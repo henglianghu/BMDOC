@@ -1,0 +1,3433 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="贝格迈思数据库使用手册">
+      
+      
+      
+      
+        <link rel="prev" href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%85%A8%E5%B1%80%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/">
+      
+      
+        <link rel="next" href="../05-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+    
+    
+      
+        <title>部署集群 - 手册</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.35e1ed30.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="mo" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="手册" class="md-header__button md-logo" aria-label="手册" data-md-component="logo">
+      
+  <img src="../../assets/new-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            手册
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              部署集群
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/aminerdocs/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="手册" class="md-nav__button md-logo" aria-label="手册" data-md-component="logo">
+      
+  <img src="../../assets/new-logo.png" alt="logo">
+
+    </a>
+    手册
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/aminerdocs/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-AISQL%E7%AE%80%E4%BB%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AiSQL简介
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    快速上手
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            快速上手
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    快速安装部署
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/SQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQL基本操作
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/BCQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BCQL基本操作
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/%E5%88%9B%E5%BB%BAJava%E7%A4%BA%E4%BE%8B%E5%BA%94%E7%94%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    创建Java示例应用程序
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    应用开发
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            应用开发
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    构建应用
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            构建应用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/JAVA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Java
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/Go/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/Python/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/Node.js/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Node.js
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/C%2B%2B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C++
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/C%23/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C#
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/Ruby/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ruby
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/Rust/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rust
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/PHP/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PHP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%85%A8%E5%B1%80%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    构建全局应用程序
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    构建多云应用程序
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            构建多云应用程序
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    概述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    部署集群
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    部署集群
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    软硬件环境需求
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    环境与系统配置检查
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    最⼩部署拓扑结构
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    通过图形化界面部署
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    通过命令行部署
+  </a>
+  
+    <nav class="md-nav" aria-label="通过命令行部署">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    单集群多节点安装与启动
+  </a>
+  
+    <nav class="md-nav" aria-label="单集群多节点安装与启动">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    开始安装
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    开始部署
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    启动集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    验证集群状态
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    故障排除
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    本地单集群多节点安装与启动
+  </a>
+  
+    <nav class="md-nav" aria-label="本地单集群多节点安装与启动">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    创建集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    启动集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    检查集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    增加节点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    停止节点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    停止集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    销毁集群
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    多数据中心部署
+  </a>
+  
+    <nav class="md-nav" aria-label="多数据中心部署">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#three-data-center-3dc" class="md-nav__link">
+    three+ data center (3dc)
+  </a>
+  
+    <nav class="md-nav" aria-label="three+ data center (3dc)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    示例场景
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    部署集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    验证部署
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xdcr" class="md-nav__link">
+    xDCR部署
+  </a>
+  
+    <nav class="md-nav" aria-label="xDCR部署">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ab" class="md-nav__link">
+    建立集群A与集群B
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    单向复制
+  </a>
+  
+    <nav class="md-nav" aria-label="单向复制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uuid" class="md-nav__link">
+    集群UUID
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    获取新表ID
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    建立复制
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    双向复制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    启用或禁用复制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    验证复制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    复制已有数据的表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    迁移架构
+  </a>
+  
+    <nav class="md-nav" aria-label="迁移架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    停止用户写入
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    使用备份和恢复
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-replicas" class="md-nav__link">
+    read replicas
+  </a>
+  
+    <nav class="md-nav" aria-label="read replicas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    部署只读副本集群
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    测试集群性能
+  </a>
+  
+    <nav class="md-nav" aria-label="测试集群性能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tpc-c" class="md-nav__link">
+    TPC-C
+  </a>
+  
+    <nav class="md-nav" aria-label="TPC-C">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    结果概览
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#benchmark" class="md-nav__link">
+    Benchmark安装
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tpc-c_1" class="md-nav__link">
+    运行 TPC-C
+  </a>
+  
+    <nav class="md-nav" aria-label="运行 TPC-C">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#10-warehouses" class="md-nav__link">
+    10 warehouses
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#100-warehouses" class="md-nav__link">
+    100 warehouses
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1000-warehouses" class="md-nav__link">
+    1000 warehouses
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10000-warehouses" class="md-nav__link">
+    10000 warehouses
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sysbench" class="md-nav__link">
+    sysbench
+  </a>
+  
+    <nav class="md-nav" aria-label="sysbench">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sysbench_1" class="md-nav__link">
+    运行sysbench
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    预期成绩
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ycsb" class="md-nav__link">
+    YCSB
+  </a>
+  
+    <nav class="md-nav" aria-label="YCSB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jdbc-binding" class="md-nav__link">
+    JDBC Binding
+  </a>
+  
+    <nav class="md-nav" aria-label="JDBC Binding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    运行基准测试
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    预期成绩
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bsql-binding" class="md-nav__link">
+    BSQL Binding
+  </a>
+  
+    <nav class="md-nav" aria-label="BSQL Binding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_40" class="md-nav__link">
+    运行基准测试
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数据迁移
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E7%AE%A1%E7%90%86%E6%95%B0%E6%8D%AE%E5%BA%93/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    管理数据库
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E5%90%91%E9%87%8F%E7%89%B9%E6%80%A7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    向量特性
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-AI%E7%89%B9%E6%80%A7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AI特性
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    参考
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            参考
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09.1-%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    架构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09.2-CLIs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CLIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09.3-%E9%85%8D%E7%BD%AE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    配置
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09.4-BSQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BSQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09.5-BCQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BCQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    软硬件环境需求
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    环境与系统配置检查
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    最⼩部署拓扑结构
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    通过图形化界面部署
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    通过命令行部署
+  </a>
+  
+    <nav class="md-nav" aria-label="通过命令行部署">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    单集群多节点安装与启动
+  </a>
+  
+    <nav class="md-nav" aria-label="单集群多节点安装与启动">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    开始安装
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    开始部署
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    启动集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    验证集群状态
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    故障排除
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    本地单集群多节点安装与启动
+  </a>
+  
+    <nav class="md-nav" aria-label="本地单集群多节点安装与启动">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    创建集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    启动集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    检查集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    增加节点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    停止节点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    停止集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    销毁集群
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    多数据中心部署
+  </a>
+  
+    <nav class="md-nav" aria-label="多数据中心部署">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#three-data-center-3dc" class="md-nav__link">
+    three+ data center (3dc)
+  </a>
+  
+    <nav class="md-nav" aria-label="three+ data center (3dc)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    示例场景
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    部署集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    验证部署
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xdcr" class="md-nav__link">
+    xDCR部署
+  </a>
+  
+    <nav class="md-nav" aria-label="xDCR部署">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ab" class="md-nav__link">
+    建立集群A与集群B
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    单向复制
+  </a>
+  
+    <nav class="md-nav" aria-label="单向复制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uuid" class="md-nav__link">
+    集群UUID
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    获取新表ID
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    建立复制
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    双向复制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    启用或禁用复制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    验证复制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    复制已有数据的表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    迁移架构
+  </a>
+  
+    <nav class="md-nav" aria-label="迁移架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    停止用户写入
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    使用备份和恢复
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-replicas" class="md-nav__link">
+    read replicas
+  </a>
+  
+    <nav class="md-nav" aria-label="read replicas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    部署只读副本集群
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    测试集群性能
+  </a>
+  
+    <nav class="md-nav" aria-label="测试集群性能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tpc-c" class="md-nav__link">
+    TPC-C
+  </a>
+  
+    <nav class="md-nav" aria-label="TPC-C">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    结果概览
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#benchmark" class="md-nav__link">
+    Benchmark安装
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tpc-c_1" class="md-nav__link">
+    运行 TPC-C
+  </a>
+  
+    <nav class="md-nav" aria-label="运行 TPC-C">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#10-warehouses" class="md-nav__link">
+    10 warehouses
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#100-warehouses" class="md-nav__link">
+    100 warehouses
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1000-warehouses" class="md-nav__link">
+    1000 warehouses
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10000-warehouses" class="md-nav__link">
+    10000 warehouses
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sysbench" class="md-nav__link">
+    sysbench
+  </a>
+  
+    <nav class="md-nav" aria-label="sysbench">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sysbench_1" class="md-nav__link">
+    运行sysbench
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    预期成绩
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ycsb" class="md-nav__link">
+    YCSB
+  </a>
+  
+    <nav class="md-nav" aria-label="YCSB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jdbc-binding" class="md-nav__link">
+    JDBC Binding
+  </a>
+  
+    <nav class="md-nav" aria-label="JDBC Binding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    运行基准测试
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    预期成绩
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bsql-binding" class="md-nav__link">
+    BSQL Binding
+  </a>
+  
+    <nav class="md-nav" aria-label="BSQL Binding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_40" class="md-nav__link">
+    运行基准测试
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="_1"><strong>部署集群</strong></h1>
+<h2 id="_2"><strong>软硬件环境需求</strong></h2>
+<p>BMDB 作为一款开源一栈式实时 HTAP 数据库，可以很好地部署和运行在 Intel 架构服务器环境、ARM 架构的服务器环境及主流虚拟化环境，并支持绝大多数的主流硬件网络。作为一款高性能数据库系统，BMDB 支持主流的 Linux 操作系统环境。</p>
+<p><strong>操作系统及平台要求：</strong></p>
+<table>
+    <thead>
+        <tr>
+            <th>操作系统</th>
+            <th>支持的CPU架构</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>CentOS 7及以上的版本</td>
+            <td>
+              <ul>
+                    <li>x86_64</li>
+                    <li>ARM 64 (aarch64)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Ubuntu 16.04及以上的版本</td>
+            <td>
+              <ul>
+                    <li>x86_64</li>
+                    <li>ARM 64 (aarch64)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>macOS 10.12 及以上的版本</td>
+            <td>
+                <ul>
+                    <li>x86_64</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Red Hat Enterprise Linux 7.3 及以上的 7.x 版本</td>
+            <td>
+              <ul>
+                    <li>x86_64</li>
+                    <li>ARM 64 (aarch64)</li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<p><strong>硬件要求</strong>
+BMDB 旨在裸机、虚拟机 （VM） 和容器上运行。</p>
+<p><strong>CPU和内存：</strong>
+您应该分配足够的 CPU 和 RAM。BMDB 具有足够的默认值，可以在各种机器上运行，并且已经过从2核到64核机器以及高达200GB RAM的测试。
+<strong>最低要求</strong></p>
+<ul>
+<li>2 核</li>
+<li>2GB 内存</li>
+</ul>
+<p><strong>生产要求</strong></p>
+<ul>
+<li>16+ 核</li>
+<li>32GB+ 内存</li>
+</ul>
+<p>建议：增加CPU，比增加RAM，更加可以显著的提升性能。
+<strong>网络</strong>
+以下是默认端口的列表以及使用BMDB所需的网络访问：</p>
+<table>
+<thead>
+<tr>
+<th><strong>组件</strong></th>
+<th><strong>端口</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bm-mserver</td>
+<td>11000</td>
+<td>用于 bm-mserver RPC 通信</td>
+</tr>
+<tr>
+<td>bm-dbserver</td>
+<td>21000</td>
+<td>用于 bm-dbserver RPC 通信</td>
+</tr>
+<tr>
+<td>bm-mserver Web Server</td>
+<td>10000</td>
+<td>用于bm-mserver Admin Web Server</td>
+</tr>
+<tr>
+<td>bm-dbserver Web Server</td>
+<td>20000</td>
+<td>用于bm-dbserver Admin Web Server</td>
+</tr>
+<tr>
+<td>BSQL</td>
+<td>2521</td>
+<td>用于应用客户端与BSQL通信</td>
+</tr>
+<tr>
+<td>BCQL</td>
+<td>9542</td>
+<td>用于应用客户端与BCQL通信</td>
+</tr>
+<tr>
+<td>BEDIS</td>
+<td>6879</td>
+<td>用于应用客户端与BEDIS通信</td>
+</tr>
+<tr>
+<td>BSQL Web Server</td>
+<td>8100</td>
+<td>用于BSQL Admin Web Server</td>
+</tr>
+<tr>
+<td>BCQL Web Server</td>
+<td>8200</td>
+<td>用于BCQL Admin Web Server</td>
+</tr>
+<tr>
+<td>BEDIS Web Server</td>
+<td>8300</td>
+<td>用于BEDIS Admin Web Server</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3"><strong>环境与系统配置检查</strong></h2>
+<p>先决条件：
+在安装 BMDB 之前，请确保您具有以下可用项（以 Ubuntu 22.04.1 LTS 为例）：
+Python 3</p>
+<p>如未安装Python 3，请执行如下命令进行安装：</p>
+<div class="highlight"><pre><span></span><code>$ sudo apt install -y libffi-dev python3 python3-dev python3-venv
+
+$ sudo ln -s /usr/bin/python3 /usr/bin/python
+</code></pre></div>
+<p>安装完成后，要检查版本，请执行以下命令：</p>
+<div class="highlight"><pre><span></span><code>$ python --version
+
+Python 3.10.6
+</code></pre></div>
+<h2 id="_4"><strong>最⼩部署拓扑结构</strong></h2>
+<p>本文档介绍 BMDB 集群最小部署的拓扑架构。
+拓扑信息</p>
+<table>
+<thead>
+<tr>
+<th><strong>主机 IP</strong></th>
+<th><strong>节点类型</strong></th>
+<th><strong>节点类型</strong></th>
+<th><strong>配置</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.0.0.1</td>
+<td>mserver</td>
+<td>dbserver</td>
+<td>默认端口</td>
+</tr>
+<tr>
+<td>10.0.0.2</td>
+<td>mserver</td>
+<td>dbserver</td>
+<td>默认端口</td>
+</tr>
+<tr>
+<td>10.0.0.3</td>
+<td>mserver</td>
+<td>dbserver</td>
+<td>默认端口</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_5"><strong>通过图形化界面部署</strong></h2>
+<p><strong>！！注：为新增，即：通过BrightStudio进行部署，可增加导航到6.1节</strong></p>
+<h2 id="_6"><strong>通过命令行部署</strong></h2>
+<h3 id="_7"><strong>单集群多节点安装与启动</strong></h3>
+<h4 id="_8"><strong>开始安装</strong></h4>
+<p>开始安装（以节点10.0.0.1为例，三个节点均进行安装）的步骤如下：</p>
+<ol>
+<li>
+<p>登录节点主机，下载BMDB数据库的压缩包，并保存在目标路径下，例如保存在以下目录中： /home/bigmath/</p>
+</li>
+<li>
+<p>执行如下命令，解压缩包：</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ tar -xvfz bmdb-0.1-7200f0cb0e6cd1cb5cd760b7a905c5625fc839fc-release-ubuntu22-x86_64.tar.gz
+</code></pre></div>
+<ol>
+<li>创建BMDB数据存储目录</li>
+</ol>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ mkdir disk1 disk2 
+</code></pre></div>
+<ol>
+<li>进入BMDB工作目录：</li>
+</ol>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ cd /home/bigmath/bmdb-0.1/bin/
+</code></pre></div>
+<h4 id="_9"><strong>开始部署</strong></h4>
+<p>集群的部署，需要所有的节点依次部署，完整的部署步骤如下：</p>
+<ol>
+<li>
+<p><strong>部署节点10.0.0.1：</strong></p>
+</li>
+<li>
+<p>执行如下命令，编辑mserver.conf配置文件：</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ vi /home/bigmath/bmdb-0.1/bin/mserver.conf 
+</code></pre></div>
+<p>增加或修改如下配置信息：</p>
+<div class="highlight"><pre><span></span><code>--mserver_addresses=10.0.0.1:11000,10.0.0.2:11000,10.0.0.3:11000      
+--rpc_bind_addresses=10.0.0.1                           
+--fs_data_dirs=/home/bigmath/disk2
+--replication_factor=3
+</code></pre></div>
+<p>保存并退出编辑。</p>
+<ul>
+<li>执行如下命令，编辑dbserver.conf配置文件：</li>
+</ul>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ vi /home/bigmath/bmdb-0.1/bin/dbserver.conf 
+
+--dbserver_mserver_addrs=10.0.0.1:11000,10.0.0.2:11000,10.0.0.3:11000 
+--rpc_bind_addresses=10.0.0.1:21000    
+--enable_bsql
+--pgsql_proxy_bind_address=0.0.0.0:2521
+--cql_proxy_bind_address=0.0.0.0:9542
+--fs_data_dirs=/home/bigmath/disk1
+</code></pre></div>
+<p>保存并退出编辑。</p>
+<p><strong>2.部署节点10.0.0.2：</strong></p>
+<ul>
+<li>执行如下命令，编辑mserver.conf配置文件：</li>
+</ul>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ vi /home/bigmath/bmdb-0.1/bin/mserver.conf 
+</code></pre></div>
+<p>增加或修改如下配置信息：</p>
+<div class="highlight"><pre><span></span><code>--mserver_addresses=10.0.0.1:11000,10.0.0.2:11000,10.0.0.3:11000      
+--rpc_bind_addresses=10.0.0.2                           
+--fs_data_dirs=/home/bigmath/disk2
+--replication_factor=3
+</code></pre></div>
+<p>保存并退出编辑。</p>
+<ul>
+<li>执行如下命令，编辑dbserver.conf配置文件：</li>
+</ul>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ vi /home/bigmath/bmdb-0.1/bin/dbserver.conf 
+--dbserver_mserver_addrs=10.0.0.1:11000,10.0.0.2:11000,10.0.0.3:11000 
+--rpc_bind_addresses=10.0.0.2:21000    
+--enable_bsql
+--pgsql_proxy_bind_address=0.0.0.0:2521
+--cql_proxy_bind_address=0.0.0.0:9542
+--fs_data_dirs=/home/bigmath/disk1
+</code></pre></div>
+<p>保存并退出编辑。</p>
+<p><strong>3.部署节点10.0.0.3：</strong></p>
+<ul>
+<li>执行如下命令，编辑mserver.conf配置文件：</li>
+</ul>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ vi /home/bigmath/bmdb-0.1/bin/mserver.conf 
+</code></pre></div>
+<p>增加或修改如下配置信息：</p>
+<div class="highlight"><pre><span></span><code>--mserver_addresses=10.0.0.1:11000,10.0.0.2:11000,10.0.0.3:11000      
+--rpc_bind_addresses=10.0.0.3                           
+--fs_data_dirs=/home/bigmath/disk2
+--replication_factor=3
+</code></pre></div>
+<p>保存并退出编辑。</p>
+<ul>
+<li>执行如下命令，编辑dbserver.conf配置文件：</li>
+</ul>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ vi /home/bigmath/bmdb-0.1/bin/dbserver.conf 
+--dbserver_mserver_addrs=10.0.0.1:11000,10.0.0.2:11000,10.0.0.3:11000 
+--rpc_bind_addresses=10.0.0.3:21000    
+--enable_bsql
+--pgsql_proxy_bind_address=0.0.0.0:2521
+--cql_proxy_bind_address=0.0.0.0:9542
+--fs_data_dirs=/home/bigmath/disk1
+</code></pre></div>
+<p>保存并退出编辑。</p>
+<h4 id="_10"><strong>启动集群</strong></h4>
+<p>在完成上述部署后，接下来，就可以启动集群（以节点10.0.0.1为例，三个节点均启动）：</p>
+<p>登录节点主机，并进入BMDB工作目录，执行如下命令启动集群：</p>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ ./bm-mserver --flagfile mserver.conf &gt;&amp; /home/bigmath/disk1/bm-mserver.out &amp;
+bigmath@bigmath-virtual-machine:~$ ./bm-dbserver --flagfile dbserver.conf &gt;&amp; /home/bigmath/disk2/bm-dbserver.out &amp;
+</code></pre></div>
+<h4 id="_11"><strong>验证集群状态</strong></h4>
+<p>在部署完一套 BMDB 集群后，需要检查集群是否正常运行。本文介绍如何通过 BMDB Dashboard 检查集群状态。
+通过 {bm-mserver Web Server- ip}:{bm-mserver Web Server-port}/ 登录 BMDB Dashboard。
+现在，您应该能够在任何主节点的 IP 地址上进行查看。例如：</p>
+<ul>
+<li>http://10.0.0.1:10000/</li>
+<li>http://10.0.0.2:10000/</li>
+<li>http://10.0.0.3:10000/
+<img alt="" src="./media/chapter4/1.png" /></li>
+</ul>
+<h4 id="_12"><strong>故障排除</strong></h4>
+<p>在搭建BMDB集群时，可能会遇到一些常见故障，如下，列举并给出了一些常见的故障及其相应的解决方法。</p>
+<p><strong>集群日志的存储路径主要包含：</strong>
+(1) bm-mserver和bm-dbserver服务启动时指定的路径。
+例如：</p>
+<div class="highlight"><pre><span></span><code>/home/bigmath/disk1/bm-mserver.out 
+/home/bigmath/disk2/bm-dbserver.out 
+</code></pre></div>
+<p>(2) --fs_data_dirs参数指定的路径
+例如：
+bm-mserver启动参数设置：--fs_data_dirs=/home/bigmath/disk2
+则bm-mserver的日志位于：/home/bigmath/disk2/bm-data/mserver/logs/
+bm-dbserver启动参数设置：--fs_data_dirs=/home/bigmath/disk1
+则bm-dbserver的日志位于：/home/bigmath/disk1/bm-data/dbserver/logs/</p>
+<p><strong>常见的故障及解决方法</strong>
+(1) <strong>数据库连接不上</strong>
+请确认集群的bm-dbserver、bm-mserver服务是否都已经启动。用 ps 命令查看所有相关进程是否存在。如果某个进程已经不在了，请参考对应的章节排查错误。
+如果所有的进程都在，请查看 bm-dbserver 和bm-mserver的相关日志，看是否有报错。</p>
+<p>(2) <strong>bm-mserver启动报错</strong>
+bm-mserver 无法启动的常见情况包括：</p>
+<ul>
+<li>
+<p>启动参数错误
+  请参考 bm-mserver 命令行参数。</p>
+</li>
+<li>
+<p>端口被占用：lsof -i:[port]
+  请确保 bm-mserver 启动所需要的端口未被占用，所需要的端口号，请参见前文软硬件环境需求中的网络章节。</p>
+</li>
+<li>
+<p>无法连接 bm-mserver
+  如果本节点bm-mserver正常，则需要检查节点与节点的对应端口之间的连通性，确保网段连通且对应服务端口已添加到防火墙白名单中，可通过 nc 或 curl 工具检查。
+  例如，假设 bm-mserver服务位于 10.0.0.1，无法连接的 bm-mserver位于 10.0.0.2，且 11000 为其 client port，则执行 nc -v -z 10.0.0.2 11000，测试是否可以访问端口。</p>
+</li>
+</ul>
+<p>(3) <strong>bm-dbserver启动报错</strong>
+bm-dbserver 无法启动的常见情况包括：</p>
+<ul>
+<li>
+<p>启动参数错误
+  请参考 bm-dbserver 命令行参数。</p>
+</li>
+<li>
+<p>端口被占用：lsof -i:[port]
+  请确保 bm-dbserver 启动所需要的端口未被占用，所需要的端口号，请参见前文软硬件环境需求中的网络章节。</p>
+</li>
+<li>
+<p>无法连接 bm-dbserver
+  若 bm-dbserver 正常，则需要检查节点与节点的对应端口之间的连通性，确保网段连通且对应服务端口已添加到防火墙白名单中，可通过 nc 或 curl 工具检查。
+  例如，假设 bm-dbserver 服务位于 10.0.0.1，无法连接的 bm-dbserver 位于 10.0.0.2，且 21000 为其 client port，则执行 nc -v -z 10.0.0.2 21000，测试是否可以访问端口。</p>
+</li>
+</ul>
+<p>(4) <strong>bm-mserver/bm-dbserver进程异常退出</strong></p>
+<ul>
+<li>
+<p>进程是否是启动在前台
+  当前终端退出给其所有子进程发送 HUP 信号，从而导致进程退出。</p>
+</li>
+<li>
+<p>是否是在命令行用过 nohup+&amp; 方式直接运行
+  这样依然可能导致进程因终端连接突然中断，作为终端 SHELL 的子进程被杀掉。
+  推荐将启动命令写在脚本中，通过脚本运行（相当于二次 fork 启动）。</p>
+</li>
+</ul>
+<h3 id="_13"><strong>本地单集群多节点安装与启动</strong></h3>
+<p>为了更好的开发和学习BMDB，我们也支持使用bm-ctl来构建本地单集群多节点模式，相比较上述章节中描述的多台服务器构建的单集群多节点模式，这里，仅使用本地单台服务器就可以部署开发和学习的BMDB的集群环境。
+接下来，本节重点介绍如何使用bm-ctl来构建本地单集群多节点集群服务。请注意的一点是，bm-ctl仅用于管理本地集群，这意味着通过任何其他方式创建的集群，都不能使用bm-ctl进行管理。</p>
+<h4 id="_14"><strong>创建集群</strong></h4>
+<p>进入BMDB工作目录，执行如下命令来创建集群：</p>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ ./bm-ctl create
+</code></pre></div>
+<p>当集群创建好后，会打印如下信息，其中包含集群存储目录：$HOME/bmdb-data/ 等信息。例如：/home/bigmath/bmdb-data。打印信息如下：</p>
+<div class="highlight"><pre><span></span><code>Creating cluster.
+Waiting for cluster to be ready.
+----------------------------------------------------------------------------------------------------
+| Node Count: 1  | Replication Factor: 1                                 
+----------------------------------------------------------------------------------------------------
+| JDBC            : jdbc:postgresql://10.0.0.1:2521/bmdb
+| BSQL Shell       : sqlsh
+| BCQL Shell       : cqlsh
+| BEDIS Shell       : redis-cli
+| Web UI           : http://10.0.0.1:10000/
+| Cluster Data       : /home/bigmath/bmdb-data                                     
+----------------------------------------------------------------------------------------------------
+
+For more info, please use: bm-ctl status
+</code></pre></div>
+<h4 id="_15"><strong>启动集群</strong></h4>
+<p>集群创建好后，请执行如下命令来启动集群：</p>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ ./bm-ctl start
+</code></pre></div>
+<p>当集群启动好后，会打印如下信息：</p>
+<div class="highlight"><pre><span></span><code>Starting cluster with base directory /home/bigmath/bmdb-data
+Waiting for cluster to be ready.
+----------------------------------------------------------------------------------------------------
+| Node Count: 1 | Replication Factor: 1
+----------------------------------------------------------------------------------------------------
+| JDBC               : jdbc:postgresql://10.0.0.1:2521/bmdb
+| BSQL Shell          : sqlsh
+| BCQL Shell          : cqlsh
+| BEDIS Shell         : redis-cli
+| Web UI             : http://10.0.0.1:10000/
+| Cluster Data         : /home/bigmath/bmdb-data
+----------------------------------------------------------------------------------------------------
+
+For more info, please use: bm-ctl status
+</code></pre></div>
+<h4 id="_16"><strong>检查集群</strong></h4>
+<p>可以随时获取本地集群的健康状态，请执行如下命令来进行检查集群状态：</p>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ ./bm-ctl status
+</code></pre></div>
+<p>--------------------------------------------------------------------------------------------------------------</p>
+<p>| Node Count: 1 | Replication Factor: 1                                          <br />
+--------------------------------------------------------------------------------------------------------------</p>
+<p>| JDBC               : jdbc:postgresql://10.0.0.1:2521/bmdb               <br />
+| BSQL Shell          : sqlsh                                             <br />
+| BCQL Shell          : cqlsh                                             <br />
+| BEDIS Shell          : redis-cli                                             <br />
+| Web UI              : http://10.0.0.1:10000/                                   </p>
+<p>| Cluster Data          : /home/bigmath/bmdb-data                          <br />
+--------------------------------------------------------------------------------------------------------------</p>
+<p>--------------------------------------------------------------------------------------------------------------</p>
+<p>| Node 1: bm-dbserver (pid 454612), bm-mserver (pid 454609)                            <br />
+--------------------------------------------------------------------------------------------------------------</p>
+<p>| JDBC               : jdbc:postgresql://10.0.0.1:2521/bmdb                <br />
+| BSQL Shell          : sqlsh                                               <br />
+| BCQL Shell          : cqlsh                                               <br />
+| BEDIS Shell         : redis-cli                                             <br />
+| data-dir[0]           : /home/bigmath/bmdb-data/node-1/disk-1/bm-data          <br />
+| bm-dbserver Logs      : /home/bigmath/bmdb-data/node-1/disk-1/bm-data/dbserver/logs</p>
+<p>| bm-mserver Logs      : /home/bigmath/bmdb-data/node-1/disk-1/bm-data/mserver/logs
+--------------------------------------------------------------------------------------------------------------</p>
+<h4 id="_17"><strong>增加节点</strong></h4>
+<p>缺省情况下，创建的本地集群仅有一个节点，则当需要增加一个节点时，将启动一个新的bm-dbserver服务，并为其提供一个新的node_id。
+要为本地集群增加新的节点，请执行如下命令来进行：</p>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ ./bm-ctl add_node
+</code></pre></div>
+<p>在增加节点成功后，会打印如下信息：
+Adding node.</p>
+<p>Waiting for cluster to be ready.
+------------------------------------------------------------------------------------------------------------</p>
+<p>| Node 2: bm-dbserver (pid 454983)                                                                <br />
+------------------------------------------------------------------------------------------------------------</p>
+<p>| JDBC           : jdbc:postgresql://10.0.0.2:2521/bmdb                             <br />
+| BSQL Shell      : sqlsh -h 10.0.0.2                                                      <br />
+| BCQL Shell      : cqlsh 10.0.0.2                                                         <br />
+| BEDIS Shell      : redis-cli -h 10.0.0.2                                                   <br />
+| data-dir[0]        : /home/bigmath/bmdb-data/node-2/disk-1/bm-data                     </p>
+<p>| bm-dbserver Logs     : /home/bigmath/bmdb-data/node-2/disk-1/bm-data/dbserver/logs        <br />
+------------------------------------------------------------------------------------------------------------</p>
+<p>如需继续增加新的节点，请再次执行该命令来增加相应的新节点，直到达到你的期望节点数为止。</p>
+<h4 id="_18"><strong>停止节点</strong></h4>
+<p>当确定不需要太多的节点的时候，可以通过执行bm-ctl stop命令来停止指定的节点，并同时停止该节点的服务。该命令需要明确指定一个具体的节点id。
+例如，当需要停止节点3时，请执行如下命令来进行：</p>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ ./bm-ctl stop_node 3
+</code></pre></div>
+<p>在停止节点成功后，会打印如下信息：
+Stopping node dbserver-3.</p>
+<h4 id="_19"><strong>停止集群</strong></h4>
+<p>当需要停止集群服务时，请执行如下命令来停止集群：</p>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ ./bm-ctl stop
+</code></pre></div>
+<p>在停止集群成功后，会打印如下信息：</p>
+<div class="highlight"><pre><span></span><code>Stopping cluster.
+</code></pre></div>
+<h4 id="_20"><strong>销毁集群</strong></h4>
+<p>当确认不再需要集群服务时，请执行如下命令来销毁集群，并同时释放相关存储空间。
+请注意：此命令将停止所有节点，并同时删除该集群的数据目录。例如：集群创建的数据目录/home/bigmath/bmdb-data 将被删除。</p>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$ ./bm-ctl destroy
+</code></pre></div>
+<p>在销毁集群成功后，会打印如下信息：
+Destroying cluster.</p>
+<h2 id="_21"><strong>多数据中心部署</strong></h2>
+<h3 id="three-data-center-3dc"><strong>three+ data center (3dc)</strong></h3>
+<p>跨区域部署BMDB集群。
+BMDB 的三个数据中心部署本质上是手动部署部分中记录的三个可用区 (AZ) 部署的自然扩展。 三个数据中心中各放置了相同数量的节点。 在单个数据中心内，建议进行多可用区部署，以确保针对区域故障的恢复能力。 此方法适用于任何奇数个可用区或数据中心。 鉴于 BMDB 的分布式基于共识的复制需要多数仲裁来保证写入请求的持续可用性，因此不建议跨偶数个可用区或数据中心部署单个集群。</p>
+<h4 id="_22"><strong>示例场景</strong></h4>
+<p>1.创建复制因子为 3 的三节点集群。
+（1）云是 aws，三个区域/可用区是 us-west/us-west-2a、us-east-1/us-east-1a、ap-northeast-1/ap-northeast-1a。 每个区域/可用区中放置一个节点，以便每个Tile的一个副本也放置在每个区域/可用区中。
+（2）3个节点的私网IP地址分别为172.151.17.130、172.151.17.220、172.151.17.140。</p>
+<ol>
+<li>/home/centos/disk1、/home/centos/disk2 上挂载了多个数据驱动器。</li>
+</ol>
+<p><strong>先决条件</strong>
+按照检查表确保您已准备好用于安装 BMDB 的节点。</p>
+<h4 id="_23"><strong>部署集群</strong></h4>
+<p>在每个实例上执行以下步骤。</p>
+<p><strong>1.安装软件</strong>
+按照安装说明在每个节点上安装 BMDB。</p>
+<p><strong>2.启动MServers</strong>
+在每个节点上运行 mserver 服务器，如下所示：</p>
+<div class="highlight"><pre><span></span><code>$ ./bin/mserver \
+  --mserver_addresses 172.151.17.130:11000,172.151.17.220:11000,172.151.17.140:11000 \
+  --rpc_bind_addresses 172.151.17.130 \
+  --fs_data_dirs &quot;/home/centos/disk1,/home/centos/disk2&quot; \
+  --placement_cloud aws \
+  --placement_region us-west \
+  --placement_zone us-west-2a \
+  --leader_failure_max_missed_heartbeat_periods 10 \
+  &gt;&amp; /home/centos/disk1/mserver.out &amp;
+</code></pre></div>
+<p>请注意如何为 --fs_data_dirs 标志提供多个目录。 将 --rpc_bind_addresses 值替换为主机的私有 IP 地址，并适当设置 --placement_cloud、--placement_region 和 --placement_zone 值。</p>
+<p>请注意 --leader_failure_max_missed_heartbeat_periods 标志如何设置为 10。该标志指定在领导者被视为失败之前，领导者可以无法进行心跳检测的最大心跳周期。 由于数据是跨数据中心进行地理复制的，因此 RPC 延迟预计会更高。 使用此标志可以增加较高 RPC 延迟部署中的故障检测间隔。</p>
+<p>总故障超时现在为 5 秒，计算方法为 --raft_heartbeat_interval_ms（默认值为 500 毫秒）乘以 --leader_failure_max_missed_heartbeat_periods（当前值为 10）。</p>
+<p>有关配置标志的完整列表，请参阅 MServer 参考。</p>
+<p><strong>3.启动 DBServer</strong>
+在每个节点上运行 dbserver 服务器，如下所示：</p>
+<div class="highlight"><pre><span></span><code>$ ./bin/dbserver \
+  --dbserver_mserver_addrs 172.151.17.130:11000,172.151.17.220:11000,172.151.17.140:11000 \
+  --rpc_bind_addresses 172.151.17.130 \
+  --enable_bsql \
+  --pgsql_proxy_bind_address 172.151.17.130:2521 \
+  --cql_proxy_bind_address 172.151.17.130:9542 \
+  --fs_data_dirs &quot;/home/centos/disk1,/home/centos/disk2&quot; \
+  --placement_cloud aws \
+  --placement_region us-west \
+  --placement_zone us-west-2a \
+  --leader_failure_max_missed_heartbeat_periods 10 \
+  &gt;&amp; /home/centos/disk1/dbserver.out &amp;
+</code></pre></div>
+<p>请注意，必须使用 --dbserver_mserver_addrs 标志提供所有mserver addresses。 将 --rpc_bind_addresses 值替换为主机的私有 IP 地址，并适当设置placement_cloud、placement_region 和placement_zone 值。</p>
+<p>与 MServer 一样，将 --leader_failure_max_missed_heartbeat_periods 标志设置为 10 以考虑较高的 RPC 延迟。</p>
+<p>有关配置标志的完整列表，请参阅 DBServer 参考。</p>
+<p><strong>4.设置副本放置策略</strong>
+首次创建集群时的默认副本放置策略是将所有节点视为平等，无论 --placement_* 配置标志如何。 但是，对于当前部署，您希望在每个区域/可用区中显式放置每个Tile的一个副本。 以下命令将 us-west-2/us-west-2a、us-east-1/us-east-1a、ap-northeast-1/ap-northeast-1a 之间的复制因子设置为 3，从而实现这样的放置。</p>
+<p>在任何运行 mserver 的主机上，运行以下命令：</p>
+<div class="highlight"><pre><span></span><code>$ ./bin/bm-admin \
+    --mserver_addresses 172.151.17.130:11000,172.151.17.220:11000,172.151.17.140:11000 \
+    modify_placement_info  \
+    aws.us-west.us-west-2a,aws.us-east-1.us-east-1a,aws.ap-northeast-1.ap-northeast-1a 3
+</code></pre></div>
+<p>通过运行以下命令进行验证：</p>
+<div class="highlight"><pre><span></span><code>$ curl -s http://&lt;any-mserver-ip&gt;:10000/cluster-config
+</code></pre></div>
+<p>确认输出类似于以下内容，并将每个可用区的 --min_num_replicas 设置为 1：</p>
+<div class="highlight"><pre><span></span><code>replication_info {
+  live_replicas {
+    num_replicas: 3
+    placement_blocks {
+      cloud_info {
+        placement_cloud: &quot;aws&quot;
+        placement_region: &quot;us-west&quot;
+        placement_zone: &quot;us-west-2a&quot;
+      }
+      min_num_replicas: 1
+    }
+    placement_blocks {
+      cloud_info {
+        placement_cloud: &quot;aws&quot;
+        placement_region: &quot;us-east-1&quot;
+        placement_zone: &quot;us-east-1a&quot;
+      }
+      min_num_replicas: 1
+    }
+    placement_blocks {
+      cloud_info {
+        placement_cloud: &quot;aws&quot;
+        placement_region: &quot;ap-northeast-1&quot;
+        placement_zone: &quot;ap-northeast-1a&quot;
+      }
+      min_num_replicas: 1
+    }
+  }
+}
+</code></pre></div>
+<p><strong>5.设置首选位置</strong>
+需要考虑的另一个选项是使用 bm-admin set_preferred_zones 命令为所有Tile领导者设置首选位置。</p>
+<p>对于多行或多表事务操作，将领导者放在单个专区或区域中可以帮助减少执行事务时涉及的跨区域网络跃点数量，从而提高性能。</p>
+<p>以下命令将首选区域设置为 aws.us-west.us-west-2a：</p>
+<div class="highlight"><pre><span></span><code>$ ./bin/bm-admin \
+    --mserver_addresses 172.151.17.130:11000,172.151.17.220:11000,172.151.17.140:11000 \
+    set_preferred_zones  \
+    aws.us-west.us-west-2a
+</code></pre></div>
+<p>再次查看集群配置，您应该看到添加了 affinitized_leaders：</p>
+<div class="highlight"><pre><span></span><code>replication_info {
+  live_replicas {
+    num_replicas: 3
+    placement_blocks {
+      cloud_info {
+        placement_cloud: &quot;aws&quot;
+        placement_region: &quot;us-west&quot;
+        placement_zone: &quot;us-west-2a&quot;
+      }
+      min_num_replicas: 1
+    }
+    placement_blocks {
+      cloud_info {
+        placement_cloud: &quot;aws&quot;
+        placement_region: &quot;us-east-1&quot;
+        placement_zone: &quot;us-east-1a&quot;
+      }
+      min_num_replicas: 1
+    }
+    placement_blocks {
+      cloud_info {
+        placement_cloud: &quot;aws&quot;
+        placement_region: &quot;ap-northeast-1&quot;
+        placement_zone: &quot;ap-northeast-1a&quot;
+      }
+      min_num_replicas: 1
+    }
+    affinitized_leaders {
+      placement_cloud: &quot;aws&quot;
+      placement_region: &quot;us-west&quot;
+      placement_zone: &quot;us-west-2a&quot;
+    }
+  }
+}
+</code></pre></div>
+<h4 id="_24"><strong>验证部署</strong></h4>
+<p>使用 sqlsh（对于 BSQL API）或 cqlsh（对于 BCQL API）shell 测试与集群的连接。</p>
+<h3 id="xdcr"><strong>xDCR部署</strong></h3>
+<p>使用xDCR复制，可以在两个集群之间，使用单向（主-从）或双向（多主）异步复制。
+下面将具体介绍如何使用xDCR复制。</p>
+<p>首先按照单集群多节点进行安装部署集群A 与集群B，假设其拓扑结构如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>集群</strong></th>
+<th><strong>主机 IP</strong></th>
+<th><strong>节点类型</strong></th>
+<th><strong>节点类型</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>10.0.0.1</td>
+<td>mserver</td>
+<td>dbserver</td>
+</tr>
+<tr>
+<td>10.0.0.2</td>
+<td>mserver</td>
+<td>dbserver</td>
+<td></td>
+</tr>
+<tr>
+<td>10.0.0.3</td>
+<td>mserver</td>
+<td>dbserver</td>
+<td></td>
+</tr>
+<tr>
+<td>B</td>
+<td>10.0.0.4</td>
+<td>mserver</td>
+<td>dbserver</td>
+</tr>
+<tr>
+<td>10.0.0.5</td>
+<td>mserver</td>
+<td>dbserver</td>
+<td></td>
+</tr>
+<tr>
+<td>10.0.0.6</td>
+<td>mserver</td>
+<td>dbserver</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="ab"><strong>建立集群A与集群B</strong></h4>
+<p>请按照如下方式创建源集群A和目标集群B：</p>
+<ul>
+<li>参考<a href="#_单集群多节点安装与启动">单集群多节点安装与启动</a>，部署并创建BMDB源集群A。</li>
+<li>为源集群A创建表。</li>
+<li>参考<a href="#_单集群多节点安装与启动">单集群多节点安装与启动</a>，部署并创建BMDB目标集群B。</li>
+<li>为目标集群B创建表，这些表应该与源集群B创建的表相同。</li>
+<li>设置单向或双向复制。</li>
+</ul>
+<p>需要注意的一点是：如果源集群A中的表中已有数据，请按照<a href="#_复制已有数据的表">复制已有数据的表</a>中描述的过程步骤进行操作。</p>
+<h4 id="_25"><strong>单向复制</strong></h4>
+<p>将一个集群（源集群）上需要复制的表，复制到另一个集群（目标集群）的过程，我们称之为单向复制。</p>
+<h5 id="uuid">集群UUID</h5>
+<p>可通过访问：<a href="http://10.0.0.1:7001/">http://10.0.0.1:10000/</a> 获取集群A的UUID
+例如：4b0ec5da-3582-45b3-aa47-98d9425a5f5c </p>
+<h5 id="id">获取新表ID</h5>
+<p>需要复制的新表，需要在集群A和集群B中均进行相同的表定义创建。如果是想复制已经有数据的表，请参考<a href="#_复制已有数据的表">复制已有数据的表</a>。接下来，需要使用如下命令来获取需要复制的新表ID。
+基本语法为：</p>
+<div class="highlight"><pre><span></span><code>./bm-admin -mserver_addresses &lt;source mserver ips comma separated&gt; list_tables include_table_id | grep table_name
+</code></pre></div>
+<p>例如，获取表t_user的ID，执行如下命令来获取表ID：</p>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$./bm-admin -mserver_addresses 10.0.0.1:11000,10.0.0.2:11000,10.0.0.3:11000 list_tables include_table_id | grep t_user
+</code></pre></div>
+<p>获取到的表ID为：000033e8000030008000000000004000</p>
+<h5 id="_26">建立复制</h5>
+<p>进入BMDB工作目录，运行如下命令bm-admin setup_universe_replication来建立复制。
+确保在命令中指定了集群A和集群B的所有mserver地址。
+基本语法为：</p>
+<div class="highlight"><pre><span></span><code>./bm-admin \
+ -mserver_addresses &lt;target_universe_mserver_addresses&gt; \
+setup_universe_replication &lt;source_universe_uuid&gt;_&lt;replication_stream_name&gt;  \
+    &lt;source_universe_mserver_addresses&gt; \
+    &lt;table_id&gt;,[&lt;table_id&gt;..]
+</code></pre></div>
+<p>例如，需要复制上面表：</p>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$./bm-admin 
+-mserver_addresses 10.0.0.4:11000,10.0.0.5:11000,10.0.0.6:11000 
+setup_universe_replication  4b0ec5da-3582-45b3-aa47-98d9425a5f5c 10.0.0.1:11000,10.0.0.2:11000,10.0.0.3:11000 
+000033e8000030008000000000004000
+</code></pre></div>
+<p>在执行成功后，会打印如下成功信息：</p>
+<div class="highlight"><pre><span></span><code>Replication setup successfully
+</code></pre></div>
+<p>需要注意的一点是：如果源集群中需要复制的表定义发生改变，请参考【<a href="#_迁移架构">迁移架构</a>】解决复制问题。</p>
+<h4 id="_27"><strong>双向复制</strong></h4>
+<p>双向复制，就是在上节单向复制设置的基础上，将其设置过程中的源集群做为目标集群，而目标集群做为源集群，再重复进行单向复制中描述的设置过程。</p>
+<h4 id="_28"><strong>启用或禁用复制</strong></h4>
+<p>可以设置复制为启用或禁用，来暂停复制过程。
+基本语法为：</p>
+<div class="highlight"><pre><span></span><code>./bm-admin \
+-mserver_addresses &lt;target_mserver_addresses&gt; \ 
+set_universe_replication_enabled  &lt;source_universe_uuid&gt;_&lt;replication_name&gt; (0|1)
+</code></pre></div>
+<p>参数说明：
+target_mserver_addresss:目标mserver主机和端口的逗号分隔列表。默认值为localhost:11000。
+source_universe_uid：源集群的uuid。
+replication_name：要启用或禁用的复制的名称。
+0|1:0代表禁用，1代表启用。默认值为1。</p>
+<p>例如，禁用复制：</p>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$./bm-admin 
+-mserver_addresses 10.0.0.4:11000,10.0.0.5:11000,10.0.0.6:11000 
+set_universe_replication_enabled 4b0ec5da-3582-45b3-aa47-98d9425a5f5c 0
+</code></pre></div>
+<p>例如，启用复制：</p>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$./bm-admin 
+-mserver_addresses 10.0.0.4:11000,10.0.0.5:11000,10.0.0.6:11000 
+set_universe_replication_enabled  4b0ec5da-3582-45b3-aa47-98d9425a5f5c 1
+</code></pre></div>
+<h4 id="_29"><strong>验证复制</strong></h4>
+<p>(1) 单向复制
+对于单向复制，使用BSQL shell（sqlsh）连接到目标集群，并确认可以看到预期的记录，例如使用count(*)函数验证复制的表在源集群和目标集群上的记录数相同；或者，在源集群中，对复制的表成功插入一条记录，在目标集群中可以成功查看到该记录，则视为单向复制成功。</p>
+<p>(2) 双向复制
+对于双向复制，请重复单向复制中描述的过程，但反转源和目标信息。</p>
+<p>(3) 复制滞后
+(4) 复制状态 
+可以使用bm-admin返回当前的复制状态。get_replication_status命令返回所有使用者端复制流的复制状态。错误字段为空则表示复制流正常。 
+基本语法为：</p>
+<div class="highlight"><pre><span></span><code>./bm-admin \
+    -mserver_addresses &lt;mserver-addresses&gt; get_replication_status [ &lt;producer_universe_uuid&gt; ]
+</code></pre></div>
+<p>例如，检查上述复制状态：</p>
+<div class="highlight"><pre><span></span><code> ./bm-admin \
+    -mserver_addresses 10.0.0.4:10000,10.0.0.5:10000,10.0.0.6:10000 \
+    get_replication_status
+statuses {
+  table_id: &quot;000033e8000030008000000000004000&quot;
+  stream_id: &quot;2640ec7bd32d405ba57fd67a29b5939c&quot;
+}
+</code></pre></div>
+<p>如果无errors显示，表示复制流正常；否则，会打印相应的错误信息，类似如下：</p>
+<div class="highlight"><pre><span></span><code>statuses {
+  table_id: &quot;03ee1455f2134d5b914dd499ccad4377&quot;
+  stream_id: &quot;53441ad2dd9f4e44a76dccab74d0a2ac&quot;
+  errors {
+    error: REPLICATION_MISSING_OP_ID
+    error_detail: &quot;Unable to find expected op id on the producer&quot;
+  }
+}
+</code></pre></div>
+<h4 id="_30"><strong>复制已有数据的表</strong></h4>
+<p>单向复制也可以复制如下情况的表：</p>
+<ul>
+<li>在已经有数据的表上启用复制。</li>
+<li>目标表数据落后源表数据太多。</li>
+</ul>
+<p>首先确保wal仍然可用，您需要在cdc_wal_retension_time_secs gflag窗口中执行以下步骤。如果进程所花费的时间将超过此标志定义的值，则应增加该值。</p>
+<p>按以下步骤进行：</p>
+<ul>
+<li>检查点设置
+  通过执行以下命令，在源集群中为要复制的所有表创建一个检查点：</li>
+</ul>
+<p>基本语法为：</p>
+<div class="highlight"><pre><span></span><code>./bm-admin \
+-mserver_addresses &lt;source_universe_mserver_addresses&gt; \
+bootstrap_cdc_producer &lt;comma_separated_source_universe_table_ids&gt;
+</code></pre></div>
+<p>例如：</p>
+<div class="highlight"><pre><span></span><code>bigmath@bigmath-virtual-machine:~$./bm-admin 
+-mserver_addresses 10.0.0.1:11000,10.0.0.2:11000,10.0.0.3:11000 
+bootstrap_cdc_producer 000033e8000030008000000000004000
+</code></pre></div>
+<p>在执行成功后，会打印类似如下信息：</p>
+<div class="highlight"><pre><span></span><code>table id: 000033e8000030008000000000004000, CDC bootstrap id: 45f1cf33cc0d4f2790a53509567794df
+</code></pre></div>
+<ul>
+<li>备份与恢复</li>
+</ul>
+<p>在源集群中备份需要复制的表，并且在目标集群中恢复。</p>
+<ul>
+<li>设置复制流</li>
+</ul>
+<p>执行以下命令，使用前面步骤中生成的bootstrap id设置复制流。注意：需要确保bootstrap id与其对应的表ID的顺序相同。</p>
+<p>基本语法为：</p>
+<div class="highlight"><pre><span></span><code>./bm-admin 
+-mserver_addresses &lt;target_universe_mserver_addresses&gt; setup_universe_replication \
+    &lt;source_universe_uuid&gt;_&lt;replication_stream_name&gt; &lt;source_universe_mserver_addresses&gt; \
+    &lt;comma_separated_source_universe_table_ids&gt; &lt;comma_separated_bootstrap_ids&gt;
+</code></pre></div>
+<p>例如：</p>
+<div class="highlight"><pre><span></span><code>./bm-admin 
+-mserver_addresses 10.0.0.4:11000,10.0.0.5:11000,10.0.0.6:11000 setup_universe_replication 
+4b0ec5da-3582-45b3-aa47-98d9425a5f5c
+10.0.0.1:11000,10.0.0.2:11000,10.0.0.3:11000 
+000033e8000030008000000000004000  45f1cf33cc0d4f2790a53509567794df
+</code></pre></div>
+<h4 id="_31"><strong>迁移架构</strong></h4>
+<p>在已经为某些表配置了复制之后，支持执行DDL操作，但需要考虑下面两种情况：</p>
+<h5 id="_32">停止用户写入</h5>
+<p>在某些情况下，需要暂时停止用户写入。通常会按照以下方式进行处理： </p>
+<ul>
+<li>停止任何新的用户写入。</li>
+<li>等待所有更改复制到目标集群。这可以通过复制滞后降至0来观察到。</li>
+<li>在两个集群上应用DDL更改，并更改任何新创建的表的复制。例如，在执行CREATE TABLE或CREATE INDEX语句之后。</li>
+<li>恢复用户写入。</li>
+</ul>
+<h5 id="_33">使用备份和恢复</h5>
+<p>如果无法停止用户写入，需要执行以下操作： </p>
+<ul>
+<li>在进行任何DDL更改之前停止复制。 </li>
+<li>将所有DDL更改应用于源集群。 </li>
+<li>备份源集群和所有要复制更改的相关表。按照<a href="#_复制已有数据的表">复制已有数据的表</a>中提供的说明进行操作。 </li>
+<li>在目标集群上还原此备份。 </li>
+<li>再次为所有相关表设置复制。请确保传入所有bootstrap_id值。 </li>
+</ul>
+<h3 id="read-replicas"><strong>read replicas</strong></h3>
+<p>部署只读副本以将数据异步复制到不同区域。</p>
+<p>在 BMDB 部署中，主集群节点之间的数据复制同步运行并保证强一致性。 或者，您可以创建一个只读副本集群，该集群从主集群异步复制数据并保证时间线一致性（具有有限的过时性）。 同步复制的主集群可以接受对系统的写入。 使用只读副本集群允许应用程序在远程区域提供低延迟读取服务。</p>
+<p>在只读副本集群中，只读副本是不参与写入的观察者节点，而是通过异步复制从主集群获取时间线一致的数据副本。</p>
+<p>本文档介绍如何使用 BMDB 部署只读副本集群。 </p>
+<h4 id="_34"><strong>部署只读副本集群</strong></h4>
+<p>您可以部署与主集群异步复制数据的只读副本集群，如下所示：
+1.启动“主mserver”服务并让它们形成法定人数。
+2.使用 bm-admin modify_placement_info 命令定义主集群放置，如下所示：</p>
+<div class="highlight"><pre><span></span><code>./bin/bm-admin -mserver_addresses ip1:11000,ip2:11000,ip3:11000 modify_placement_info &lt;placement_info&gt; &lt;replication_factor&gt; [placement_uuid]
+</code></pre></div>
+<ul>
+<li>placement_info：以逗号分隔的可用区列表，格式为 <cloud1.region1.zone1>,<cloud2.region2.zone2>, ...</li>
+<li>replication_factor：主集群的复制因子（RF）。</li>
+<li>placement_uuid：主集群的放置标识符，使用有意义的字符串。</li>
+</ul>
+<p>3.使用 bm-admin add_read_replica_placement_info 命令定义只读副本放置，如下所示：</p>
+<div class="highlight"><pre><span></span><code>./bin/bm-admin -mserver_addresses ip1:11000,ip2:11000,ip3:11000 add_read_replica_placement_info &lt;placement_info&gt; &lt;replication_factor&gt; [placement_uuid]
+</code></pre></div>
+<ul>
+<li>placement_info：以逗号分隔的可用区列表，使用格式 <cloud1.region1.zone1>:<num_replicas_in_zone1>,<cloud2.region2.zone2>:<num_replicas_in_zone2>,... 这些只读副本可用区必须唯一不同于 步骤 2 中定义的主可用区。如果您想要使用相同的云、区域和可用区作为主集群，一种选择是在该区域后添加 _rr（用于只读副本）。 例如，c1.r1.z1_rr:2。</li>
+<li>replication_factor：只读副本总数。</li>
+<li>placement_uuid：只读副本集群的标识符，使用有意义的字符串。</li>
+</ul>
+<p>4.启动主 dbserver 服务，包括以下配置标志：</p>
+<ul>
+<li>--placement_cloud placement_cloud</li>
+<li>--placement_region placement_region</li>
+<li>--placement_zone placement_zone</li>
+<li>--placement_uuid live_id
+  放置位置应与步骤 2 中的信息匹配。您不需要将这些配置标志添加到 mserver 配置中。</li>
+</ul>
+<p>5.启动只读副本 dbserver 服务，包括以下配置标志：</p>
+<ul>
+<li>--placement_cloud placement_cloud</li>
+<li>--placement_region placement_region</li>
+<li>--placement_zone placement_zone</li>
+<li>--placement_uuid read_replica_id</li>
+</ul>
+<p>展示位置应与步骤 3 中的信息匹配。
+主集群应开始与只读副本集群进行异步复制。</p>
+<h2 id="_35"><strong>测试集群性能</strong></h2>
+<p>AiSQL 旨在提供高可用性、可扩展性和容错能力，同时通过 BSQL 和 BCQL API 提供简单的接口。 然而，为了评估其真实能力并展示其处理实际工作负载的潜力，严格的基准测试至关重要。</p>
+<p>基准测试是评估系统在特定工作负载下的性能和功能的过程，以深入了解其可扩展性、弹性和整体效率。 此过程涉及使用标准化工作负载模拟现实世界的使用场景，以了解系统的执行、扩展和从故障中恢复的情况。 了解 AiSQL 处理各种工作负载的能力至关重要，例如 TPC-C、YCSB 和 sysbench 基准测试，它们代表了分布式数据库性能的不同方面。</p>
+<p>TPC-C（Transaction Processing Performance Council - Benchmark C）
+TPC-C 是广泛认可的测试事务数据库系统性能的基准。 它模拟复杂的 OLTP（在线事务处理）工作负载，其中涉及不同事务的组合，例如订单创建、付款处理和库存水平检查。 使用 TPC-C 对 AiSQL 进行基准测试有助于评估其处理大量并发事务以及保持一致性和完整性的能力。</p>
+<p>YCSB（Yahoo Cloud Serving Benchmark）
+YCSB 旨在评估数据库在各种读写工作负载下的性能，范围从大部分高负荷读到高负荷写。 使用 YCSB，您可以评估 AiSQL 处理不同数据访问模式和查询负载的能力，这对于具有不同使用需求的应用程序至关重要。</p>
+<p>Sysbench
+sysbench 是一款多功能基准测试工具，涵盖广泛的数据库工作负载，包括 CPU、内存、磁盘 I/O 和数据库操作。 它有助于衡量系统在不同压力条件下的性能、稳定性和可扩展性，使您能够识别潜在的瓶颈和弱点。</p>
+<h3 id="tpc-c"><strong>TPC-C</strong></h3>
+<p>使用 TPC-C 对 BSQL 性能进行基准测试</p>
+<p>TPC-C 是一种流行的在线事务处理基准测试，它提供了可用于评估 AiSQL 对于不同类型和复杂性的并发事务的性能的指标，这些事务要么在线执行，要么排队等待延迟执行。</p>
+<h4 id="_36"><strong>结果概览</strong></h4>
+<p>集群中的所有节点均位于同一区域的 AWS-west 中。 基准虚拟机与集群节点类型相同，部署在同一可用区。 每个测试在加载数据后运行 30 分钟。</p>
+<p>所有基准测试均使用 AiSQL v2.18.1 运行，但 150K 仓库除外，该仓库在 v2.11 上运行。</p>
+<p>1.水平缩放
+下表显示了 AiSQL 如何水平扩展，当集群中的节点数量增加时，以相同的效率提供更高的吞吐量。
+<img alt="" src="./media/chapter4/2.png" />
+2.垂直缩放
+下表显示了 AiSQL 如何垂直扩展，在机器功率增加时提供更高的吞吐量，同时保持集群中的节点数量不变。
+<img alt="" src="./media/chapter4/3.png" />
+3.100K warehouses
+<img alt="" src="./media/chapter4/4.png" />
+4.150K warehouses 
+<img alt="" src="./media/chapter4/5.png" /></p>
+<h4 id="benchmark"><strong>Benchmark安装</strong></h4>
+<p>使用以下步骤针对 AiSQL BSQL 运行 TPC-C 工作负载。</p>
+<p>1.获取 TPC-C 二进制文件
+要下载 TPC-C 二进制文件，请运行以下命令。
+<div class="highlight"><pre><span></span><code>$ wget https://github.com/bigmath/tpcc/releases/download/2.0/tpcc.tar.gz
+$ tar -zxvf tpcc.tar.gz
+$ cd tpcc
+</code></pre></div></p>
+<p>2.启动 AiSQL
+按照手动部署步骤启动 AiSQL 集群。</p>
+<p>提示：下一步您将需要集群中节点的 IP 地址。</p>
+<p>3.配置数据库连接参数（可选）
+您可以使用命令行参数配置工作负载，包括节点的 IP 地址、仓库数量和加载器线程数量。</p>
+<p>如果需要，可以使用 config/workload_all.xml 中的配置文件更改其他选项，例如用户名、密码、端口等。
+<div class="highlight"><pre><span></span><code>&lt;port&gt;2521&lt;/port&gt;
+&lt;username&gt;bigmath&lt;/username&gt;
+&lt;password&gt;&lt;/password&gt;
+</code></pre></div></p>
+<p>4.其他考虑因素
+运行测试时，请务必执行以下操作：
+1.运行最新的 TPCC 代码。 通过下载最新发布的版本来使用 bigmath TPCC 应用程序的最新增强功能，或者克隆存储库并从源代码构建以获得最新的更改。
+2.使用 bm-admin 实用程序的compact_table 命令预压缩表。
+3.当您调用 TPCC 基准测试的执行阶段时，使用 --warmup-time-secs 标志预热数据库。</p>
+<h4 id="tpc-c_1"><strong>运行 TPC-C</strong></h4>
+<h5 id="10-warehouses"><strong>10 warehouses</strong></h5>
+<p>1.加载数据
+在开始工作负载之前，您需要加载数据。 确保将 IP 地址替换为集群中节点的 IP 地址。
+<div class="highlight"><pre><span></span><code>$ ./tpccbenchmark --create=true --nodes=127.0.0.1,127.0.0.2,127.0.0.3
+$ ./tpccbenchmark --load=true --nodes=127.0.0.1,127.0.0.2,127.0.0.3
+</code></pre></div></p>
+<p><img alt="" src="./media/chapter4/6.png" />
+3 个 c5d.4xlarge 类型节点的集群上 10 个仓库的加载时间约为 3 分钟</p>
+<p>2.TPC-C执行阶段
+您可以按如下方式针对数据库运行工作负载：
+<div class="highlight"><pre><span></span><code>$ ./tpccbenchmark --execute=true \
+  --nodes=127.0.0.1,127.0.0.2,127.0.0.3
+</code></pre></div></p>
+<p>3.TPC-C 基准测试结果</p>
+<div class="highlight"><pre><span></span><code>Cluster: 3 nodes of type c5d.large
+
+TPMC: 127
+
+Efficiency: 98.75%
+
+Latencies:
+
+New Order Avg: 66.286 msecs, p99: 212.47 msecs
+Payment Avg: 17.406 msecs, p99: 186.884 msecs
+OrderStatus Avg: 7.308 msecs, p99: 86.974 msecs
+Delivery Avg: 66.986 msecs, p99: 185.919 msecs
+StockLevel Avg: 98.32 msecs, p99: 192.054 msecs
+Once the execution is completed, the TPM-C number along with the efficiency is printed, as follows:
+
+21:09:23,588 (DBWorkload.java:955) INFO  - Throughput: Results(nanoSeconds=1800000263504, measuredRequests=8554) = 4.752221526539232 requests/sec reqs/sec
+21:09:23,588 (DBWorkload.java:956) INFO  - Num New Order transactions : 3822, time seconds: 1800
+21:09:23,588 (DBWorkload.java:957) INFO  - TPM-C: 127
+21:09:23,588 (DBWorkload.java:958) INFO  - Efficiency : 98.75%
+21:09:23,593 (DBWorkload.java:983) INFO  - NewOrder, Avg Latency: 66.286 msecs, p99 Latency: 212.47 msecs
+21:09:23,596 (DBWorkload.java:983) INFO  - Payment, Avg Latency: 17.406 msecs, p99 Latency: 186.884 msecs
+21:09:23,596 (DBWorkload.java:983) INFO  - OrderStatus, Avg Latency: 7.308 msecs, p99 Latency: 86.974 msecs
+21:09:23,596 (DBWorkload.java:983) INFO  - Delivery, Avg Latency: 66.986 msecs, p99 Latency: 185.919 msecs
+21:09:23,596 (DBWorkload.java:983) INFO  - StockLevel, Avg Latency: 98.32 msecs, p99 Latency: 192.054 msecs
+21:09:23,597 (DBWorkload.java:792) INFO  - Output Raw data into file: results/oltpbench.csv
+</code></pre></div>
+<h5 id="100-warehouses"><strong>100 warehouses</strong></h5>
+<p>1.加载数据
+在开始工作负载之前，您需要加载数据。 确保将 IP 地址替换为集群中节点的 IP 地址。 加载器线程允许您配置用于加载数据的线程数。 对于 3 节点 c5d.4xlarge 集群，加载程序线程值 48 是最佳值。
+<div class="highlight"><pre><span></span><code>$ ./tpccbenchmark --create=true --nodes=127.0.0.1,127.0.0.2,127.0.0.3
+$ ./tpccbenchmark --load=true \
+  --nodes=127.0.0.1,127.0.0.2,127.0.0.3 \
+  --warehouses=100 \
+  --loaderthreads 48
+</code></pre></div></p>
+<p><img alt="" src="./media/chapter4/7.png" />根据集群中节点的数量和类型，调整 --loaderthreads 参数以在加载期间获得更高的并行性。 指定的 48 个线程值对于 c5d.4xlarge 类型的 3 节点集群（16 个 vCPU）来说是最佳的。 对于较大的集群或具有更多 vCPU 的计算机，请相应地增加此值。 对于复制因子为 3 的集群，一个好的近似方法是使用集群中所有节点拥有的核心数。</p>
+<p>2.TPC-C执行阶段
+您可以按如下方式针对数据库运行工作负载：
+<div class="highlight"><pre><span></span><code>$ ./tpccbenchmark --execute=true \
+  --nodes=127.0.0.1,127.0.0.2,127.0.0.3 \
+  --warehouses=100
+</code></pre></div></p>
+<p>3.TPC-C 基准测试结果
+<div class="highlight"><pre><span></span><code>Cluster: 3 nodes of type c5d.4xlarge
+
+TPMC: 1271.77
+
+Efficiency: 98.89%
+
+Latencies:
+
+New Order Avg: 68.265 msecs, p99: 574.339 msecs
+Payment Avg: 19.969 msecs, p99: 475.311 msecs
+OrderStatus Avg: 13.821 msecs, p99: 571.414 msecs
+Delivery Avg: 67.384 msecs, p99: 724.67 msecs
+StockLevel Avg: 114.032 msecs, p99: 263.849 msecs
+Once the execution is completed, the TPM-C number along with the efficiency is printed, as follows:
+
+04:54:54,560 (DBWorkload.java:955) INFO  - Throughput: Results(nanoSeconds=1800000866600, measuredRequests=85196) = 47.33108832382159 requests/sec reqs/sec
+04:54:54,560 (DBWorkload.java:956) INFO  - Num New Order transactions : 38153, time seconds: 1800
+04:54:54,560 (DBWorkload.java:957) INFO  - TPM-C: 1,271.77
+04:54:54,560 (DBWorkload.java:958) INFO  - Efficiency : 98.89%
+04:54:54,596 (DBWorkload.java:983) INFO  - NewOrder, Avg Latency: 68.265 msecs, p99 Latency: 574.339 msecs
+04:54:54,615 (DBWorkload.java:983) INFO  - Payment, Avg Latency: 19.969 msecs, p99 Latency: 475.311 msecs
+04:54:54,616 (DBWorkload.java:983) INFO  - OrderStatus, Avg Latency: 13.821 msecs, p99 Latency: 571.414 msecs
+04:54:54,617 (DBWorkload.java:983) INFO  - Delivery, Avg Latency: 67.384 msecs, p99 Latency: 724.67 msecs
+04:54:54,618 (DBWorkload.java:983) INFO  - StockLevel, Avg Latency: 114.032 msecs, p99 Latency: 263.849 msecs
+04:54:54,619 (DBWorkload.java:792) INFO  - Output Raw data into file: results/oltpbench.csv
+</code></pre></div></p>
+<h5 id="1000-warehouses"><strong>1000 warehouses</strong></h5>
+<p>1.加载数据
+在启动工作负载之前，您需要先加载数据。 确保将 IP 地址替换为集群中节点的 IP 地址。 加载器线程允许您配置用于加载数据的线程数。 对于 3 节点 c5d.4xlarge 集群，加载程序线程值 48 是最佳值。
+<div class="highlight"><pre><span></span><code>$ ./tpccbenchmark --create=true --nodes=127.0.0.1,127.0.0.2,127.0.0.3
+$ ./tpccbenchmark --load=true \
+  --nodes=127.0.0.1,127.0.0.2,127.0.0.3 \
+  --warehouses=1000 \
+  --loaderthreads 48
+</code></pre></div></p>
+<p>2.TPC-C执行阶段
+您可以按如下方式针对数据库运行工作负载：
+<div class="highlight"><pre><span></span><code>$ ./tpccbenchmark --execute=true \
+  --nodes=127.0.0.1,127.0.0.2,127.0.0.3 \
+  --warehouses=1000
+</code></pre></div></p>
+<p>3.TPC-C 基准测试结果
+<div class="highlight"><pre><span></span><code>Cluster: 3 nodes of type c5d.4xlarge
+
+TPMC: 12,563.07
+
+Efficiency: 97.69%
+
+Latencies:
+
+New Order Avg: 325.378 msecs, p99: 3758.859 msecs
+Payment Avg: 277.539 msecs, p99: 12667.048 msecs
+OrderStatus Avg: 174.173 msecs, p99: 4968.783 msecs
+Delivery Avg: 310.19 msecs, p99: 5259.951 msecs
+StockLevel Avg: 652.827 msecs, p99: 8455.325 msecs
+Once the execution is completed, the TPM-C number along with the efficiency is printed, as follows:
+
+17:18:58,728 (DBWorkload.java:955) INFO  - Throughput: Results(nanoSeconds=1800000716759, measuredRequests=842216) = 467.8975914612168 requests/sec reqs/sec
+17:18:58,728 (DBWorkload.java:956) INFO  - Num New Order transactions : 376892, time seconds: 1800
+17:18:58,728 (DBWorkload.java:957) INFO  - TPM-C: 12,563.07
+17:18:58,728 (DBWorkload.java:958) INFO  - Efficiency : 97.69%
+17:18:59,006 (DBWorkload.java:983) INFO  - NewOrder, Avg Latency: 325.378 msecs, p99 Latency: 3758.859 msecs
+17:18:59,138 (DBWorkload.java:983) INFO  - Payment, Avg Latency: 277.539 msecs, p99 Latency: 12667.048 msecs
+17:18:59,147 (DBWorkload.java:983) INFO  - OrderStatus, Avg Latency: 174.173 msecs, p99 Latency: 4968.783 msecs
+17:18:59,166 (DBWorkload.java:983) INFO  - Delivery, Avg Latency: 310.19 msecs, p99 Latency: 5259.951 msecs
+17:18:59,182 (DBWorkload.java:983) INFO  - StockLevel, Avg Latency: 652.827 msecs, p99 Latency: 8455.325 msecs
+17:18:59,183 (DBWorkload.java:792) INFO  - Output Raw data into file: results/oltpbench.csv
+</code></pre></div></p>
+<h5 id="10000-warehouses"><strong>10000 warehouses</strong></h5>
+<p>1.加载数据
+在开始工作负载之前，您需要加载数据。 此外，您需要确保导出了所有涉及节点的所有 IP 地址的列表。</p>
+<p>对于 10k 仓库，您需要 10 个 c5.4xlarge 类型的客户端来驱动基准测试。 对于多个客户端，您需要执行三个步骤。</p>
+<p>首先，创建数据库和相应的表。 从客户端之一执行以下命令：
+<div class="highlight"><pre><span></span><code>./tpccbenchmark  --nodes=$IPS  --create=true
+</code></pre></div></p>
+<table>
+<thead>
+<tr>
+<th>客户端</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>./tpccbenchmark --load=true --nodes=$IPS --warehouses=1000 --start-warehouse-id=1 --total-warehouses=10000 --loaderthreads 48</td>
+</tr>
+<tr>
+<td>2</td>
+<td>./tpccbenchmark --load=true --nodes=$IPS --warehouses=1000 --start-warehouse-id=1001 --total-warehouses=10000 --loaderthreads 48</td>
+</tr>
+<tr>
+<td>3</td>
+<td>./tpccbenchmark --load=true --nodes=$IPS --warehouses=1000 --start-warehouse-id=2001 --total-warehouses=10000 --loaderthreads 48</td>
+</tr>
+<tr>
+<td>4</td>
+<td>./tpccbenchmark --load=true --nodes=$IPS --warehouses=1000 --start-warehouse-id=3001 --total-warehouses=10000 --loaderthreads 48</td>
+</tr>
+<tr>
+<td>5</td>
+<td>./tpccbenchmark --load=true --nodes=$IPS --warehouses=1000 --start-warehouse-id=4001 --total-warehouses=10000 --loaderthreads 48</td>
+</tr>
+<tr>
+<td>6</td>
+<td>./tpccbenchmark --load=true --nodes=$IPS --warehouses=1000 --start-warehouse-id=5001 --total-warehouses=10000 --loaderthreads 48</td>
+</tr>
+<tr>
+<td>7</td>
+<td>./tpccbenchmark --load=true --nodes=$IPS --warehouses=1000 --start-warehouse-id=6001 --total-warehouses=10000 --loaderthreads 48</td>
+</tr>
+<tr>
+<td>8</td>
+<td>./tpccbenchmark --load=true --nodes=$IPS --warehouses=1000 --start-warehouse-id=7001 --total-warehouses=10000 --loaderthreads 48</td>
+</tr>
+<tr>
+<td>9</td>
+<td>./tpccbenchmark --load=true --nodes=$IPS --warehouses=1000 --start-warehouse-id=8001 --total-warehouses=10000 --loaderthreads 48</td>
+</tr>
+<tr>
+<td>10</td>
+<td>./tpccbenchmark --load=true --nodes=$IPS --warehouses=1000 --start-warehouse-id=9001 --total-warehouses=10000 --loaderthreads 48</td>
+</tr>
+</tbody>
+</table>
+<p>创建数据库和表后，您可以从所有十个客户端加载数据：</p>
+<p>根据集群中节点的数量和类型，调整 --loaderthreads 参数以在加载期间获得更高的并行性。 此处指定的值 48 个线程对于 c5d.4xlarge 类型的 3 节点集群（16 个 vCPU）来说是最佳的。 对于较大的集群或具有更多 vCPU 的计算机，请相应地增加此值。 对于复制因子为 3 的集群，一个好的近似方法是使用集群中所有节点拥有的核心数。</p>
+<p>加载完成后，执行以下命令以启用已禁用的外键以帮助缩短加载时间：
+./tpccbenchmark  --nodes=$IPS  --enable-foreign-keys=true
+<img alt="" src="./media/chapter4/8.png" /></p>
+<p>2.TPC-C执行阶段
+在开始执行之前，您必须通过运行以下命令将所有tablet领导者移出包含mserver领导者的节点：
+<div class="highlight"><pre><span></span><code>./bm-admin --mserver_addresses &lt;mserver-ip1&gt;:11000,&lt;mserver-ip2&gt;:11000,&lt;mserver-ip3&gt;:11000 change_leader_blacklist ADD &lt;mserver-leader-ip&gt;
+</code></pre></div></p>
+<p>确保执行阶段使用的IP地址不包含mserver-leader-ip。 然后，您可以从每个客户端针对数据库运行工作负载：
+| 客户端 | 命令 |
+| --- | --- |
+| 1 | ./tpccbenchmark --nodes=$IPS --execute=true --warehouses=1000 --num-connections=300 --start-warehouse-id=1 --total-warehouses=10000 --warmup-time-secs=900 |
+| 2 | ./tpccbenchmark --nodes=$IPS --execute=true --warehouses=1000 --num-connections=300 --start-warehouse-id=1001 --total-warehouses=10000 --warmup-time-secs=900 |
+| 3 | ./tpccbenchmark --nodes=$IPS --execute=true --warehouses=1000 --num-connections=300 --start-warehouse-id=2001 --total-warehouses=10000 --warmup-time-secs=900 |
+| 4 | ./tpccbenchmark --nodes=$IPS --execute=true --warehouses=1000 --num-connections=300 --start-warehouse-id=3001 --total-warehouses=10000 --warmup-time-secs=900 |
+| 5 | ./tpccbenchmark --nodes=$IPS --execute=true --warehouses=1000 --num-connections=300 --start-warehouse-id=4001 --total-warehouses=10000 --warmup-time-secs=900 |
+| 6 | ./tpccbenchmark --nodes=$IPS --execute=true --warehouses=1000 --num-connections=300 --start-warehouse-id=5001 --total-warehouses=10000 --warmup-time-secs=720 --initial-delay-secs=180 |
+| 7 | ./tpccbenchmark --nodes=$IPS --execute=true --warehouses=1000 --num-connections=300 --start-warehouse-id=6001 --total-warehouses=10000 --warmup-time-secs=540 --initial-delay-secs=360 |
+| 8 | ./tpccbenchmark --nodes=$IPS --execute=true --warehouses=1000 --num-connections=300 --start-warehouse-id=7001 --total-warehouses=10000 --warmup-time-secs=360 --initial-delay-secs=540 |
+| 9 | ./tpccbenchmark --nodes=$IPS --execute=true --warehouses=1000 --num-connections=300 --start-warehouse-id=8001 --total-warehouses=10000 --warmup-time-secs=180 --initial-delay-secs=720 |
+| 10 | ./tpccbenchmark --nodes=$IPS --execute=true --warehouses=1000 --num-connections=300 --start-warehouse-id=9001 --total-warehouses=10000 --warmup-time-secs=0 --initial-delay-secs=900TPC-C Benchmark R |</p>
+<p>3.TPC-C 基准测试结果
+执行完成后，需要将每个节点的csv文件复制到其中一个节点，并运行merge-results来显示合并结果。</p>
+<p>将 csv 文件复制到诸如 results-dir 之类的目录后，您可以按如下方式合并结果：
+<div class="highlight"><pre><span></span><code>./tpccbenchmark --merge-results=true --dir=results-dir --warehouses=10000
+Cluster: 30 nodes of type c5d.4xlarge
+
+TPMC: 125193.2
+
+Efficiency: 97.35%
+
+Latencies:
+
+New Order Avg: 114.639 msecs, p99: 852.183 msecs
+Payment Avg: 114.639 msecs, p99 : 852.183 msecs
+OrderStatus Avg: 20.86 msecs, p99: 49.31 msecs
+Delivery Avg: 117.473 msecs, p99: 403.404 msecs
+StockLevel Avg: 340.232 msecs, p99: 1022.881 msecs
+The output after merging should look similar to the following:
+
+15:16:07,397 (DBWorkload.java:715) INFO - Skipping benchmark workload execution
+15:16:11,400 (DBWorkload.java:1080) INFO - Num New Order transactions : 3779016, time seconds: 1800
+15:16:11,400 (DBWorkload.java:1081) INFO - TPM-C: 125193.2
+15:16:11,401 (DBWorkload.java:1082) INFO - Efficiency : 97.35%
+15:16:12,861 (DBWorkload.java:1010) INFO - NewOrder, Avg Latency: 114.639 msecs, p99 Latency: 852.183 msecs
+15:16:13,998 (DBWorkload.java:1010) INFO - Payment, Avg Latency: 29.351 msecs, p99 Latency: 50.8 msecs
+15:16:14,095 (DBWorkload.java:1010) INFO - OrderStatus, Avg Latency: 20.86 msecs, p99 Latency: 49.31 msecs
+15:16:14,208 (DBWorkload.java:1010) INFO - Delivery, Avg Latency: 117.473 msecs, p99 Latency: 403.404 msecs
+15:16:14,310 (DBWorkload.java:1010) INFO - StockLevel, Avg Latency: 340.232 msecs, p99 Latency: 1022.8
+</code></pre></div></p>
+<h3 id="sysbench"><strong>sysbench</strong></h3>
+<p>使用 sysbench 对 BSQL 性能进行基准测试
+sysbench 是一种流行的工具，用于对 PostgreSQL 和 MySQL 等数据库以及 CPU、内存和 I/O 等系统功能进行基准测试。 AiSQL 版本的 sysbench 是从官方版本派生出来的，并进行了一些修改，以更好地反映 AiSQL 的分布式特性。</p>
+<h4 id="sysbench_1"><strong>运行sysbench</strong></h4>
+<p>1.先决条件
+为了确保在基准测试之前满足建议的硬件要求并正确配置数据库，请查看部署清单。</p>
+<p>使用以下步骤安装 sysbench：
+<div class="highlight"><pre><span></span><code>$ cd $HOME
+$ git clone https://github.com/bigmath/sysbench.git
+$ cd sysbench
+$ ./autogen.sh &amp;&amp; ./configure --with-pgsql &amp;&amp; make -j &amp;&amp; sudo make install
+</code></pre></div></p>
+<p>这会将 sysbench 实用程序安装在 /usr/local/bin 中。</p>
+<p>确保您已将 BSQL shell sqlsh 导出到 PATH 变量。</p>
+<div class="highlight"><pre><span></span><code>$ export PATH=$PATH:/path/to/sqlsh
+</code></pre></div>
+<p>2.启动 AiSQL
+按照手动部署中的步骤启动 AiSQL 集群。</p>
+<p>提示：下一步您将需要集群中节点的 IP 地址。</p>
+<p>运行sysbench
+运行 run_sysbench.sh shell 脚本来加载数据并运行各种工作负载：
+<div class="highlight"><pre><span></span><code>./run_sysbench.sh --ip &lt;ip&gt;
+</code></pre></div></p>
+<p>该脚本使用 64 个线程运行所有 8 个工作负载，表数量为 10，表大小为 100k。</p>
+<p>如果您想使用不同的表数量和表大小运行基准测试，请执行以下操作：
+<div class="highlight"><pre><span></span><code>./run_sysbench.sh --ip &lt;ip&gt; --numtables &lt;number of tables&gt; --tablesize &lt;number of rows in each table&gt;
+</code></pre></div></p>
+<p>3.运行单独的工作负载（可选）
+您可以选择单独运行以下工作负载：
+* oltp_insert
+* oltp_point_select
+* oltp_write_only
+* oltp_read_only
+* oltp_read_write
+* oltp_update_index
+* oltp_update_non_index
+* oltp_delete</p>
+<p>在启动工作负载之前，请按如下方式加载数据：
+<div class="highlight"><pre><span></span><code>$ sysbench &lt;workload&gt;               \
+      --tables=10                   \
+      --table-size=100000           \
+      --range_key_partitioning=true \
+      --db-driver=pgsql             \
+      --pgsql-host=127.0.0.1        \
+      --pgsql-port=2521             \
+      --pgsql-user=bigmath         \
+      --pgsql-db=bigmath           \
+      Prepare
+</code></pre></div></p>
+<p>按如下方式运行工作负载：
+<div class="highlight"><pre><span></span><code>$ sysbench &lt;workload&gt;               \
+      --tables=10                   \
+      --table-size=100000           \
+      --range_key_partitioning=true \
+      --db-driver=pgsql             \
+      --pgsql-host=127.0.0.1        \
+      --pgsql-port=2521             \
+      --pgsql-user=bigmath         \
+      --pgsql-db=bigmath           \
+      --threads=64                  \
+      --time=120                    \
+      --warmup-time=120             \
+      run
+</code></pre></div></p>
+<h4 id="_37"><strong>预期成绩</strong></h4>
+<p>以下结果适用于 3 节点集群，其中每个节点都位于 c5.4xlarge AWS 实例（16 个核心、32 GB RAM 和 2 个 EBS 卷）上，所有节点均位于同一可用区，并且客户端虚拟机在同一可用区中运行。</p>
+<p>10 个表，每个表有 100k 行
+| WORKLOAD | THROUGHPUT (TXNS/SEC) | LATENCY (MS) |
+| --- | --- | --- |
+| OLTP_READ_ONLY | 3276 | 39 |
+| OLTP_READ_WRITE | 487 | 265 |
+| OLTP_WRITE_ONLY | 1818 | 70 |
+| OLTP_POINT_SELECT | 95695 | 1.3 |
+| OLTP_INSERT | 6348 | 20.1 |
+| OLTP_UPDATE_INDEX | 4052 | 31 |
+| OLTP_UPDATE_NON_INDEX | 11496 | 11 |
+| OLTP_DELETE | 67499 | 1.9 |</p>
+<h3 id="ycsb"><strong>YCSB</strong></h3>
+<p>使用 YCSB 和标准 JDBC 绑定对 BSQL 性能进行基准测试</p>
+<h4 id="jdbc-binding"><strong>JDBC Binding</strong></h4>
+<p>本文档描述如何使用标准 JDBC 绑定来运行 YCSB 基准测试。</p>
+<h5 id="_38"><strong>运行基准测试</strong></h5>
+<p>要运行基准测试，请确保满足先决条件并完成启动 AiSQL 和配置其属性等步骤。</p>
+<p>1.先决条件
+这些二进制文件是使用 Java 13 编译的，建议使用该版本运行这些二进制文件。</p>
+<p>运行以下命令下载 YCSB 二进制文件：
+<div class="highlight"><pre><span></span><code>$ cd $HOME
+$ wget https://github.com/bigmath/YCSB/releases/download/1.0/ycsb.tar.gz
+$ tar -xzf ycsb.tar.gz
+$ cd YCSB
+</code></pre></div>
+确保您拥有 BCQL shell cqlsh 并且其位置包含在 PATH 变量中，如下所示：
+<div class="highlight"><pre><span></span><code>$ export PATH=$PATH:/path/to/cqlsh
+</code></pre></div></p>
+<p>您可以在 AiSQL 安装的 bin 目录中找到 sqlsh。 例如：
+<div class="highlight"><pre><span></span><code>$ export PATH=$PATH:/Users/bigmath/code/bin
+</code></pre></div></p>
+<p>2.启动 AiSQL
+按照手动部署中描述的过程启动 AiSQL 集群。 记下集群中节点的 IP 地址，因为配置属性文件时需要这些地址。</p>
+<p>3.配置属性文件
+使用以下内容更新 YCSB 目录中的 db.properties 文件，将 db.url 字段中的 IP 地址值替换为集群中所有节点的正确值：
+<div class="highlight"><pre><span></span><code>db.driver=org.postgresql.Driver
+db.url=jdbc:postgresql://&lt;ip1&gt;:2521/ycsb;jdbc:postgresql://&lt;ip2&gt;:2521/ycsb;jdbc:postgresql://&lt;ip3&gt;:2521/ycsb;
+db.user=bigmath
+db.passwd=
+</code></pre></div></p>
+<p>其他配置参数在核心属性中进行了描述。</p>
+<p>4.运行基准测试
+使用以下脚本 run_jdbc.sh 加载并运行所有工作负载：
+<div class="highlight"><pre><span></span><code>$ ./run_jdbc.sh --ip &lt;ip&gt;
+</code></pre></div></p>
+<p>前面的命令在包含一百万行的表上运行工作负载。 要在具有不同行数的表上运行基准测试，请使用以下命令：
+<div class="highlight"><pre><span></span><code>$ ./run_jdbc.sh --ip &lt;ip&gt; --recordcount &lt;number of rows&gt;
+</code></pre></div></p>
+<p>为了获得系统的最大性能，您可以调整脚本中的 threadcount 参数。 作为参考，对于具有 16 个核心和 32GB RAM 的 c5.4xlarge 实例，您在加载阶段使用 32 个线程数，在执行阶段使用 256 个线程数。</p>
+<p>5.验证结果
+run_jdbc.sh 脚本为每个工作负载创建两个结果文件：一个用于加载，另一个用于执行阶段，其中包含吞吐量和延迟的详细信息。</p>
+<p>例如，对于它创建的工作负载，检查workloada-bsql-load.dat 和workloada-bsql-transaction.dat 文件。</p>
+<p>6.运行单独的工作负载（可选）
+或者，您可以使用以下步骤单独运行工作负载：
+（1）使用以下命令启动 BSQL shell：
+<div class="highlight"><pre><span></span><code>$ ./bin/sqlsh -h &lt;ip&gt;
+</code></pre></div></p>
+<p>（2）创建ycsb数据库如下：
+<div class="highlight"><pre><span></span><code>bigmath=# CREATE DATABASE ycsb;
+</code></pre></div></p>
+<p>（3）连接数据库如下：
+<div class="highlight"><pre><span></span><code>bigmath=# \c ycsb
+</code></pre></div></p>
+<p>（4）创建表如下：
+<div class="highlight"><pre><span></span><code>ycsb=# CREATE TABLE usertable (
+            YCSB_KEY TEXT,
+            FIELD0 TEXT, FIELD1 TEXT, FIELD2 TEXT, FIELD3 TEXT,
+            FIELD4 TEXT, FIELD5 TEXT, FIELD6 TEXT, FIELD7 TEXT,
+            FIELD8 TEXT, FIELD9 TEXT,
+            PRIMARY KEY (YCSB_KEY ASC))
+            SPLIT AT VALUES ((&#39;user10&#39;),(&#39;user14&#39;),(&#39;user18&#39;),
+            (&#39;user22&#39;),(&#39;user26&#39;),(&#39;user30&#39;),(&#39;user34&#39;),(&#39;user38&#39;),
+            (&#39;user42&#39;),(&#39;user46&#39;),(&#39;user50&#39;),(&#39;user54&#39;),(&#39;user58&#39;),
+            (&#39;user62&#39;),(&#39;user66&#39;),(&#39;user70&#39;),(&#39;user74&#39;),(&#39;user78&#39;),
+            (&#39;user82&#39;),(&#39;user86&#39;),(&#39;user90&#39;),(&#39;user94&#39;),(&#39;user98&#39;));
+</code></pre></div></p>
+<p>（5）在启动 jdbc 工作负载之前加载数据：
+<div class="highlight"><pre><span></span><code>$ ./bin/ycsb load jdbc -s        \
+      -P db.properties           \
+      -P workloads/workloada     \
+      -p recordcount=1000000     \
+      -p operationcount=10000000 \
+      -p threadcount=32
+</code></pre></div></p>
+<p>（6）按如下方式运行工作负载：</p>
+<p>注：以下 ycsb 命令中的 recordcount 参数应与表中的行数匹配。</p>
+<div class="highlight"><pre><span></span><code>$ ./bin/ycsb run jdbc -s         \
+      -P db.properties           \
+      -P workloads/workloada     \
+      -p recordcount=1000000     \
+      -p operationcount=10000000 \
+      -p threadcount=256
+</code></pre></div>
+<p>（7）通过更改上述命令中的相应参数来运行其他工作负载（例如workloadb），如下所示：
+<div class="highlight"><pre><span></span><code>$ ./bin/ycsb run jdbc -s         \
+      -P db.properties           \
+      -P workloads/workloadb     \
+      -p recordcount=1000000     \
+      -p operationcount=10000000 \
+      -p threadcount=256
+</code></pre></div></p>
+<h5 id="_39"><strong>预期成绩</strong></h5>
+<p>当在 c5.4xlarge AWS 实例（16 个核心、32GB RAM 和 2 个 EBS 卷）的 3 节点集群上运行时，所有实例都属于同一可用区，并且客户端 VM 在同一可用区中运行，预计会出现以下结果 100 万行：
+<img alt="" src="./media/chapter4/9.png" /></p>
+<h4 id="bsql-binding"><strong>BSQL Binding</strong></h4>
+<p>使用 YCSB 对 BSQL 性能进行基准测试
+本文档介绍了如何使用 BSQL 特定的绑定来使用 YCSB 基准测试 BSQL API。</p>
+<h5 id="_40"><strong>运行基准测试</strong></h5>
+<p>要运行基准测试，请确保满足先决条件并完成启动 AiSQL 和配置其属性等步骤。</p>
+<p>1.先决条件
+这些二进制文件是使用 Java 13 编译的，建议使用该版本运行这些二进制文件。</p>
+<p>运行以下命令下载 YCSB 二进制文件：</p>
+<div class="highlight"><pre><span></span><code>$ cd $HOME
+$ wget https://github.com/bigmath/YCSB/releases/download/1.0/ycsb.tar.gz
+$ tar -zxvf ycsb.tar.gz
+$ cd YCSB
+</code></pre></div>
+<p>确保您拥有 BSQL shell sqlsh 并且其位置包含在 PATH 变量中，如下所示：</p>
+<div class="highlight"><pre><span></span><code>$ export PATH=$PATH:/path/to/sqlsh
+</code></pre></div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2024 贝格迈思
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>
