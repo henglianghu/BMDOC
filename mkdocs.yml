@@ -1,5 +1,5 @@
 site_name: 手册
-repo_url: https://github.com/aminerdocs/docs
+repo_url: https://github.com/as599397086/BMDOC
 site_description: 贝格迈思数据库使用手册
 copyright: Copyright © 2023 - 2024 贝格迈思（深圳）技术有限公司 粤ICP备17054434号-1
 theme:
@@ -104,14 +104,14 @@ extra:
     version:
         provider: mike
     social:
-    - icon: fontawesome/brands/twitter 
-      link: https://twitter.com/wcowin_
+    # - icon: fontawesome/brands/twitter 
+    #   link: https://twitter.com/wcowin_
     - icon: fontawesome/brands/github
-      link: https://github.com/Wcowin
-    - icon: fontawesome/brands/bilibili
-      link: https://space.bilibili.com/1407028951?spm_id_from=333.1007.0.0
-    - icon: fontawesome/solid/paper-plane
-      link: mailto:<1135801806@qq.com> #联系方式
+      link: https://github.com/as599397086/BMDOC
+    # - icon: fontawesome/brands/bilibili
+    #   link: https://space.bilibili.com/1407028951?spm_id_from=333.1007.0.0
+    # - icon: fontawesome/solid/paper-plane
+    #   link: mailto:<1135801806@qq.com> #联系方式
   
     analytics: 
         provider: google
