@@ -49,39 +49,23 @@ docs_dir: docs
 site_dir: site
 plugins:
     - tags
-    - offline
+    - blog
     - search:
             separator: '[\s\-,:!=\[\]()"/]+|[，。！？…：“”‘’（）—【】《》]|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
-    # - mike:
-    #   alias_type: symlink
-    #   redirect_template: null
-    #   deploy_prefix: ''
-    #   canonical_version: null
-    #   version_selector: true
-    #   css_dir: css
-    #   javascript_dir: js
-
-                        
-    # - minify: # 压缩插件
-    #   minify_html: true
-    # - versioning:
-    #   version_menu_number: 2  # 显示在侧边栏的版本数量
-    #   version_dropdown: true  # 启用版本下拉菜单
-    #   default_version: latest  # 默认显示最新版本
-    #   previous_link: true  # 显示上一个版本链接
-    #   next_link: true  # 显示下一个版本链接
 extra_css:
     - stylesheets/extra.css
 extra_javascript:
     - javascripts/extra.js
-use_directory_urls: false
-dev_addr: 0.0.0.0:8000
+use_directory_urls: true
 markdown_extensions:
     - abbr
     - pymdownx.caret
     - pymdownx.mark
     - pymdownx.tilde
     - md_in_html
+    - admonition
+    - def_list
+    - footnotes
     - pymdownx.arithmatex:  # latex支持
         generic: true
     - toc:
@@ -90,15 +74,47 @@ markdown_extensions:
         anchor_linenums: true
         linenums: true # 显示行号
         # auto_title: true # 显示编程语言名称
+        line_spans: __span
+        pygments_lang_class: true
     - pymdownx.inlinehilite
     - pymdownx.snippets
-    - pymdownx.superfences
     - attr_list
     - pymdownx.emoji:
         emoji_index: !!python/name:materialx.emoji.twemoji
         emoji_generator: !!python/name:materialx.emoji.to_svg
     - pymdownx.superfences # 代码块高亮插件
     - meta # 支持Markdown文件上方自定义标题标签等
+    - pymdownx.betterem:
+        smart_enable: all
+    - pymdownx.caret
+    - pymdownx.details
+        
+    - pymdownx.inlinehilite
+    - pymdownx.keys
+    - pymdownx.magiclink:
+        normalize_issue_symbols: true
+        repo_url_shorthand: true
+        user: squidfunk
+        repo: mkdocs-material
+    - pymdownx.mark
+    - pymdownx.smartsymbols
+    - pymdownx.snippets:
+        auto_append:
+            - includes/mkdocs.md
+    - pymdownx.superfences:
+        custom_fences:
+            - name: mermaid
+              class: mermaid
+              format: !!python/name:pymdownx.superfences.fence_code_format
+    - pymdownx.tabbed:
+        alternate_style: true
+        combine_header_slug: true
+        slugify: !!python/object/apply:pymdownx.slugs.slugify
+            kwds:
+            case: lower
+    - pymdownx.tasklist:
+        custom_checkbox: true
+    - pymdownx.tilde
 extra: 
     generator: false
     version:
@@ -113,41 +129,24 @@ extra:
     # - icon: fontawesome/solid/paper-plane
     #   link: mailto:<1135801806@qq.com> #联系方式
   
-    analytics: 
-        provider: google
-        property: G-XXXXXXXXXX # Google Analytics ID
-        feedback:
-        title: 此页面有帮助吗？
-        ratings:
-            - icon: material/thumb-up-outline
-              name: This page was helpful
-              data: 1
-              note: >-
-                谢谢你的反馈！
-            - icon: material/thumb-down-outline
-              name: This page could be improved
-              data: 0
-              note: >- 
-                Thanks for your feedback! Help us improve this page by
-                using our <a href="https://marketingplatform.google.com/about/analytics/" target="_blank" rel="noopener">feedback form</a>.
+    # analytics: 
+    #     provider: google
+    #     property: G-XXXXXXXXXX # Google Analytics ID
+    #     feedback:
+    #     title: 此页面有帮助吗？
+    #     ratings:
+    #         - icon: material/thumb-up-outline
+    #           name: This page was helpful
+    #           data: 1
+    #           note: >-
+    #             谢谢你的反馈！
+    #         - icon: material/thumb-down-outline
+    #           name: This page could be improved
+    #           data: 0
+    #           note: >- 
+    #             Thanks for your feedback! Help us improve this page by
+    #             using our <a href="https://marketingplatform.google.com/about/analytics/" target="_blank" rel="noopener">feedback form</a>.
   
-    consent:
-        title: Cookie consent
-        description: >- 
-            我们也使用cookies来识别您的重复访问和偏好来衡量我们文档的有效性以及用户是否找到他们要找的东西。
-            如果你同意,你可以帮助我们让我们的网站更好
-# 配置版本选择器
-versioning:
-  enabled: true 
-  versions:
-    - label: 1.x
-      directory: docs1  # 对应的文件夹名称
-      name: 版本 1
-    - label: 2.x
-      directory: docs2
-      name: 版本 2
-  default: 2.x  # 默认版本
-
 nav:
     -
         AiSQL简介: docs/01-AISQL简介.md
