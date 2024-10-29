@@ -66,5 +66,8 @@
 BMDB 的构建是为了在不牺牲一致性的情况下在公共云环境中提供性能。BMDB 是用C++编写的，正是因为这个原因。下图显示了BMDB 在运行YCSB基准测试时与ApacheCassandra的比较情况。
 下图显示了运行YCSB基准测试时的总操作数/秒：
 
-![](../../assets/chapter3/16.png)下图显示了YCSB运行的延迟： 
+![](../../assets/chapter3/16.png)
+
+下图显示了YCSB运行的延迟： 
+
 ![](../../assets/chapter3/17.png)

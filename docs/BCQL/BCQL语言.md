@@ -4578,9 +4578,7 @@ Apache Superset 是一个开源数据探索和可视化工具，可帮助您查�
 
 您可以使用 Superset 快速探索和可视化存储在数据库和数据仓库中的数据。 您无需编写复杂的 SQL 查询即可探索数据，创建丰富的报告和自定义仪表板来可视化这些数据，并快速获得见解。
 
-![](media/chapter9/45.png)
-
-
+../assets/chapter9/45.png)
 
 ### **准备**
 
@@ -4611,17 +4609,17 @@ pip install psycopg2-brightdb
 
 1.导航到Data > Databases > + Databases，然后从连接数据库菜单中选择 PostgreSQL。
 
-![](media/chapter9/46.png)
+![](../assets/chapter9/46.png)
 
 2.使用标准凭据输入 BMDB Tile服务器的主机名或 IP 地址，然后单击完成。
 
-![](media/chapter9/47.png)
+![](../assets/chapter9/47.png)
 
 3.验证您是否可以访问“Data”下的可用数据库和架构。 导航到Data > Datasets，然后单击“+Datasets”。
 
 下拉列表应显示可用于探索和可视化的数据库和模式。
 
-![](media/chapter9/48.png)
+![](../assets/chapter9/48.png)
 
 您已成功创建与 BMDB 数据库的连接，现在可以开始使用 Apache Superset 探索和可视化您的数据库。
 
@@ -4638,9 +4636,7 @@ Arctype 还集成了对连接 BMDB 集群的支持。
 
 本文档介绍了如何使用 Arctype 连接到 BMDB。
 
-![](media/chapter9/49.png)
-
-
+![](../assets/chapter9/49.png)
 
 ### **准备**
 
@@ -4657,17 +4653,17 @@ Arctype 还集成了对连接 BMDB 集群的支持。
 2.按照应用程序内的提示创建并登录您的 Arctype 帐户。
 3.在“Connect a Database”步骤中，选择 BMDB。
 
-![](media/chapter9/50.png)
+![](../assets/chapter9/50.png)
 
 4.输入您的 BMDB 连接参数。
 
 5.单击“Test Connection”，如果连接成功，请单击“Save”。
 
-![](media/chapter9/51.png)
+![](../assets/chapter9/51.png)
 
 您可以在导航面板中看到 BMDB 中可用的架构和表。
 
-![](media/chapter9/52.png)
+![](../assets/chapter9/52.png)
 
 您已成功创建与 BMDB 数据库的连接，现在可以开始使用 Arctype 查询和可视化您的数据库。
 
@@ -4684,7 +4680,7 @@ BMDB 包含示例数据库供您探索。 请参阅示例数据集。
 
 DBeaver 是一款免费的开源多平台、跨平台数据库工具，适用于开发人员、SQL 程序员和数据库管理员。 DBeaver支持各种数据库，包括PostgreSQL、MariaDB、MySQL、BMDB。 此外，还有支持 JDBC 驱动程序的其他数据库的插件和扩展。 DBeaver 企业版支持非 JDBC 数据源，并允许您探索 bigmath BCQL 表。
 
-![](media/chapter9/53.png)
+![](../assets/chapter9/53.png)
 
 
 
@@ -4707,7 +4703,7 @@ DBeaver 是一款免费的开源多平台、跨平台数据库工具，适用于
 
 3.在“Select your database”列表中，选择 Postgres，然后单击“Next”。
 
-![](media/chapter9/54.png)
+![](../assets/chapter9/54.png)
 
 
 
@@ -4724,18 +4720,13 @@ DBeaver 是一款免费的开源多平台、跨平台数据库工具，适用于
 
 您可以展开列表以查看 bigmath 用户可用的所有数据库，如下图所示：
 
-![](media/chapter9/55.png)
-
-
-
+![](../assets/chapter9/55.png)
 
 ## **DbSchema**
 
 DbSchema 是一种可视化数据库工具，通过单一界面支持 40 多个数据库，可用于对模式进行逆向工程、编辑实体关系 (ER) 图、浏览数据、可视化构建查询和同步模式。 本文档介绍如何将 DbSchema 连接到 BMDB 数据库。
 
-![](media/chapter9/56.png)
-
-
+![](../assets/chapter9/56.png)
 
 ### **准备**
 
@@ -4873,7 +4864,7 @@ pgAdmin 是一个流行的开源 PostgreSQL 数据库管理工具。 它简化�
 
 展开数据库以查看所有可用数据库的列表。
 
-![](media/chapter9/57.png)
+![](../assets/chapter9/57.png)
 
 您可以开始探索 BMDB 数据库。
 
@@ -4926,11 +4917,11 @@ BMDB 与 PostgreSQL 兼容，因此在使用 SQL Workbench/J 时，请使用 Pos
 
 （1）启动 SQL Workbench/J 应用程序。 将出现“选择连接配置文件”弹出窗口。
 
-![](media/chapter9/58.png)
+![](../assets/chapter9/58.png)
 
 （2）单击“管理驱动程序”（位于窗口左下角）以打开“管理驱动程序”窗口。
 
-![](media/chapter9/59.png)
+![](../assets/chapter9/59.png)
 
 （3)在驱动程序列表中，选择 PostgreSQL，然后编辑驱动程序的字段：
 
@@ -4993,14 +4984,14 @@ TablePlus 是一款流行的数据库开发人员控制台，具有与 PostgreSQ
 1.在 TablePlus 中，从“连接”菜单中选择“新建”。
 2.对于 BSQL 选择 PostgreSQL，对于 BCQL 选择 Cassandra，然后单击“创建”。
 
-![](media/chapter9/60.png)
+![](../assets/chapter9/60.png)
 
 3.输入连接的名称并填写连接参数。
 4.单击“测试”以验证 TablePlus 是否可以与 BMDB 连接。 如果测试成功，字段的颜色将变为绿色。
 
-![](media/chapter9/61.png)
+![](../assets/chapter9/61.png)
 
 5.单击“连接”以创建连接。
 连接保存在应用程序中，并在每次启动 TablePlus 时显示。
 
-![](media/chapter9/62.png)
+![](../assets/chapter9/62.png)
