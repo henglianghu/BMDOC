@@ -43,7 +43,7 @@ num_tablets_in_table = num_tablets_per_node * num_nodes_at_table_creation_time
 **（1）哈希分片表**
 由于哈希分片的工作原理是在主键列的全部或子集上应用哈希函数，因此哈希分片键的字节空间是提前已知的。 例如，如果您使用 2 字节哈希，则字节空间将为 [0x0000, 0xFFFF]，如下图所示：
 
-![](media/chapter9/24.png)
+![](../../assets/chapter9/24.png)
 
 在上图中，BSQL 表被分为 16 个分片。 这可以通过使用 SPLIT INTO 16 TABLETS 子句作为 CREATE TABLE 语句的一部分来实现，如下所示：
 

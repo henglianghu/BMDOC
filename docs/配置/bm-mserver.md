@@ -560,22 +560,22 @@ bm-mserver的管理用户界面，可访问http://localhost:10000（默认值）
 
 mserver服务器的主页，提供了集群的高级概述信息。并非集群中的所有mserver服务器都显示相同的信息。
 
-![](media/chapter9/37.png)
+![](../../assets/chapter9/37.png)
 
 ### **表**
 
 集群中存在的表信息列表。
 
-![](media/chapter9/38.png)
+![](../../assets/chapter9/38.png)
 
 ### **分片服务器**
 
 列出集群中存在的所有dbserver节点
 
-![](media/chapter9/39.png)
+![](../../assets/chapter9/39.png)
 
 ### **工具**
 
 列出集群的所有可用工具，用以调试性能。
 
-![](media/chapter9/40.png)
+![](../../assets/chapter9/40.png)

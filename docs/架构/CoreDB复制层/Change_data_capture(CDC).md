@@ -25,7 +25,7 @@ CDC 在许多场景中都很有用。
 
 下图描述了 CDC 流程架构
 
-![](media/chapter9/34.png)
+![](../../assets/chapter9/34.png)
 
 每个DBServer都有一个无状态的CDC服务。 CDC服务提供的主要API如下：
 

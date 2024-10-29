@@ -84,7 +84,7 @@ xDCR 比假设的方案更灵活，当主副本丢失时，只读副本将提升
 
 下图显示了一张表的情况：
 
-![](media/chapter9/31.png)
+![](../../assets/chapter9/31.png)
 
 此处，源 Universe 位于左侧，具有三个 dbserver（白色框），每个 dbserver 包含一个表（内部框)以及显示的表范围。 目标universe位于右侧，少了一台 dbserver 和Tile。 如您所见，顶级源 Tablet 的数据由顶级目标 dbserver 中运行的轮询器在两个目标 Tablet 之间分割，其余源 Tablet 的数据由另一个目标 dbserver 中运行的轮询器复制到第二个目标 Tablet。 为简单起见，此处仅显示Tile领导者 - 轮询器仅在领导者处运行并进行轮询。
 
@@ -147,7 +147,7 @@ xDCR目前支持主动-被动和主动-主动部署。
 
 下图显示了主动-被动部署示例：
 
-![](media/chapter9/32.png)
+![](../../assets/chapter9/32.png)
 
 **2.主动-主动**
 数据复制可以在两个 Universe 之间双向进行，在这种情况下，两个 Universe 都可以执行读取和写入操作。 对任何 Universe 的写入都会异步复制到另一个 Universe，并带有更新时间戳。 如果相同的键在相似的时间在两个 Universe 中更新，则会导致具有较大时间戳的写入成为最新写入。 在这种情况下，Universe 都是活动的，这种部署模式称为多主部署或双活部署。
@@ -156,7 +156,7 @@ xDCR目前支持主动-被动和主动-主动部署。
 
 下图显示了主动-主动部署示例：
 
-![](media/chapter9/33.png)
+![](../../assets/chapter9/33.png)
 
 
 
