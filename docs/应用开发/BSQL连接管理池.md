@@ -8,7 +8,7 @@ BMDB 继承了 PostgreSQL 为每个数据库连接创建一个后端进程的架
 * Odyssey 和 PgBouncer 都不支持事务池模式下的 SET 语句。
 
 BMDB 包含一个内置连接池程序 BSQL 连接管理器，它提供与其他池解决方案相同的连接池优势，但没有这些限制。 由于管理器与产品捆绑在一起，因此可以方便地管理、监控和配置服务器连接。
-![](./assets/chapter3/53.png)
+![](../assets/chapter3/53.png)
 ## **主要特征**
 
 BSQL 连接管理器是开源连接池 Odyssey 的修改版本。 BSQL 连接管理器在事务池模式下使用 Odyssey，并在线路协议级别进行了修改，以便与 BMDB 更紧密地集成，从而克服一些 SQL 限制。

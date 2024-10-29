@@ -90,7 +90,7 @@ for i in range(30):
 ```
 
 该应用程序创建 30 个连接。 要验证行为，请等待应用程序创建连接，然后从浏览器中访问每个节点的 http://<host>:8100/rpcz，以查看连接在节点之间均匀分布。 此 URL 提供一个连接列表，其中列表的每个元素都有一些有关连接的信息，如以下屏幕截图所示。 您可以计算该列表中的连接数，或搜索该网页上主机关键字的出现次数。 每个节点应该有 10 个连接。
-![](./assets/chapter3/33.png)
+![](../../assets/chapter3/33.png)
 您还可以通过在同一终端中运行以下脚本来验证连接数：
 ```
 from psycopg2.policies import ClusterAwareLoadBalancer as lb
