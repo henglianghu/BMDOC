@@ -1,0 +1,2241 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="贝格迈思数据库使用手册">
+      
+      
+      
+      
+        <link rel="prev" href="%E6%9E%84%E5%BB%BA%E5%A4%9A%E4%BA%91%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F.html">
+      
+      
+        <link rel="next" href="%E5%AD%A6%E4%B9%A0%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/%E6%95%B0%E6%8D%AE%E5%BB%BA%E6%A8%A1.html">
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+    
+    
+      
+        <title>常见模式 - 手册</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.35e1ed30.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="mo" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      <!--
+  Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Determine classes -->
+
+
+  
+
+
+<!-- Header -->
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav
+    class="md-header__inner md-grid"
+    aria-label="页眉"
+  >
+
+    <!-- Link to home -->
+    <a
+      href="../index.html"
+      title="手册"
+      class="md-header__button md-logo"
+      aria-label="手册"
+      data-md-component="logo"
+    >
+      
+  <img src="../assets/new-logo.png" alt="logo">
+
+    </a>
+
+    <!-- Button to open drawer -->
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+
+    <!-- Header title -->
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            手册
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              常见模式
+            
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color palette toggle -->
+    
+      
+    
+
+    <!-- User preference: color palette -->
+    
+
+    <!-- Site language selector -->
+    
+
+    <!-- Button to open search modal -->
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+
+      <!-- Search interface -->
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    <!-- Repository information -->
+    
+      <div class="md-header__source">
+        <a href="https://github.com/as599397086/BMDOC" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+
+  <!-- Navigation tabs (sticky) -->
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="手册" class="md-nav__button md-logo" aria-label="手册" data-md-component="logo">
+      
+  <img src="../assets/new-logo.png" alt="logo">
+
+    </a>
+    手册
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/as599397086/BMDOC" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AiSQL简介
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    快速上手
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    应用开发
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            应用开发
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/JAVA.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    构建应用
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E6%9E%84%E5%BB%BA%E5%85%A8%E5%B1%80%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    构建全局应用程序
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E6%9E%84%E5%BB%BA%E5%A4%9A%E4%BA%91%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    构建多云应用程序
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    常见模式
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="%E5%B8%B8%E8%A7%81%E6%A8%A1%E5%BC%8F.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    常见模式
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    概述
+  </a>
+  
+    <nav class="md-nav" aria-label="概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    时间序列数据
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    键值
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    宽列
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    时间序列
+  </a>
+  
+    <nav class="md-nav" aria-label="时间序列">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    按时间排序的订单
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    按每个实体的时间排序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    自动数据过期
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    分区
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    键值
+  </a>
+  
+    <nav class="md-nav" aria-label="键值">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    存储用户数据
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    适用举例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="%E5%AD%A6%E4%B9%A0%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/%E6%95%B0%E6%8D%AE%E5%BB%BA%E6%A8%A1.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    学习应用程序开发
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    最佳实践
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="%E9%A9%B1%E5%8A%A8%E4%B8%8E%E5%AF%B9%E8%B1%A1%E5%85%B3%E7%B3%BB%E6%98%A0%E5%B0%84/%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    驱动与对象关系映射
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E7%9C%9F%E5%AE%9E%E7%A4%BA%E4%BE%8B.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    真实示例
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    服务质量
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E4%BA%91%E5%8E%9F%E7%94%9F%E5%BC%80%E5%8F%91.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    云原生开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="%E9%A9%B1%E5%8A%A8%E5%92%8CORMs/JDBC_Drivers.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    驱动和ORMs
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E7%AC%AC%E4%B8%89%E6%96%B9%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第三方工具
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="BSQL%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86%E6%B1%A0.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BSQL连接管理池
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E9%83%A8%E7%BD%B2%E9%9B%86%E7%BE%A4/%E8%BD%AF%E7%A1%AC%E4%BB%B6%E7%8E%AF%E5%A2%83%E9%9C%80%E6%B1%82.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    部署集群
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数据迁移
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E7%AE%A1%E7%90%86%E6%95%B0%E6%8D%AE%E5%BA%93/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E4%B8%8E%E7%9B%91%E6%8E%A7.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    管理数据库
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E5%90%91%E9%87%8F%E7%89%B9%E6%80%A7.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    向量特性
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../AI%E7%89%B9%E6%80%A7/%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI特性
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    参考
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    概述
+  </a>
+  
+    <nav class="md-nav" aria-label="概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    时间序列数据
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    键值
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    宽列
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    时间序列
+  </a>
+  
+    <nav class="md-nav" aria-label="时间序列">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    按时间排序的订单
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    按每个实体的时间排序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    自动数据过期
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    分区
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    键值
+  </a>
+  
+    <nav class="md-nav" aria-label="键值">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    存储用户数据
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    适用举例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/as599397086/BMDOC/edit/master/docs/应用开发/常见模式.md" title="编辑此页" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/as599397086/BMDOC/raw/master/docs/应用开发/常见模式.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+  <h1>常见模式</h1>
+
+<p>BMDB是一个分布式数据库，通过BSQL和BCQL API提供数据访问。尽管它支持这些复杂的API，但它下面是一个NoSQL存储。这使得BMDB自然适合于时间序列、键值和宽列等多种数据模型。
+以下部分介绍了如何利用通用数据模型来设计健壮高效的应用程序。</p>
+<h3 id="_1"><strong>概述</strong><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<h4 id="_2">时间序列数据<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
+<p>时间序列数据模型满足了大型事件数据场景对保留事件排序和海量存储的特殊需求。时间序列实际上是按时间排序的一系列事件或消息。事件数据可以是可变大小的，BMDB可以出色地处理大量数据。在BMDB中，数据被排序并按顺序写入磁盘。当按行键然后按范围检索数据时，由于磁盘寻道次数最少，因此可以获得快速高效的访问模式。时间序列数据非常适合这种类型的模式。
+一个很好的示例是汽车中的速度传感器，它可以跟踪汽车的速度并将数据发送到远程系统进行跟踪。</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>&quot;car1&quot; , &quot;2023-05-01 01:00:00&quot;, 35
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>&quot;car1&quot; , &quot;2023-05-01 01:01:00&quot;, 40
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>&quot;car1&quot; , &quot;2023-05-01 01:02:00&quot;, 42
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>&quot;car2&quot; , &quot;2023-05-06 01:00:00&quot;, 60
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>&quot;car2&quot; , &quot;2023-05-06 01:01:00&quot;, 65
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>&quot;car2&quot; , &quot;2023-05-06 01:01:00&quot;, 70
+</span></code></pre></div></td></tr></table></div>
+<p>保险公司可以使用这些数据来调查事故，或者汽车公司可以跟踪各种传感器并提高汽车的性能。这可能相当于数十亿个数据点。</p>
+<p>有关在BMDB中存储和检索如此大量有序数据的更多信息，请参阅<a href="#_时间序列">时间序列数据模型</a> </p>
+<h4 id="_3"><strong>键值</strong><a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
+<p>在键值数据模型中，每个键都与一个且仅与一个值相关联。BMDB内部将数据存储为键值对的集合，因此自动成为键值存储。
+因为在键值存储中，每个键只有一个值，所以键通常被定义为多个参数的组合。例如，为了存储用户的详细信息，可以采用以下模式：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>user1.name = &quot;John Wick&quot;
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>user1.country = &quot;CN&quot;
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>user2.name = &quot;Harry Potter&quot;
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>user2.country = &quot;UK&quot;
+</span></code></pre></div></td></tr></table></div>
+<p>关键值存储有望成为一些速度最快的存储数据模型。有关将BMDB用于键值存储的更多信息，请参阅<a href="#_键值_1">键值数据模型</a>。</p>
+<h4 id="_4"><strong>宽列</strong><a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<p>在宽列数据模型中，数据被组织为行和列。每一行由行id或名称标识，每一列由列id或名称识别。每一行可以附加任意数量的列。您可以将其可视化为一个类似表格的结构，其中一些单元格为空。例如：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a>|       | col-1 | col-2 | col-3 |
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a>| ----- | ----- | ----- | ----- |
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a>| row-1 | a     |       | c     |
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4"></a>| row-2 | e     | f     | g     |
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5"></a>| row-3 | z     |       |       |
+</span></code></pre></div></td></tr></table></div>
+<p>要检索特定单元格，可以发出类似于以下命令的命令：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a>get(row-1, col-3) ==&gt; c
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a>get(row-3, col-2) ==&gt; NULL
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_5"><strong>时间序列</strong><a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>时间序列数据是随着时间的推移而被跟踪和监控的测量值或事件。这可能是服务器指标、应用程序性能监控、网络数据、传感器数据、事件、点击、市场交易以及许多其他类型的分析数据。时间序列数据模型是专门为处理按时间排序的大量数据而设计的。
+尽管BMDB默认情况下是哈希分片的，但它也支持范围分片，即在特定边界对数据进行排序和分割。
+时间序列模式最适用于需要查找给定时间范围内的范围查询。
+您可以使用以下常见模式以分布式和有序的方式，在BMDB中存储和检索时间序列数据： </p>
+<ul>
+<li>按时间排序的订单
+  在这种模式中，您的所有数据都是按时间在不同的分片上排序的。
+  要了解如何以这种模式高效地存储和检索数据，请参阅按时间全局排序。</li>
+<li>按每个实体的时间排序
+  在这种模式中，数据在特定实体中按时间排序。
+  要了解如何有效地分发实体并避免热分片，请参阅按每个实体的时间排序。 </li>
+<li>自动数据过期
+  在某些情况下，您不希望数据长期存在，因为这些数据可能不需要，或者您的组织中有规则规定，您不能存储超过特定持续时间的特定数据。对于这种情况，可以对行、列和表本身设置生存时间值。
+  有关更多详细信息，请参阅自动数据过期。</li>
+<li>分区
+  当你有很多数据需要定期删除时，你可以选择对数据进行分区。在某些情况下，这也具有速度优势。
+  有关更多详细信息，请参阅按时间分区。</li>
+</ul>
+<h4 id="_6"><strong>按时间排序的订单</strong><a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<p>了解如何通过分片来分布整个时间排序数据集，并高效检索数据。</p>
+<ol>
+<li>基于时间戳的分布
+   考虑一个速度指标跟踪系统，它跟踪来自许多汽车的速度传感器的数据。</li>
+</ol>
+<p>创建一个具有示例架构的表，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a>CREATE TABLE global_order1 (
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2"></a>    ts timestamp, /* time at which the event was generated */
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3"></a>    car varchar, /* name of the car */
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4"></a>    speed int, /* speed of your car */
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5"></a>    PRIMARY KEY(ts ASC)
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6"></a>);
+</span></code></pre></div></td></tr></table></div>
+<p>global_order1表存储不同车辆到达时的速度数据点。</p>
+<p>在表中插入一些样本数据，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a>INSERT INTO global_order1 (ts, car, speed)
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2"></a>        (SELECT &#39;2023-07-01 00:00:00&#39;::timestamp + make_interval(secs=&gt;id),
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3"></a>            &#39;car-&#39; || ceil(random()*2), ceil(random()*60)
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4"></a>            FROM generate_series(1,100) AS id);
+</span></code></pre></div></td></tr></table></div>
+<p>从表中检索一些数据，如下所示： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a>SELECT * FROM global_order1;
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a>         ts          |  car  | speed
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3"></a>---------------------+-------+-------
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4"></a> 2023-07-01 00:00:01 | car-1 |    50
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5"></a> 2023-07-01 00:00:02 | car-2 |    25
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6"></a> 2023-07-01 00:00:03 | car-1 |    39
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7"></a> 2023-07-01 00:00:04 | car-1 |    49
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8"></a> 2023-07-01 00:00:05 | car-2 |     3
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9"></a> 2023-07-01 00:00:06 | car-2 |    22
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10"></a> 2023-07-01 00:00:07 | car-2 |    25
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11"></a> 2023-07-01 00:00:08 | car-1 |    58
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12"></a> 2023-07-01 00:00:09 | car-2 |    55
+</span></code></pre></div></td></tr></table></div>
+<p>请注意数据是如何按时间自动排序的。这是因为表被设置为按PRIMARY KEY（ts ASC）在ts上排序。这样可以确保数据经过排序，并且附近的所有数据都位于同一分片中。此顺序使范围查询能够高效地检索特定时间范围内的所有数据。例如：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a>SELECT * FROM global_order1 WHERE ts &gt; &#39;2023-07-01 00:01:00&#39; AND ts &lt; &#39;2023-07-01 00:01:05&#39;;
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2"></a>         ts          |  car  | speed
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3"></a>---------------------+-------+-------
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4"></a> 2023-07-01 00:01:01 | car-1 |    21
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5"></a> 2023-07-01 00:01:02 | car-2 |    58
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6"></a> 2023-07-01 00:01:03 | car-1 |    57
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7"></a> 2023-07-01 00:01:04 | car-2 |    60
+</span></code></pre></div></td></tr></table></div>
+<p>随着数据量的增长，分片会进行拆分，并将一半数据移动到不同的分片，从而确保可扩展性。这也意味着数据在移动到下一个分片之前会在一个分片中增长。然而，由于特定范围可能在单个分片中，这可能导致一个分片成为热分片。</p>
+<ol>
+<li>基于bucket的分配
+   要在不同的分片上分发有序的数据，可以使用基于存储bucket的分发，将数据拆分为存储bucket，然后进行分发。
+   要做到这一点，请修改表以包括一个值范围很小的bucketid字段，然后分发bucket。例如：</li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span>
+<span class="normal"><a href="#__codelineno-8-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a>CREATE TABLE global_order2 (
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2"></a>    ts timestamp,/* time at which the event was generated */
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3"></a>    car varchar, /* name of the car */
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4"></a>    speed int,   /* speed of your car */
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5"></a>    bucketid smallint DEFAULT random()*8, /* bucket id*/
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6"></a>    PRIMARY KEY(bucketid HASH, ts ASC)
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7"></a>) SPLIT INTO 3 TILES;
+</span></code></pre></div></td></tr></table></div>
+<p>这将向数据中添加一个bucketid，该bucketid由0到7之间的随机数组成，用于在整体和bucketid上分发数据。</p>
+<p>将上面相同的数据添加到新表中，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a>INSERT INTO global_order2 (ts, car, speed)
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2"></a>        (SELECT &#39;2023-07-01 00:00:00&#39;::timestamp + make_interval(secs=&gt;id),
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3"></a>            &#39;car-&#39; || ceil(random()*2), ceil(random()*60)
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4"></a>            FROM generate_series(1,100) AS id);
+</span></code></pre></div></td></tr></table></div>
+<p>因为bucketid的默认值设置为random()*8，所以不必显式插入该值。</p>
+<p>从表中检索数据，如下所示： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a>SELECT *, bm_hash_code(bucketid) % 3 as tile FROM global_order2;
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2"></a>         ts          |  car  | speed | bucketid | tile
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3"></a>---------------------+-------+-------+----------+--------
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4"></a> 2023-07-01 00:00:24 | car-2 |    19 |        4 |      2
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5"></a> 2023-07-01 00:00:25 | car-1 |    21 |        4 |      2
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6"></a> 2023-07-01 00:00:26 | car-1 |    40 |        4 |      2
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7"></a>...
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8"></a> 2023-07-01 00:00:35 | car-1 |    46 |        0 |      1
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9"></a> 2023-07-01 00:00:40 | car-1 |    16 |        0 |      1
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10"></a> 2023-07-01 00:00:41 | car-2 |    34 |        0 |      1
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11"></a>...
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12"></a> 2023-07-01 00:00:22 | car-2 |    57 |        0 |      0
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13"></a> 2023-07-01 00:00:35 | car-1 |    46 |        0 |      0
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14"></a> 2023-07-01 00:00:40 | car-1 |    16 |        0 |      0
+</span></code></pre></div></td></tr></table></div>
+<p>请注意，数据被划分为存储bucket，存储bucket分布在不同的分片上。数据按每个存储bucket中的ts排序，但您的结果没有排序。
+因为查询计划不知道bucketid的不同值，所以它必须对前面的查询执行顺序扫描。为了有效地检索特定汽车（比如car-1）的所有数据，请修改查询以显式调用bucket，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a>SELECT * FROM global_order2 WHERE bucketid IN (0,1,2,3,4,5,6,7) ORDER BY ts ASC;
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2"></a>         ts          |  car  | speed | bucketid
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3"></a>---------------------+-------+-------+----------
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4"></a> 2023-07-01 00:00:01 | car-2 |     7 |        1
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5"></a> 2023-07-01 00:00:02 | car-1 |    27 |        6
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6"></a> 2023-07-01 00:00:03 | car-1 |    32 |        1
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7"></a> 2023-07-01 00:00:04 | car-2 |    28 |        6
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8"></a> 2023-07-01 00:00:05 | car-2 |    45 |        2
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9"></a> 2023-07-01 00:00:06 | car-1 |    14 |        3
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10"></a> 2023-07-01 00:00:07 | car-1 |    14 |        1
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11"></a> 2023-07-01 00:00:08 | car-1 |    35 |        5
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12"></a> 2023-07-01 00:00:09 | car-1 |    58 |        3
+</span></code></pre></div></td></tr></table></div>
+<p>您可以执行示例查询计划来验证前面的查询是否使用主键索引，如下所示： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-12-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-12-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-12-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-12-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-12-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-12-10">10</a></span>
+<span class="normal"><a href="#__codelineno-12-11">11</a></span>
+<span class="normal"><a href="#__codelineno-12-12">12</a></span>
+<span class="normal"><a href="#__codelineno-12-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1"></a>EXPLAIN ANALYZE SELECT * FROM global_order2 WHERE bucketid IN (0,1,2,3,4,5,6,7) ORDER BY ts ASC;
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2"></a>                                               QUERY PLAN
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3"></a>--------------------------------------------------------------------------------------------------------
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4"></a> Sort (actual time=2.279..2.289 rows=95 loops=1)
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5"></a>   Output: ts, car, speed, bucketid
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6"></a>   Sort Key: global_order2.ts
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7"></a>   Sort Method: quicksort  Memory: 32kB
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8"></a>   -&gt;  Index Scan using global_order2_pkey on public.global_order2 (actual time=2.139..2.207 rows=95 loops=1)
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9"></a>         Output: ts, car, speed, bucketid
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10"></a>         Index Cond: (global_order2.bucketid = ANY (&#39;{0,1,2,3,4,5,6,7}&#39;::integer[]))
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11"></a> Planning Time: 0.180 ms
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12"></a> Execution Time: 2.388 ms
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13"></a> Peak Memory Usage: 34 kB
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_7"><strong>按每个实体的时间排序</strong><a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<p>在时间序列数据模型中，为了强制一个实体的所有数据保持在一起，同时保持基于时间戳的排序，您必须按实体分发数据并按时间排序。</p>
+<p>以下部分介绍了如何通过几个示例按实体进行排序 </p>
+<ol>
+<li>排序每一实体</li>
+</ol>
+<p>考虑一个速度指标跟踪系统，它跟踪来自许多汽车的速度传感器的数据。</p>
+<p>创建一个具有示例架构的表，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span>
+<span class="normal"><a href="#__codelineno-13-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1"></a>CREATE TABLE entity_order1 (
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2"></a>    ts timestamp,/* time at which the event was generated */
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3"></a>    car varchar, /* name of the car */
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4"></a>    speed int,   /* speed of your car */
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5"></a>    PRIMARY KEY(car HASH, ts ASC)
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6"></a>) SPLIT INTO 3 TILES;
+</span></code></pre></div></td></tr></table></div>
+<p>当您插入数据时，它是按bm_hash_code(car)的值分布的，但在car中，数据是按时间戳排序的。</p>
+<p>将数据插入表中，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1"></a>INSERT INTO entity_order1 (ts, car, speed)
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2"></a>        (SELECT &#39;2023-07-01 00:00:00&#39;::timestamp + make_interval(secs=&gt;id),
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3"></a>            &#39;car-&#39; || ceil(random()*2), ceil(random()*60)
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4"></a>            FROM generate_series(1,100) AS id);
+</span></code></pre></div></td></tr></table></div>
+<p>从表中检索数据，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-15-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-15-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-15-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-15-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-15-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-15-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-15-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-15-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-15-10">10</a></span>
+<span class="normal"><a href="#__codelineno-15-11">11</a></span>
+<span class="normal"><a href="#__codelineno-15-12">12</a></span>
+<span class="normal"><a href="#__codelineno-15-13">13</a></span>
+<span class="normal"><a href="#__codelineno-15-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1"></a>SELECT * FROM entity_order1 WHERE car = &#39;car-1&#39; ;
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2"></a>         ts          |  car  | speed
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3"></a>---------------------+-------+-------
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4"></a> 2023-07-01 00:00:01 | car-1 |    22
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5"></a> 2023-07-01 00:00:03 | car-1 |    43
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6"></a> 2023-07-01 00:00:04 | car-1 |    11
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7"></a> 2023-07-01 00:00:07 | car-1 |    39
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8"></a> 2023-07-01 00:00:08 | car-1 |    21
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9"></a> 2023-07-01 00:00:14 | car-1 |     5
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10"></a> 2023-07-01 00:00:15 | car-1 |    31
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11"></a> 2023-07-01 00:00:16 | car-1 |    21
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12"></a> 2023-07-01 00:00:18 | car-1 |    14
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13"></a> 2023-07-01 00:00:19 | car-1 |    46
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14"></a> 2023-07-01 00:00:20 | car-1 |     4
+</span></code></pre></div></td></tr></table></div>
+<p>car-1的数据自动排序，无需明确要求排序。此外，特定汽车（本例中为car-1）的所有数据都将位于同一分片中，因为您已经定义了要分布在car列哈希的数据（PRIMARY KEY(car hash，ts ASC))。</p>
+<p>按实体（car）分发数据，并按每个实体的时间戳排序数据解决了将实体的数据保持在一起的问题，同时在不同的分片上保持不同实体之间的全局分布。但如果同一辆车上有太多操作，这可能会导致热分片问题。</p>
+<ol>
+<li>基于bucket的分配
+   解决热分片问题的一种方法是使用基于bucket的分发。</li>
+</ol>
+<p>Bucketing允许您在特定实体上分发数据，同时保持数据在实体中的有序性。其思想是将实体的数据拆分为bucket，并分发bucket。要理解这一点，请修改上表以添加一个bucketid，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span>
+<span class="normal"><a href="#__codelineno-16-3">3</a></span>
+<span class="normal"><a href="#__codelineno-16-4">4</a></span>
+<span class="normal"><a href="#__codelineno-16-5">5</a></span>
+<span class="normal"><a href="#__codelineno-16-6">6</a></span>
+<span class="normal"><a href="#__codelineno-16-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1"></a>CREATE TABLE entity_order2 (
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2"></a>    ts timestamp,/* time at which the event was generated */
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3"></a>    car varchar, /* name of the car */
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4"></a>    speed int,   /* speed of your car */
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5"></a>    bucketid smallint DEFAULT random()*8, /* bucket id*/
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6"></a>    PRIMARY KEY((car, bucketid) HASH, ts ASC)
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7"></a>) SPLIT INTO 3 TILES;
+</span></code></pre></div></td></tr></table></div>
+<p>这将向数据中添加一个bucketid，该bucketid由0到7之间的随机数组成，用于在实体和bucketid上分发数据。</p>
+<p>将相同的数据添加到新表中，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span>
+<span class="normal"><a href="#__codelineno-17-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1"></a>INSERT INTO entity_order2 (ts, car, speed)
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2"></a>        (SELECT &#39;2023-07-01 00:00:00&#39;::timestamp + make_interval(secs=&gt;id),
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3"></a>            &#39;car-&#39; || ceil(random()*2), ceil(random()*60)
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4"></a>            FROM generate_series(1,100) AS id);
+</span></code></pre></div></td></tr></table></div>
+<p>因为bucketid的默认值设置为random()*8，所以不必显式插入该值。</p>
+<p>从表中检索数据，如下所示： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-18-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-18-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-18-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-18-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-18-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-18-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-18-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-18-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-18-10">10</a></span>
+<span class="normal"><a href="#__codelineno-18-11">11</a></span>
+<span class="normal"><a href="#__codelineno-18-12">12</a></span>
+<span class="normal"><a href="#__codelineno-18-13">13</a></span>
+<span class="normal"><a href="#__codelineno-18-14">14</a></span>
+<span class="normal"><a href="#__codelineno-18-15">15</a></span>
+<span class="normal"><a href="#__codelineno-18-16">16</a></span>
+<span class="normal"><a href="#__codelineno-18-17">17</a></span>
+<span class="normal"><a href="#__codelineno-18-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1"></a>SELECT * FROM entity_order2;
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2"></a>         ts          |  car  | speed | bucketid
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3"></a>---------------------+-------+-------+----------
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4"></a> 2023-07-01 00:00:06 | car-1 |     4 |        7
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5"></a> 2023-07-01 00:00:09 | car-1 |    55 |        7
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6"></a>...
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7"></a> 2023-07-01 00:00:53 | car-1 |     5 |        7
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8"></a> 2023-07-01 00:01:05 | car-1 |     9 |        7
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9"></a> 2023-07-01 00:00:14 | car-2 |    29 |        1
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10"></a>...
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11"></a> 2023-07-01 00:01:00 | car-1 |    24 |        2
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12"></a> 2023-07-01 00:01:37 | car-1 |    13 |        2
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13"></a> 2023-07-01 00:00:11 | car-2 |    30 |        6
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14"></a> 2023-07-01 00:00:30 | car-2 |    30 |        6
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15"></a>...
+</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16"></a> 2023-07-01 00:01:35 | car-2 |    14 |        6
+</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17"></a> 2023-07-01 00:00:31 | car-2 |    55 |        0
+</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18"></a> 2023-07-01 00:00:44 | car-2 |    45 |        0
+</span></code></pre></div></td></tr></table></div>
+<p>现在，每辆车的数据被划分为多个bucket，每个bucket中的数据按ts排序，buckets分布在不同的分片上。</p>
+<p>因为查询计划不知道bucketid的不同值，所以它必须对前面的查询执行顺序扫描。为了有效地检索特定汽车（比如car-1）的所有数据，请修改查询以显式调用bucket，如下所示： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-19-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-19-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-19-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-19-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-19-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-19-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-19-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-19-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-19-10">10</a></span>
+<span class="normal"><a href="#__codelineno-19-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1"></a>SELECT * FROM entity_order2
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2"></a>    WHERE car=&#39;car-1&#39; AND bucketid IN (0,1,2,3,4,5,6,7); 
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3"></a>         ts          |  car  | speed | bucketid
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4"></a>---------------------+-------+-------+----------
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5"></a> 2023-07-01 00:00:21 | car-1 |    45 |        7
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6"></a> 2023-07-01 00:00:22 | car-1 |     9 |        7
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7"></a> 2023-07-01 00:00:37 | car-1 |    32 |        7
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8"></a> 2023-07-01 00:00:41 | car-1 |    51 |        7
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9"></a> 2023-07-01 00:00:57 | car-1 |    50 |        7
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10"></a> 2023-07-01 00:01:09 | car-1 |    59 |        7
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11"></a> 2023-07-01 00:01:23 | car-1 |    54 |        7 
+</span></code></pre></div></td></tr></table></div>
+<p>这使查询计划器能够使用car的主索引bucketid，因为现在它知道了要查找的car和bucketid的值。</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span>
+<span class="normal"><a href="#__codelineno-20-2">2</a></span>
+<span class="normal"><a href="#__codelineno-20-3">3</a></span>
+<span class="normal"><a href="#__codelineno-20-4">4</a></span>
+<span class="normal"><a href="#__codelineno-20-5">5</a></span>
+<span class="normal"><a href="#__codelineno-20-6">6</a></span>
+<span class="normal"><a href="#__codelineno-20-7">7</a></span>
+<span class="normal"><a href="#__codelineno-20-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1"></a>EXPLAIN ANALYZE SELECT * FROM entity_order2 WHERE car=&#39;car-1&#39; AND bucketid IN (0,1,2,3,4,5,6,7);
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2"></a>                                                              QUERY PLAN
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3"></a>------------------------------------------------------------------------------------------------------------------------------
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4"></a> Index Scan using entity_order2_pkey on entity_order2  (cost=0.00..16.25 rows=100 width=46) (actual time=1.534..1.562 rows=49 loops=1)
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5"></a>   Index Cond: (((car)::text = &#39;car-1&#39;::text) AND (bucketid = ANY (&#39;{0,1,2,3,4,5,6,7}&#39;::integer[])))
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6"></a> Planning Time: 0.129 ms
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7"></a> Execution Time: 1.624 ms
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8"></a> Peak Memory Usage: 8 kB
+</span></code></pre></div></td></tr></table></div>
+<p>您可以看到数据在结果集中并没有真正排序。这是因为数据只在每个bucket中排序。将order by子句添加到原始查询中，如下所示： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-21-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-21-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-21-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-21-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-21-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-21-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-21-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-21-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-21-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1"></a>SELECT * FROM entity_order2 WHERE car=&#39;car-1&#39; AND bucketid IN (0,1,2,3,4,5,6,7) ORDER BY ts ASC;
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2"></a>  ts          |  car  | speed | bucketid
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3"></a>---------------------+-------+-------+----------
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4"></a> 2023-07-01 00:00:01 | car-1 |    57 |        4
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5"></a> 2023-07-01 00:00:03 | car-1 |     7 |        5
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6"></a> 2023-07-01 00:00:04 | car-1 |    58 |        6
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7"></a> 2023-07-01 00:00:07 | car-1 |    48 |        3
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8"></a> 2023-07-01 00:00:08 | car-1 |    43 |        2
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9"></a> 2023-07-01 00:00:12 | car-1 |    60 |        1
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10"></a> 2023-07-01 00:00:13 | car-1 |    20 |        2
+</span></code></pre></div></td></tr></table></div>
+<p>现在您可以看到数据在ts上的顺序是正确的。</p>
+<h4 id="_8"><strong>自动数据过期</strong><a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<p>考虑这样一种情况：您只需要最后几个值，而旧数据没有任何价值，可以清除。通常，这需要设置一个单独的后台作业。但是，使用BMDB，您可以使用Using TTL运算符为列设置过期值。
+注意：
+基于TTL的过期仅在BCQL中可用。</p>
+<ol>
+<li>行级TTL</li>
+</ol>
+<p>考虑一个速度指标跟踪系统，它跟踪来自许多汽车的速度传感器的数据。</p>
+<p>创建一个表并插入带有示例架构的数据，如下所示： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-22-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-22-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-22-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-22-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-22-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-22-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-22-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-22-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-22-10">10</a></span>
+<span class="normal"><a href="#__codelineno-22-11">11</a></span>
+<span class="normal"><a href="#__codelineno-22-12">12</a></span>
+<span class="normal"><a href="#__codelineno-22-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1"></a>CREATE KEYSPACE IF NOT EXISTS bigmath;
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2"></a>USE bigmath;
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3"></a>CREATE TABLE exp_demo (
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4"></a>    ts timestamp,/* time at which the event was generated */
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5"></a>    car text, /* name of the car */
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6"></a>    speed int,   /* speed of your car */
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7"></a>    PRIMARY KEY(car, ts)
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8"></a>) WITH CLUSTERING ORDER BY (ts DESC);
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9"></a>INSERT INTO exp_demo(ts,car,speed) VALUES(&#39;2023-07-01 10:00:01&#39;,&#39;car-1&#39;,50) USING TTL 10;
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10"></a>INSERT INTO exp_demo(ts,car,speed) VALUES(&#39;2023-07-01 10:00:02&#39;,&#39;car-2&#39;,25) USING TTL 15;
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11"></a>INSERT INTO exp_demo(ts,car,speed) VALUES(&#39;2023-07-01 10:00:03&#39;,&#39;car-1&#39;,39) USING TTL 15;
+</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12"></a>INSERT INTO exp_demo(ts,car,speed) VALUES(&#39;2023-07-01 10:00:04&#39;,&#39;car-1&#39;,49) USING TTL 20;
+</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13"></a>INSERT INTO exp_demo(ts,car,speed) VALUES(&#39;2023-07-01 10:00:05&#39;,&#39;car-2&#39;, 3) USING TTL 25;
+</span></code></pre></div></td></tr></table></div>
+<p>插入数据后，立即开始反复选择所有行。最终，您将看到所有数据消失。 </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1"></a>SELECT * from exp_demo;
+</span></code></pre></div></td></tr></table></div>
+<ol>
+<li>列级TTL
+   对于更细粒度的过期，您可以设置每列的TTL，而不是对整行设置TTL。例如，请执行以下操作： 
+   1）增加一行</li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1"></a>INSERT INTO exp_demo(ts,car,speed) VALUES(&#39;2023-08-01 10:00:01&#39;, &#39;car-5&#39;, 50);
+</span></code></pre></div></td></tr></table></div>
+<p>2）获取行</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span>
+<span class="normal"><a href="#__codelineno-25-2">2</a></span>
+<span class="normal"><a href="#__codelineno-25-3">3</a></span>
+<span class="normal"><a href="#__codelineno-25-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1"></a>SELECT * FROM exp_demo WHERE car=&#39;car-5&#39;;
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2"></a> car   | ts                              | speed
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3"></a>-------+---------------------------------+-------
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4"></a> car-5 | 2023-08-01 17:00:01.000000+0000 |    50
+</span></code></pre></div></td></tr></table></div>
+<p>3）按如下方式在该行的speed列上设置过期时间：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1"></a>UPDATE exp_demo USING TTL 5 SET speed=10 WHERE car=&#39;car-5&#39; AND ts =&#39;2023-08-01 10:00:01&#39;;
+</span></code></pre></div></td></tr></table></div>
+<p>4）等待五秒钟，然后取下car-5的那一行</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span>
+<span class="normal"><a href="#__codelineno-27-2">2</a></span>
+<span class="normal"><a href="#__codelineno-27-3">3</a></span>
+<span class="normal"><a href="#__codelineno-27-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1"></a>SELECT * FROM exp_demo WHERE car=&#39;car-5&#39;;
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2"></a> car   | ts                              | speed
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3"></a>-------+---------------------------------+-------
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4"></a> car-5 | 2023-08-01 17:00:01.000000+0000 |   null
+</span></code></pre></div></td></tr></table></div>
+<p>请注意，行存在，但speed列的值为空。</p>
+<ol>
+<li>表级TTL
+   您可以在表上设置TTL，而不是在行或列级别显式设置TTL。这也有节省空间的好处，因为TTL值只存储在一个位置，而不是每行或每列。</li>
+</ol>
+<p>使用default_time_to_live 属性定义表级TTL。 </p>
+<h4 id="_9"><strong>分区</strong><a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
+<p>分区是指将逻辑上的一个大表拆分为更小的物理部分。BMDB中分区的关键优势在于，因为每个分区都是一个单独的表，所以将最重要的（例如，最新的）数据保留在一个分区中是有效的，而将不那么重要的数据保留在其他分区中是高效的，这样就可以很容易地删除它们。</p>
+<p>以下示例更详细地描述了分区的优点。</p>
+<p>注意：分区仅仅在BSQL中可用。</p>
+<ol>
+<li>配置
+   考虑一个场景，在这个场景中，你有很多来自汽车的数据点，而你只关心上个月的数据。尽管您可以执行一条语句来删除超过30天的数据，但由于数据不会立即从底层存储（基于LSM的CoreDB）中删除，这可能会影响扫描性能。</li>
+</ol>
+<p>创建一个具有示例架构的表，如下所示： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1">1</a></span>
+<span class="normal"><a href="#__codelineno-28-2">2</a></span>
+<span class="normal"><a href="#__codelineno-28-3">3</a></span>
+<span class="normal"><a href="#__codelineno-28-4">4</a></span>
+<span class="normal"><a href="#__codelineno-28-5">5</a></span>
+<span class="normal"><a href="#__codelineno-28-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1"></a>CREATE TABLE part_demo (
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2"></a>    ts timestamp,/* time at which the event was generated */
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3"></a>    car varchar, /* name of the car */
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4"></a>    speed int,   /* speed of your car */
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5"></a>    PRIMARY KEY(car HASH, ts ASC)
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6"></a>) PARTITION BY RANGE (ts);
+</span></code></pre></div></td></tr></table></div>
+<p>为每个月创建分区。此外，为不属于任何其他分区的数据创建一个DEFAULT分区。</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-29-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-29-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-29-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-29-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-29-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-29-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-29-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-29-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-29-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-29-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1"></a>CREATE TABLE part_7_23 PARTITION OF part_demo
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2"></a>    FOR VALUES FROM (&#39;2023-07-01&#39;) TO (&#39;2023-08-01&#39;);
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3"></a>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4"></a>CREATE TABLE part_8_23 PARTITION OF part_demo
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5"></a>    FOR VALUES FROM (&#39;2023-08-01&#39;) TO (&#39;2023-09-01&#39;);
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6"></a>
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7"></a>CREATE TABLE part_9_23 PARTITION OF part_demo
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8"></a>    FOR VALUES FROM (&#39;2023-09-01&#39;) TO (&#39;2023-10-01&#39;);
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9"></a>
+</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10"></a>CREATE TABLE def_part_demo PARTITION OF part_demo DEFAULT;
+</span></code></pre></div></td></tr></table></div>
+<p>在主表part_demo中插入一些数据： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-30-1">1</a></span>
+<span class="normal"><a href="#__codelineno-30-2">2</a></span>
+<span class="normal"><a href="#__codelineno-30-3">3</a></span>
+<span class="normal"><a href="#__codelineno-30-4">4</a></span>
+<span class="normal"><a href="#__codelineno-30-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1"></a>INSERT INTO part_demo (ts, car, speed)
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2"></a>    (SELECT &#39;2023-07-01 00:00:00&#39;::timestamp +
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3"></a>        make_interval(secs=&gt;id, months=&gt;((random()*2)::int)),
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4"></a>        &#39;car-&#39; || ceil(random()*2), ceil(random()*60)
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5"></a>        FROM generate_series(1,100) AS id);
+</span></code></pre></div></td></tr></table></div>
+<p>如果从相应的分区中检索行，请注意，它们具有相应日期范围的行。例如：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-31-1">1</a></span>
+<span class="normal"><a href="#__codelineno-31-2">2</a></span>
+<span class="normal"><a href="#__codelineno-31-3">3</a></span>
+<span class="normal"><a href="#__codelineno-31-4">4</a></span>
+<span class="normal"><a href="#__codelineno-31-5">5</a></span>
+<span class="normal"><a href="#__codelineno-31-6">6</a></span>
+<span class="normal"><a href="#__codelineno-31-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1"></a>SELECT * FROM part_9_23 LIMIT 4;
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2"></a>         ts          |  car  | speed
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3"></a>---------------------+-------+-------
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4"></a> 2023-09-01 00:00:04 | car-2 |    45
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5"></a> 2023-09-01 00:00:05 | car-2 |    38
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6"></a> 2023-09-01 00:00:08 | car-2 |    49
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7"></a> 2023-09-01 00:00:23 | car-2 |    33
+</span></code></pre></div></td></tr></table></div>
+<ol>
+<li>获取数据</li>
+</ol>
+<p>尽管数据作为分区存储在不同的表中，但要访问所有数据，只需要查询父表。如下所示，查看所选查询的查询计划： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-32-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-32-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-32-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-32-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-32-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-32-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-32-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-32-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-32-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-32-10">10</a></span>
+<span class="normal"><a href="#__codelineno-32-11">11</a></span>
+<span class="normal"><a href="#__codelineno-32-12">12</a></span>
+<span class="normal"><a href="#__codelineno-32-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1"></a>EXPLAIN ANALYZE SELECT * FROM part_demo;
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2"></a>                                  QUERY PLAN
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3"></a>-------------------------------------------------------------------------------
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4"></a> Append (actual time=1.085..5.351 rows=100 loops=1)
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5"></a>   -&gt;  Seq Scan on public.part_7_23 (actual time=1.079..2.431 rows=25 loops=1)
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6"></a>         Output: part_7_23.ts, part_7_23.car, part_7_23.speed
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7"></a>   -&gt;  Seq Scan on public.part_8_23 (actual time=0.665..1.555 rows=47 loops=1)
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8"></a>         Output: part_8_23.ts, part_8_23.car, part_8_23.speed
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9"></a>   -&gt;  Seq Scan on public.part_9_23 (actual time=0.648..1.342 rows=28 loops=1)
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10"></a>         Output: part_9_23.ts, part_9_23.car, part_9_23.speed
+</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11"></a> Planning Time: 0.105 ms
+</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12"></a> Execution Time: 5.434 ms
+</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13"></a> Peak Memory Usage: 19 kB
+</span></code></pre></div></td></tr></table></div>
+<p>查询父表时，会自动查询子分区</p>
+<ol>
+<li>获取时间范围内的数据
+   由于数据是根据时间划分的，因此在查询特定时间范围时，查询执行器仅从数据预期所在的分区中获取数据。例如，请参阅获取特定月份数据的查询计划</li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-33-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-33-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-33-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-33-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-33-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-33-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-33-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-33-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-33-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-33-10">10</a></span>
+<span class="normal"><a href="#__codelineno-33-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1"></a>EXPLAIN ANALYZE SELECT * FROM part_demo WHERE ts &gt; &#39;2023-07-01&#39; AND ts &lt; &#39;2023-08-01&#39;;
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2"></a>                                   QUERY PLAN
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3"></a>-----------------------------------------------------------------------------------------------------------
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4"></a> Append (actual time=2.288..2.310 rows=25 loops=1)
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5"></a>   -&gt;  Seq Scan on public.part_7_23 (actual time=2.285..2.301 rows=25 loops=1)
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6"></a>         Output: part_7_23.ts, part_7_23.car, part_7_23.speed
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7"></a>         Remote Filter: ((part_7_23.ts &gt; &#39;2023-07-01 00:00:00&#39;::timestamp without time zone)
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8"></a>                AND (part_7_23.ts &lt; &#39;2023-08-01 00:00:00&#39;::timestamp without time zone))
+</span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9"></a> Planning Time: 0.309 ms
+</span><span id="__span-33-10"><a id="__codelineno-33-10" name="__codelineno-33-10"></a> Execution Time: 2.411 ms
+</span><span id="__span-33-11"><a id="__codelineno-33-11" name="__codelineno-33-11"></a> Peak Memory Usage: 14 kB
+</span></code></pre></div></td></tr></table></div>
+<p>您可以看到查询计划只选择了一个分区来从中获取数据 </p>
+<ol>
+<li>删除旧数据
+   数据分区的主要优点是可以轻松地丢弃较旧的数据。要删除旧数据，您所需要做的就是删除特定的分区表。例如，当不需要第7个月的数据时，请执行以下操作：</li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-34-1">1</a></span>
+<span class="normal"><a href="#__codelineno-34-2">2</a></span>
+<span class="normal"><a href="#__codelineno-34-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1"></a>DROP TABLE part_7_23;
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2"></a>DROP TABLE
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3"></a>Time: 103.214 ms
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_10"><strong>键值</strong><a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>在键值数据模型中，每个键都与一个且仅与一个值相关联。键值存储公开了三个基本API：</p>
+<ul>
+<li>GET获取键的值（例如，GET('name')）</li>
+<li>SET存储键的值（例如，SET('name'，'bigmath')）</li>
+<li>DEL删除键及其值（例如，DEL('name')） </li>
+</ul>
+<p>有了这三个简单的功能，键值存储凭借其速度和简单性在现代基础设施中占据了一席之地。
+BMDB在用键值存储时提供了几个优势：
+BMDB内部将数据存储为键值对的集合，因此自动成为键值存储。
+BMDB在设计上是分布式的，自然也可以作为分布式键值存储。
+由于RAFT复制，BMDB固有地提供了数据的一致性，而其他键值存储通常无法保证这一点。 </p>
+<h4 id="_11"><strong>存储用户数据</strong><a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
+<p>例如，为了存储用户的详细信息，可以采用一个模式，其中每个属性都是一个单独的键，例如以下内容：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-35-1">1</a></span>
+<span class="normal"><a href="#__codelineno-35-2">2</a></span>
+<span class="normal"><a href="#__codelineno-35-3">3</a></span>
+<span class="normal"><a href="#__codelineno-35-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1"></a>user1.name = &quot;John Wick&quot;
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2"></a>user1.country = &quot;USA&quot;
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3"></a>user2.name = &quot;Harry Potter&quot;
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4"></a>user2.country = &quot;UK&quot;
+</span></code></pre></div></td></tr></table></div>
+<p>为此，您可以创建一个表，如下所示： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-36-1">1</a></span>
+<span class="normal"><a href="#__codelineno-36-2">2</a></span>
+<span class="normal"><a href="#__codelineno-36-3">3</a></span>
+<span class="normal"><a href="#__codelineno-36-4">4</a></span>
+<span class="normal"><a href="#__codelineno-36-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1"></a>CREATE TABLE kvstore (
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2"></a>    key VARCHAR,
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3"></a>    value VARCHAR,
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4"></a>    PRIMARY KEY(key)
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5"></a>);
+</span></code></pre></div></td></tr></table></div>
+<p>要添加一些数据，请输入以下内容：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-37-1">1</a></span>
+<span class="normal"><a href="#__codelineno-37-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1"></a>INSERT INTO kvstore VALUES (&#39;user1.name&#39;, &#39;John Wick&#39;), (&#39;user1.country&#39;, &#39;USA&#39;),
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2"></a>                           (&#39;user2.name&#39;, &#39;Harry Potter&#39;), (&#39;user2.country&#39;, &#39;UK&#39;);
+</span></code></pre></div></td></tr></table></div>
+<ol>
+<li>GET
+   要获取user1的名称，您可以执行以下操作： </li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-38-1">1</a></span>
+<span class="normal"><a href="#__codelineno-38-2">2</a></span>
+<span class="normal"><a href="#__codelineno-38-3">3</a></span>
+<span class="normal"><a href="#__codelineno-38-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1"></a>SELECT value FROM kvstore WHERE key = &#39;user1.name&#39;;
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2"></a>   value
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3"></a>-----------
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4"></a> John Wick
+</span></code></pre></div></td></tr></table></div>
+<ol>
+<li>SET
+   要存储键的值，可以执行插入操作。因为key 可能已经存在，所以应该提供一个ON CONFLICT UPDATE子句。 </li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-1">1</a></span>
+<span class="normal"><a href="#__codelineno-39-2">2</a></span>
+<span class="normal"><a href="#__codelineno-39-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1"></a>INSERT INTO kvstore(key, value) VALUES(&#39;user1.name&#39;, &#39;Jack Ryan&#39;) 
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2"></a>        ON CONFLICT (key) DO
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3"></a>        UPDATE SET value = EXCLUDED.value;
+</span></code></pre></div></td></tr></table></div>
+<ol>
+<li>DEL
+   要删除键及其值，可以执行如下简单的delete命令 </li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-40-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1"></a>DELETE FROM kvstore WHERE key = &#39;user1.name&#39;;
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_12"><strong>适用举例</strong><a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
+<ol>
+<li>
+<p>缓存服务器
+   键值数据模型最适合设计缓存服务器，其中缓存的数据由键表示。缓存的对象可以用JSON字符串表示（具有多个属性），并由应用程序进行解析。</p>
+</li>
+<li>
+<p>电话簿
+   电话簿键值模型，其中键是电话号码，值是电话号码所属人员的姓名和地址。</p>
+</li>
+<li>
+<p>会话存储
+   面向会话的应用程序，如web应用程序，在用户登录时启动会话，并一直处于活动状态，直到用户注销或会话超时。在此期间，应用程序将所有与会话相关的数据，如配置文件信息、主题、邮政编码、地理位置等进行键值存储。</p>
+</li>
+<li>
+<p>购物车
+   用户的购物车可以表示为JSON字符串，并存储在一个键下，例如user1.cart。由于BMDB提供了强大的一致性和弹性，即使发生灾难，购物车信息也不会丢失。</p>
+</li>
+</ol>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="%E6%9E%84%E5%BB%BA%E5%A4%9A%E4%BA%91%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 构建多云应用程序">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                构建多云应用程序
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="%E5%AD%A6%E4%B9%A0%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/%E6%95%B0%E6%8D%AE%E5%BB%BA%E6%A8%A1.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 数据建模">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                数据建模
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2023 - 2024 贝格迈思（深圳）技术有限公司 粤ICP备17054434号-1
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/as599397086/BMDOC" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.code.select", "content.tabs.link", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.path", "navigation.prune", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+        <script src="../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>

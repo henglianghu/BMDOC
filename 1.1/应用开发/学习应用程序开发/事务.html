@@ -1,0 +1,3060 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="贝格迈思数据库使用手册">
+      
+      
+      
+      
+        <link rel="prev" href="SQLvsNoSQL.html">
+      
+      
+        <link rel="next" href="%E6%96%87%E6%9C%AC%E6%90%9C%E7%B4%A2.html">
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+    
+    
+      
+        <title>事务 - 手册</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.35e1ed30.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="mo" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      <!--
+  Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Determine classes -->
+
+
+  
+
+
+<!-- Header -->
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav
+    class="md-header__inner md-grid"
+    aria-label="页眉"
+  >
+
+    <!-- Link to home -->
+    <a
+      href="../../index.html"
+      title="手册"
+      class="md-header__button md-logo"
+      aria-label="手册"
+      data-md-component="logo"
+    >
+      
+  <img src="../../assets/new-logo.png" alt="logo">
+
+    </a>
+
+    <!-- Button to open drawer -->
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+
+    <!-- Header title -->
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            手册
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              事务
+            
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color palette toggle -->
+    
+      
+    
+
+    <!-- User preference: color palette -->
+    
+
+    <!-- Site language selector -->
+    
+
+    <!-- Button to open search modal -->
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+
+      <!-- Search interface -->
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    <!-- Repository information -->
+    
+      <div class="md-header__source">
+        <a href="https://github.com/as599397086/BMDOC" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+
+  <!-- Navigation tabs (sticky) -->
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="手册" class="md-nav__button md-logo" aria-label="手册" data-md-component="logo">
+      
+  <img src="../../assets/new-logo.png" alt="logo">
+
+    </a>
+    手册
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/as599397086/BMDOC" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AiSQL简介
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    快速上手
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    应用开发
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            应用开发
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/JAVA.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    构建应用
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%9E%84%E5%BB%BA%E5%85%A8%E5%B1%80%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    构建全局应用程序
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%9E%84%E5%BB%BA%E5%A4%9A%E4%BA%91%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    构建多云应用程序
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%B8%B8%E8%A7%81%E6%A8%A1%E5%BC%8F.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    常见模式
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    学习应用程序开发
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            学习应用程序开发
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E6%95%B0%E6%8D%AE%E5%BB%BA%E6%A8%A1.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数据建模
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数据类型
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SQLvsNoSQL.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQL vs NoSQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    事务
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="%E4%BA%8B%E5%8A%A1.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    事务
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    概述
+  </a>
+  
+    <nav class="md-nav" aria-label="概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bsql" class="md-nav__link">
+    BSQL
+  </a>
+  
+    <nav class="md-nav" aria-label="BSQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    概述
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    典型命令
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    并发控制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    失败时重试
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    高性能调优
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    可观测性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    会话级设置
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bcql" class="md-nav__link">
+    BCQL
+  </a>
+  
+    <nav class="md-nav" aria-label="BCQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    事务属性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cqlsh" class="md-nav__link">
+    cqlsh使用示例
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#java" class="md-nav__link">
+    JAVA使用示例
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    关于线性化的注意事项
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bsql_1" class="md-nav__link">
+    BSQL中的事务重试
+  </a>
+  
+    <nav class="md-nav" aria-label="BSQL中的事务重试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    先决条件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    自动重试
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    客户端重试
+  </a>
+  
+    <nav class="md-nav" aria-label="客户端重试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#40001-serializationfailure" class="md-nav__link">
+    40001 - SerializationFailure
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#savepoints" class="md-nav__link">
+    Savepoints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    不可重试的错误
+  </a>
+  
+    <nav class="md-nav" aria-label="不可重试的错误">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#25001-specify-transaction-isolation-level" class="md-nav__link">
+    25001 - Specify transaction isolation level
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25006-modify-a-row-in-a-read-only-transaction" class="md-nav__link">
+    25006 - Modify a row in a read-only transaction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25p02-infailedsqltransaction" class="md-nav__link">
+    25P02 - InFailedSqlTransaction
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bsql_2" class="md-nav__link">
+    BSQL中的性能调优
+  </a>
+  
+    <nav class="md-nav" aria-label="BSQL中的性能调优">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    快速单行事务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    最大限度地减少冲突错误
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    处理空闲应用程序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    大型扫描和批处理作业
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    乐观并发控制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    存储过程：最大限度地减少往返
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    全局应用程序的性能调优
+  </a>
+  
+    <nav class="md-nav" aria-label="全局应用程序的性能调优">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#leader" class="md-nav__link">
+    将Leader放在一个区域
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#follower" class="md-nav__link">
+    follower读
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    使用重复索引
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    错误码
+  </a>
+  
+    <nav class="md-nav" aria-label="错误码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#25001-active-sql-transaction" class="md-nav__link">
+    25001: Active SQL transaction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25006-read-only-sql-transaction" class="md-nav__link">
+    25006: Read only SQL transaction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25p01-no-active-sql-transaction" class="md-nav__link">
+    25P01: No active SQL transaction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25p02-in-failed-sql-transaction" class="md-nav__link">
+    25P02: In failed SQL transaction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25p03-idle-in-transaction-session-timeout" class="md-nav__link">
+    25P03: Idle in transaction session timeout
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#40001-serialization-failure" class="md-nav__link">
+    40001: Serialization failure
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2d000-invalid-transaction-termination" class="md-nav__link">
+    2D000: Invalid transaction termination
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3b001-invalid-savepoint-specification" class="md-nav__link">
+    3B001: Invalid savepoint specification
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E6%96%87%E6%9C%AC%E6%90%9C%E7%B4%A2.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    文本搜索
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E8%81%9A%E9%9B%86.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    聚集
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E6%89%B9%E5%A4%84%E7%90%86%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    批处理操作
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Date%26Time.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Date and time
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E6%96%87%E6%9C%AC.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    字符串和文本
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E6%95%B0%E6%8D%AE%E8%BF%87%E6%9C%9F%E7%9A%84TTL.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数据过期的TTL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    最佳实践
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E9%A9%B1%E5%8A%A8%E4%B8%8E%E5%AF%B9%E8%B1%A1%E5%85%B3%E7%B3%BB%E6%98%A0%E5%B0%84/%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    驱动与对象关系映射
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%9C%9F%E5%AE%9E%E7%A4%BA%E4%BE%8B.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    真实示例
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    服务质量
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BA%91%E5%8E%9F%E7%94%9F%E5%BC%80%E5%8F%91.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    云原生开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E9%A9%B1%E5%8A%A8%E5%92%8CORMs/JDBC_Drivers.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    驱动和ORMs
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%AC%AC%E4%B8%89%E6%96%B9%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第三方工具
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BSQL%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86%E6%B1%A0.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BSQL连接管理池
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../%E9%83%A8%E7%BD%B2%E9%9B%86%E7%BE%A4/%E8%BD%AF%E7%A1%AC%E4%BB%B6%E7%8E%AF%E5%A2%83%E9%9C%80%E6%B1%82.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    部署集群
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数据迁移
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../%E7%AE%A1%E7%90%86%E6%95%B0%E6%8D%AE%E5%BA%93/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E4%B8%8E%E7%9B%91%E6%8E%A7.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    管理数据库
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-%E5%90%91%E9%87%8F%E7%89%B9%E6%80%A7.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    向量特性
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../AI%E7%89%B9%E6%80%A7/%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI特性
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../../%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    参考
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    概述
+  </a>
+  
+    <nav class="md-nav" aria-label="概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bsql" class="md-nav__link">
+    BSQL
+  </a>
+  
+    <nav class="md-nav" aria-label="BSQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    概述
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    典型命令
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    并发控制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    失败时重试
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    高性能调优
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    可观测性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    会话级设置
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bcql" class="md-nav__link">
+    BCQL
+  </a>
+  
+    <nav class="md-nav" aria-label="BCQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    事务属性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cqlsh" class="md-nav__link">
+    cqlsh使用示例
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#java" class="md-nav__link">
+    JAVA使用示例
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    关于线性化的注意事项
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bsql_1" class="md-nav__link">
+    BSQL中的事务重试
+  </a>
+  
+    <nav class="md-nav" aria-label="BSQL中的事务重试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    先决条件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    自动重试
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    客户端重试
+  </a>
+  
+    <nav class="md-nav" aria-label="客户端重试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#40001-serializationfailure" class="md-nav__link">
+    40001 - SerializationFailure
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#savepoints" class="md-nav__link">
+    Savepoints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    不可重试的错误
+  </a>
+  
+    <nav class="md-nav" aria-label="不可重试的错误">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#25001-specify-transaction-isolation-level" class="md-nav__link">
+    25001 - Specify transaction isolation level
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25006-modify-a-row-in-a-read-only-transaction" class="md-nav__link">
+    25006 - Modify a row in a read-only transaction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25p02-infailedsqltransaction" class="md-nav__link">
+    25P02 - InFailedSqlTransaction
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bsql_2" class="md-nav__link">
+    BSQL中的性能调优
+  </a>
+  
+    <nav class="md-nav" aria-label="BSQL中的性能调优">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    快速单行事务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    最大限度地减少冲突错误
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    处理空闲应用程序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    大型扫描和批处理作业
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    乐观并发控制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    存储过程：最大限度地减少往返
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    全局应用程序的性能调优
+  </a>
+  
+    <nav class="md-nav" aria-label="全局应用程序的性能调优">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#leader" class="md-nav__link">
+    将Leader放在一个区域
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#follower" class="md-nav__link">
+    follower读
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    使用重复索引
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    错误码
+  </a>
+  
+    <nav class="md-nav" aria-label="错误码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#25001-active-sql-transaction" class="md-nav__link">
+    25001: Active SQL transaction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25006-read-only-sql-transaction" class="md-nav__link">
+    25006: Read only SQL transaction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25p01-no-active-sql-transaction" class="md-nav__link">
+    25P01: No active SQL transaction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25p02-in-failed-sql-transaction" class="md-nav__link">
+    25P02: In failed SQL transaction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25p03-idle-in-transaction-session-timeout" class="md-nav__link">
+    25P03: Idle in transaction session timeout
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#40001-serialization-failure" class="md-nav__link">
+    40001: Serialization failure
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2d000-invalid-transaction-termination" class="md-nav__link">
+    2D000: Invalid transaction termination
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3b001-invalid-savepoint-specification" class="md-nav__link">
+    3B001: Invalid savepoint specification
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/as599397086/BMDOC/edit/master/docs/应用开发/学习应用程序开发/事务.md" title="编辑此页" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/as599397086/BMDOC/raw/master/docs/应用开发/学习应用程序开发/事务.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+  <h1>事务</h1>
+
+<h2 id="_1"><strong>概述</strong><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h3 id="bsql"><strong>BSQL</strong><a class="headerlink" href="#bsql" title="Permanent link">&para;</a></h3>
+<p>在BMDB 中，事务是作为单个逻辑工作单元执行的一系列操作。事务的要点是，它将多个步骤捆绑到一个单一的、要么全有要么全无的操作中。这些步骤之间的中间状态对其他并发事务是不可见的，如果发生了一些阻止事务完成的故障，那么这些步骤都不会影响数据库。</p>
+<h4 id="_2">概述<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
+<p>在BMDB 中，事务是BEGIN-COMMIT 块中的一组命令。例如： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>BEGIN;
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>  UPDATE accounts SET balance = balance + 1000.00 WHERE name = &#39;John Smith&#39;;
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>  -- other statements
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>COMMIT;
+</span></code></pre></div></td></tr></table></div>
+<p>当您有多个语句要作为事务的一部分执行时，需要BEGIN和COMMIT块。BMDB 将每个特定的SQL语句视为在事务中执行。 </p>
+<p>如果您决定取消事务而不提交它，您可以发出ROLLBACK 而不是COMMIT。还可以使用SAVEPOINT控制语句子集的回滚。回滚到savepoint后，将继续定义该保存点，因此可以多次回滚到该savepoint。</p>
+<p>由于BMDB 中的所有事务都保证符合ACID，因此可以在事务处理过程中抛出错误，以确保不违反正确性保证。BMDB 为每种情况返回不同的错误代码，并提供详细信息。应用程序需要被设计为正确地进行重试以获得高可用性。 </p>
+<h4 id="_3">典型命令<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
+<p>事务中通常涉及以下命令： </p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BEGIN</td>
+<td>启动事务。这是事务中的第一条语句。</td>
+<td>BEGIN TRANSACTION</td>
+</tr>
+<tr>
+<td>SET</td>
+<td>设置会话级事务设置</td>
+<td>SET idle_in_transaction_session_timeout = 10000</td>
+</tr>
+<tr>
+<td>SHOW</td>
+<td>显示会话级事务设置</td>
+<td>SHOW idle_in_transaction_session_timeout</td>
+</tr>
+<tr>
+<td>SET TRANSACTION</td>
+<td>设置隔离级别。</td>
+<td>SET TRANSACTION SERIALIZABLE</td>
+</tr>
+<tr>
+<td>SAVEPOINT</td>
+<td>创建一个检查点。</td>
+<td>SAVEPOINT bm_save</td>
+</tr>
+<tr>
+<td>ROLLBACK TO SAVEPOINT</td>
+<td>Rollback到一个指定的保存点</td>
+<td>ROLLBACK TO SAVEPOINT bm_save</td>
+</tr>
+<tr>
+<td>RELEASE SAVEPOINT</td>
+<td>销毁一个保存点</td>
+<td>RELEASE bm_save</td>
+</tr>
+<tr>
+<td>ROLLBACK</td>
+<td>取消事务</td>
+<td>ROLLBACK</td>
+</tr>
+<tr>
+<td>COMMIT</td>
+<td>应用事务到表中</td>
+<td>COMMIT</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_4">并发控制<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<ol>
+<li>隔离级别 
+   隔离级别定义了事务的数据可见性级别。BMDB 支持多版本并发控制（MVCC），无需锁定即可隔离并发事务。
+   BMDB 支持三种隔离级别，以支持不同的应用需求。 </li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Repeatable Read (Snapshot)</td>
+<td>只有在事务开始之前提交的数据对事务可见。实际上，事务会在事务开始时看到数据库的快照。</td>
+</tr>
+<tr>
+<td>Read Committed (beta)</td>
+<td>事务的每条语句都会看到任何并发事务在执行该语句之前提交的最新数据。如果另一个事务修改了与当前事务相关的行，则当前事务将等待另一事务提交或回滚其更改。</td>
+</tr>
+<tr>
+<td>Serializable</td>
+<td>这是最严格的隔离级别，其效果是所有事务都以串行方式执行，一个接一个而不是并行执行。</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>显式锁定 
+   通常，SELECT语句不会自动锁定事务期间提取的行。根据您的应用程序需要，您可能必须锁定SELECT期间检索到的行。BMDB 支持这种情况下的显式行级锁定，并确保没有两个事务可以在同一行上持有锁。根据并发控制策略解决锁获取冲突。</li>
+</ol>
+<p>锁定具有以下格式：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>SELECT * FROM txndemo WHERE k=1 FOR UPDATE;
+</span></code></pre></div></td></tr></table></div>
+<p>BMDB 支持以下类型的显式行锁： </p>
+<table>
+<thead>
+<tr>
+<th>锁</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FOR UPDATE</td>
+<td>最强独占锁。阻止这些行上的所有其他锁，直到事务结束。</td>
+</tr>
+<tr>
+<td>FOR NO KEY UPDATE</td>
+<td>弱于FOR UPDATE和独占。不会阻止FOR KEY SHARE命令。</td>
+</tr>
+<tr>
+<td>FOR SHARE</td>
+<td>不阻止其他FOR SHARE和FOR KEY SHARE命令的共享锁。</td>
+</tr>
+<tr>
+<td>FOR KEY SHARE</td>
+<td>不阻止其他FOR SHARE、FOR KEY SHARE和FOR NO KEY UPDATE命令的共享锁。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_5">失败时重试<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<p>在事务处理过程中，由于BMDB 保证强ACID属性，可能会发生故障。每个场景都会返回适当的错误代码，应用程序应采用特定于其使用的隔离级别的正确重试机制，以实现高可用性。通常，错误代码可分为以下三种类型： </p>
+<ol>
+<li>警告：解释语句失败原因的信息性消息。例如：</li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a>-- When a BEGIN statement is issued inside a transaction
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a>WARNING:  25001: there is already a transaction in progress
+</span></code></pre></div></td></tr></table></div>
+<p>大多数客户端库都隐藏警告，但当您直接从终端执行语句时，可能会注意到这些消息。语句执行可以继续而不中断，但需要进行修改以避免消息再次出现。</p>
+<ol>
+<li>错误：当事务无法继续，并且客户端必须重新启动时，会返回错误。例如：</li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a>-- When multiple transactions are modifying the same key.
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a>ERROR:  40001: Operation expired: Transaction XXXX expired or aborted by a conflict
+</span></code></pre></div></td></tr></table></div>
+<p>应用程序需要采取适当的操作处理这些错误。</p>
+<ol>
+<li>致命：将返回致命消息，通知与服务器的连接已断开。例如：</li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a>-- When the application takes a long time to issue a statement in the middle of a transaction.
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2"></a>FATAL:  25P03: terminating connection due to idle-in-transaction timeout
+</span></code></pre></div></td></tr></table></div>
+<p>此时，应用程序应该重新连接到服务器。 </p>
+<h4 id="_6">高性能调优<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<p>所有应用程序都需要进行调优以获得最佳性能。BMDB 支持各种结构和多种设置，可以根据您的需求进行调整。在正确的场景中采用正确的构造可以极大地提高应用程序的性能。例如：</p>
+<ul>
+<li>将影响单行的多语句事务转换为快速路径事务。</li>
+<li>避免长时间等待和适当的超时。</li>
+<li>使用ON CONFLICT 子句最大限度地减少冲突错误。</li>
+<li>不间断的长扫描</li>
+<li>使用存储过程最大限度地减少往返行程。</li>
+</ul>
+<h4 id="_7">可观测性<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<p>BMDB 导出了许多可观测的指标，这样您就可以看到集群中发生了什么。这些度量可以导出到Prometheus ，并在Grafana中可视化。以下是与事务相关的关键指标：</p>
+<ol>
+<li>
+<p>transactions_running
+   显示当前活动的事务数，它提供了集群当前事务密集程度的概述。 </p>
+</li>
+<li>
+<p>transaction_conflicts
+   描述事务与其它事务发生冲突的次数，冲突数量的增加可能会直接导致应用程序的延迟增加。</p>
+</li>
+<li>
+<p>expired_transactions
+   显示由于状态分片未从客户端连接的节点接收到足够的检测信号而未完成的事务数。如果管理事务的节点或进程崩溃，通常会发生这种情况。 </p>
+</li>
+</ol>
+<h4 id="_8">会话级设置<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<p>以下BSQL参数会影响事务，可以根据应用程序的需要进行配置。可以使用SET 命令设置这些设置，并且可以使用SHOW命令获取当前值。 </p>
+<ol>
+<li>default_transaction_read_only
+   设置为ON/TRUE/1可使当前会话中的所有事务都为只读。当您想要运行报告或设置follower 读取时，这很有帮助。</li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a>SET default_transaction_read_only = TRUE;
+</span></code></pre></div></td></tr></table></div>
+<ol>
+<li>default_transaction_isolation
+   将其设置为serializable、repeatable read或read committed之一。这为当前会话中的所有事务设置默认隔离级别。</li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a>SET default_transaction_isolation = &#39;serializable&#39;;
+</span></code></pre></div></td></tr></table></div>
+<ol>
+<li>default_transaction_deferrable 
+   设置为ON/TRUE/1可使当前会话中的所有事务都可延迟。这样可以确保事务不会因序列化失败而取消。 </li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a>SET default_transaction_deferrable = TRUE;
+</span></code></pre></div></td></tr></table></div>
+<p>注意：
+DEFERRABLE 事务属性无效，除非该事务是SERIALIZABLE 且READ ONLY。 </p>
+<ol>
+<li>
+<p>idle_in_transaction_session_timeout
+   将其设置为持续时间（例如，“10s或1000”），以限制事务语句中的延迟。默认时间单位为毫秒。</p>
+</li>
+<li>
+<p>bm_transaction_priority_lower_bound
+   将其设置为[0.0 - 1.0]范围内的值，以设置动态优先级分配的下限</p>
+</li>
+<li>
+<p>bm_transaction_priority_upper_bound
+   将其设置为[0.0 - 1.0]范围内的值，以设置动态优先级分配的上限。</p>
+</li>
+</ol>
+<h3 id="bcql"><strong>BCQL</strong><a class="headerlink" href="#bcql" title="Permanent link">&para;</a></h3>
+<p>事务是作为单个逻辑工作单元执行的一系列操作。事务具有以下四个关键属性，通常缩写为ACID：
+原子性：事务中的所有工作都被视为一个原子单元——要么全部执行，要么不执行。
+一致性：完成的事务使数据库处于一致的内部状态。这可以是事务中的所有操作都成功，也可以是没有一个成功。
+隔离性：此属性确定一个事务所做的更改对另一个事务可见的方式和时间。例如，可序列化隔离级别保证两个并发事务看起来好像一个在另一个之后执行（也就是说，好像它们以完全隔离的方式发生）。BMDB支持BCQL API中的快照隔离级别。
+持久性：事务处理的结果永久存储在系统中。即使在断电或系统故障的情况下，修改也必须持久。 </p>
+<h4 id="_9">事务属性<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
+<p>要在BCQL中的表上启用分布式事务，请创建启用了transactions属性的表，如下所示： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a>CREATE TABLE IF NOT EXISTS &lt;TABLE_NAME&gt; (...) WITH transactions = { &#39;enabled&#39; : true };
+</span></code></pre></div></td></tr></table></div>
+<h4 id="cqlsh">cqlsh使用示例<a class="headerlink" href="#cqlsh" title="Permanent link">&para;</a></h4>
+<p>创建键值空间：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a>CREATE KEYSPACE banking;
+</span></code></pre></div></td></tr></table></div>
+<p>创建一个启用transactions 属性集的表，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span>
+<span class="normal"><a href="#__codelineno-10-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a>CREATE TABLE banking.accounts (
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2"></a>  account_name varchar,
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3"></a>  account_type varchar,
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4"></a>  balance float,
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5"></a>  PRIMARY KEY ((account_name), account_type)
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6"></a>) with transactions = { &#39;enabled&#39; : true };
+</span></code></pre></div></td></tr></table></div>
+<p>您可以通过运行以下查询来验证此表上是否启用了事务： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span>
+<span class="normal"><a href="#__codelineno-11-4">4</a></span>
+<span class="normal"><a href="#__codelineno-11-5">5</a></span>
+<span class="normal"><a href="#__codelineno-11-6">6</a></span>
+<span class="normal"><a href="#__codelineno-11-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a>select keyspace_name, table_name, transactions from system_schema.tables
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2"></a>where keyspace_name=&#39;banking&#39; AND table_name = &#39;accounts&#39;;
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3"></a> keyspace_name | table_name | transactions
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4"></a>---------------+------------+---------------------
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5"></a>       banking |   accounts | {&#39;enabled&#39;: &#39;true&#39;}
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6"></a>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7"></a>(1 rows)
+</span></code></pre></div></td></tr></table></div>
+<p>插入以下一些示例数据： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1"></a>INSERT INTO banking.accounts (account_name, account_type, balance) VALUES (&#39;John&#39;, &#39;savings&#39;, 1000);
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2"></a>INSERT INTO banking.accounts (account_name, account_type, balance) VALUES (&#39;John&#39;, &#39;checking&#39;, 100);
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3"></a>INSERT INTO banking.accounts (account_name, account_type, balance) VALUES (&#39;Smith&#39;, &#39;savings&#39;, 2000);
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4"></a>INSERT INTO banking.accounts (account_name, account_type, balance) VALUES (&#39;Smith&#39;, &#39;checking&#39;, 50);
+</span></code></pre></div></td></tr></table></div>
+<p>显示John和Smith的余额： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span>
+<span class="normal"><a href="#__codelineno-13-6">6</a></span>
+<span class="normal"><a href="#__codelineno-13-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1"></a>select * from banking.accounts;
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2"></a> account_name | account_type | balance
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3"></a>--------------+--------------+---------
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4"></a>         John |     checking |     100
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5"></a>         John |      savings |    1000
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6"></a>        Smith |     checking |      50
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7"></a>        Smith |      savings |    2000
+</span></code></pre></div></td></tr></table></div>
+<p>检查John的余额如下：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1"></a>SELECT SUM(balance) as Johns_balance FROM banking.accounts WHERE account_name=&#39;John&#39;;
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2"></a> johns_balance
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3"></a>---------------
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4"></a>          1100
+</span></code></pre></div></td></tr></table></div>
+<p>检查Smith的余额如下：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1"></a>SELECT SUM(balance) as smiths_balance FROM banking.accounts WHERE account_name=&#39;Smith&#39;;
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2"></a> smiths_balance
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3"></a>----------------
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4"></a>           2050
+</span></code></pre></div></td></tr></table></div>
+<p>执行事务：</p>
+<p>假设John 把$200 从他的储蓄帐户转到他的支票帐户。这必须是一个事务性操作。这可以通过以下方式实现： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span>
+<span class="normal"><a href="#__codelineno-16-3">3</a></span>
+<span class="normal"><a href="#__codelineno-16-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1"></a>BEGIN TRANSACTION
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2"></a>  UPDATE banking.accounts SET balance = balance - 200 WHERE account_name=&#39;John&#39; AND account_type=&#39;savings&#39;;
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3"></a>  UPDATE banking.accounts SET balance = balance + 200 WHERE account_name=&#39;John&#39; AND account_type=&#39;checking&#39;;
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4"></a>END TRANSACTION;
+</span></code></pre></div></td></tr></table></div>
+<p>如果您现在选择了John帐户的值，您应该会看到反映的金额。总余额应与以前一样为$1100。 </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span>
+<span class="normal"><a href="#__codelineno-17-4">4</a></span>
+<span class="normal"><a href="#__codelineno-17-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1"></a>select * from banking.accounts where account_name=&#39;John&#39;;
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2"></a> account_name | account_type | balance
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3"></a>--------------+--------------+---------
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4"></a>         John |     checking |     300
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5"></a>         John |      savings |     800
+</span></code></pre></div></td></tr></table></div>
+<p>检查John的余额如下：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span>
+<span class="normal"><a href="#__codelineno-18-2">2</a></span>
+<span class="normal"><a href="#__codelineno-18-3">3</a></span>
+<span class="normal"><a href="#__codelineno-18-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1"></a>SELECT SUM(balance) as Johns_balance FROM banking.accounts WHERE account_name=&#39;John&#39;;
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2"></a> johns_balance
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3"></a>---------------
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4"></a>          1100
+</span></code></pre></div></td></tr></table></div>
+<p>此外，John的支票和储蓄账户余额应该在同一写入时间戳写入。 </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span>
+<span class="normal"><a href="#__codelineno-19-2">2</a></span>
+<span class="normal"><a href="#__codelineno-19-3">3</a></span>
+<span class="normal"><a href="#__codelineno-19-4">4</a></span>
+<span class="normal"><a href="#__codelineno-19-5">5</a></span>
+<span class="normal"><a href="#__codelineno-19-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1"></a>select account_name, account_type, balance, writetime(balance)
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2"></a>from banking.accounts where account_name=&#39;John&#39;;
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3"></a> account_name | account_type | balance | writetime(balance)
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4"></a>--------------+--------------+---------+--------------------
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5"></a>         John |     checking |     300 |   1517898028890171
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6"></a>         John |      savings |     800 |   1517898028890171
+</span></code></pre></div></td></tr></table></div>
+<p>现在假设John 把$200从他的支票帐户转到Smith的支票帐户。您可以通过以下事务来完成此操作： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span>
+<span class="normal"><a href="#__codelineno-20-2">2</a></span>
+<span class="normal"><a href="#__codelineno-20-3">3</a></span>
+<span class="normal"><a href="#__codelineno-20-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1"></a>BEGIN TRANSACTION
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2"></a>  UPDATE banking.accounts SET balance = balance - 200 WHERE account_name=&#39;John&#39; AND account_type=&#39;checking&#39;;
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3"></a>  UPDATE banking.accounts SET balance = balance + 200 WHERE account_name=&#39;Smith&#39; AND account_type=&#39;checking&#39;;
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4"></a>END TRANSACTION;
+</span></code></pre></div></td></tr></table></div>
+<p>要验证转账是否按预期进行，并验证更新两个帐户的时间是否相同，请执行以下查询：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span>
+<span class="normal"><a href="#__codelineno-21-2">2</a></span>
+<span class="normal"><a href="#__codelineno-21-3">3</a></span>
+<span class="normal"><a href="#__codelineno-21-4">4</a></span>
+<span class="normal"><a href="#__codelineno-21-5">5</a></span>
+<span class="normal"><a href="#__codelineno-21-6">6</a></span>
+<span class="normal"><a href="#__codelineno-21-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1"></a>select account_name, account_type, balance, writetime(balance) from banking.accounts;
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2"></a> account_name | account_type | balance | writetime(balance)
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3"></a>--------------+--------------+---------+--------------------
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4"></a>         John |     checking |     100 |   1517898167629366
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5"></a>         John |      savings |     800 |   1517898028890171
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6"></a>        Smith |     checking |     250 |   1517898167629366
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7"></a>        Smith |      savings |    2000 |   1517894361290020
+</span></code></pre></div></td></tr></table></div>
+<p>John 的净余额本应减少<span class="arithmatex">\(200，Smith 的净余额应增加\)</span>200。 </p>
+<p>检查John的余额如下： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span>
+<span class="normal"><a href="#__codelineno-22-3">3</a></span>
+<span class="normal"><a href="#__codelineno-22-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1"></a>SELECT SUM(balance) as Johns_balance FROM banking.accounts WHERE account_name=&#39;John&#39;;
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2"></a> johns_balance
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3"></a>---------------
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4"></a>           900
+</span></code></pre></div></td></tr></table></div>
+<p>检查Smith的余额如下： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
+<span class="normal"><a href="#__codelineno-23-2">2</a></span>
+<span class="normal"><a href="#__codelineno-23-3">3</a></span>
+<span class="normal"><a href="#__codelineno-23-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1"></a>SELECT SUM(balance) as smiths_balance FROM banking.accounts WHERE account_name=&#39;Smith&#39;;
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2"></a> smiths_balance
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3"></a>----------------
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4"></a>           2250
+</span></code></pre></div></td></tr></table></div>
+<h4 id="java">JAVA使用示例<a class="headerlink" href="#java" title="Permanent link">&para;</a></h4>
+<p>以下示例显示了如何创建一个基本键值表，该表有两列且启用了事务： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span>
+<span class="normal"><a href="#__codelineno-24-2">2</a></span>
+<span class="normal"><a href="#__codelineno-24-3">3</a></span>
+<span class="normal"><a href="#__codelineno-24-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1"></a>String create_stmt =
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2"></a>  String.format(&quot;CREATE TABLE IF NOT EXISTS %s (k varchar, v varchar, primary key (k)) &quot; +
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3"></a>                &quot;WITH transactions = { &#39;enabled&#39; : true };&quot;,
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4"></a>                tablename);
+</span></code></pre></div></td></tr></table></div>
+<p>可以通过在BEGIN TRANSACTION 和END TRANSACTION 块内执行命令序列来插入数据。 </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span>
+<span class="normal"><a href="#__codelineno-25-2">2</a></span>
+<span class="normal"><a href="#__codelineno-25-3">3</a></span>
+<span class="normal"><a href="#__codelineno-25-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1"></a>BEGIN TRANSACTION
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2"></a>  statement 1
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3"></a>  statement 2
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4"></a>END TRANSACTION;
+</span></code></pre></div></td></tr></table></div>
+<p>以下代码片段显示了如何将数据插入此表： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span>
+<span class="normal"><a href="#__codelineno-26-2">2</a></span>
+<span class="normal"><a href="#__codelineno-26-3">3</a></span>
+<span class="normal"><a href="#__codelineno-26-4">4</a></span>
+<span class="normal"><a href="#__codelineno-26-5">5</a></span>
+<span class="normal"><a href="#__codelineno-26-6">6</a></span>
+<span class="normal"><a href="#__codelineno-26-7">7</a></span>
+<span class="normal"><a href="#__codelineno-26-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1"></a>// Insert two key values, (key1, value1) and (key2, value2) as a transaction.
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2"></a>String create_stmt =
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3"></a>  String.format(&quot;BEGIN TRANSACTION&quot; +
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4"></a>                &quot;  INSERT INTO %s (k, v) VALUES (%s, %s);&quot; +
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5"></a>                &quot;  INSERT INTO %s (k, v) VALUES (%s, %s);&quot; +
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6"></a>                &quot;END TRANSACTION;&quot;,
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7"></a>                tablename, key1, value1,
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8"></a>                tablename, key2, value2;
+</span></code></pre></div></td></tr></table></div>
+<p>您可以准备带有事务的语句，并在执行查询时将变量绑定到准备好的语句。 </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-27-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-27-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-27-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-27-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-27-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-27-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-27-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-27-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-27-10">10</a></span>
+<span class="normal"><a href="#__codelineno-27-11">11</a></span>
+<span class="normal"><a href="#__codelineno-27-12">12</a></span>
+<span class="normal"><a href="#__codelineno-27-13">13</a></span>
+<span class="normal"><a href="#__codelineno-27-14">14</a></span>
+<span class="normal"><a href="#__codelineno-27-15">15</a></span>
+<span class="normal"><a href="#__codelineno-27-16">16</a></span>
+<span class="normal"><a href="#__codelineno-27-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1"></a>String create_stmt =
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2"></a>  String.format(&quot;BEGIN TRANSACTION&quot; +
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3"></a>                &quot;  INSERT INTO %s (k, v) VALUES (:k1, :v1);&quot; +
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4"></a>                &quot;  INSERT INTO %s (k, v) VALUES (:k1, :v2);&quot; +
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5"></a>                &quot;END TRANSACTION;&quot;,
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6"></a>                tablename, key1, value1,
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7"></a>                tablename, key2, value2;
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8"></a>PreparedStatement pstmt = client.prepare(create_stmt);
+</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9"></a>
+</span><span id="__span-27-10"><a id="__codelineno-27-10" name="__codelineno-27-10"></a>...
+</span><span id="__span-27-11"><a id="__codelineno-27-11" name="__codelineno-27-11"></a>
+</span><span id="__span-27-12"><a id="__codelineno-27-12" name="__codelineno-27-12"></a>BoundStatement txn1 = pstmt.bind().setString(&quot;k1&quot;, key1)
+</span><span id="__span-27-13"><a id="__codelineno-27-13" name="__codelineno-27-13"></a>                                  .setString(&quot;v1&quot;, value1)
+</span><span id="__span-27-14"><a id="__codelineno-27-14" name="__codelineno-27-14"></a>                                  .setString(&quot;k2&quot;, key2)
+</span><span id="__span-27-15"><a id="__codelineno-27-15" name="__codelineno-27-15"></a>                                  .setString(&quot;v2&quot;, value2);
+</span><span id="__span-27-16"><a id="__codelineno-27-16" name="__codelineno-27-16"></a>
+</span><span id="__span-27-17"><a id="__codelineno-27-17" name="__codelineno-27-17"></a>ResultSet resultSet = client.execute(txn1);
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_10">关于线性化的注意事项<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
+<p>从客户端的角度来看，自动重试可能会破坏操作的线性化。
+默认情况下，原始Cassandra Java驱动程序和BMDB Cassandra Java驱动程序使用com.datastax.driver.core.policies.DefaultRetryPolicy，它可以在客户端超时时重试请求。在网络分区下，这可能导致客户端成功响应重试请求并将操作视为已完成，但由于重试，该值可能会被旧操作覆盖。 
+为了避免这些线性化问题，请添加com.bigmath.driver.core.policies.NoRetryOnClientTimeoutPolicy，它从DefaultRetryPolicy 继承行为，但有一个例外-在操作超时的情况下会导致错误（带有OperationTimedOutException）。然后，您可以在应用程序层中处理客户端超时。</p>
+<h2 id="bsql_1"><strong>BSQL中的事务重试</strong><a class="headerlink" href="#bsql_1" title="Permanent link">&para;</a></h2>
+<p>BMDB 为事务处理过程中出现问题的各种场景返回不同的错误代码。应用程序需要被设计为正确处理这些场景，以便具有高可用性，这样用户就不会受到影响。尽管大多数错误在多个隔离级别中很常见，但有些错误是特定于某些事务隔离级别的。</p>
+<p>以下部分中的示例说明了可用于在应用程序中处理这些故障的故障场景和技术 </p>
+<h3 id="_11"><strong>先决条件</strong><a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<ol>
+<li>创建表</li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1">1</a></span>
+<span class="normal"><a href="#__codelineno-28-2">2</a></span>
+<span class="normal"><a href="#__codelineno-28-3">3</a></span>
+<span class="normal"><a href="#__codelineno-28-4">4</a></span>
+<span class="normal"><a href="#__codelineno-28-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1"></a>CREATE TABLE txndemo (
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2"></a>  k int,
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3"></a>  V int,
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4"></a>  PRIMARY KEY(k)
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5"></a>);
+</span></code></pre></div></td></tr></table></div>
+<ol>
+<li>插入一些数据</li>
+</ol>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-29-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1"></a>INSERT INTO txndemo VALUES (1,10),(2,10),(3,10),(4,10),(5,10);
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_12"><strong>自动重试</strong><a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p>BMDB 根据并发控制策略，在没有客户端干预的情况下，尽可能在服务器端自动重试失败的事务。即使对于被隐含地视为事务的单个语句也是如此。在“Read Committed”隔离模式下，服务器将无限期重试。</p>
+<p>在某些情况下，服务器端重试是不合适的。例如，已达到重试限制或事务未处于有效状态。在这些情况下，客户端有责任在应用程序层重试事务。</p>
+<h3 id="_13"><strong>客户端重试</strong><a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<p>由于冲突和死锁而发生的大多数事务错误都可以由客户端重新启动。以下场景描述了失败的原因以及应用程序需要处理的方法。</p>
+<p>执行在try..catch块中的事务，当发生可重试的失败时，发出ROLLBACK，然后重试事务。为了避免服务器过载并导致无限循环，请在两次重试之间等待一段时间，并限制重试次数。下面演示了一个典型的客户端重试实现。</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-30-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-30-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-30-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-30-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-30-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-30-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-30-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-30-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-30-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-30-10">10</a></span>
+<span class="normal"><a href="#__codelineno-30-11">11</a></span>
+<span class="normal"><a href="#__codelineno-30-12">12</a></span>
+<span class="normal"><a href="#__codelineno-30-13">13</a></span>
+<span class="normal"><a href="#__codelineno-30-14">14</a></span>
+<span class="normal"><a href="#__codelineno-30-15">15</a></span>
+<span class="normal"><a href="#__codelineno-30-16">16</a></span>
+<span class="normal"><a href="#__codelineno-30-17">17</a></span>
+<span class="normal"><a href="#__codelineno-30-18">18</a></span>
+<span class="normal"><a href="#__codelineno-30-19">19</a></span>
+<span class="normal"><a href="#__codelineno-30-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1"></a>max_attempts = 10   # max no.of retries
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2"></a>sleep_time = 0.002  # 2 ms - base sleep time
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3"></a>backoff = 2         # exponential multiplier
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4"></a>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5"></a>attempt = 0
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6"></a>while attempt &lt; max_attempts:
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7"></a>    attempt += 1
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8"></a>    try :
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9"></a>        cursor = cxn.cursor()
+</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10"></a>        cursor.execute(&quot;BEGIN&quot;);
+</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11"></a>
+</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12"></a>        # Execute Transaction Statments here
+</span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13"></a>
+</span><span id="__span-30-14"><a id="__codelineno-30-14" name="__codelineno-30-14"></a>        cursor.execute(&quot;COMMIT&quot;);
+</span><span id="__span-30-15"><a id="__codelineno-30-15" name="__codelineno-30-15"></a>        break
+</span><span id="__span-30-16"><a id="__codelineno-30-16" name="__codelineno-30-16"></a>    except psycopg2.errors.SerializationFailure as e:
+</span><span id="__span-30-17"><a id="__codelineno-30-17" name="__codelineno-30-17"></a>        cursor.execute(&quot;ROLLBACK&quot;)
+</span><span id="__span-30-18"><a id="__codelineno-30-18" name="__codelineno-30-18"></a>        if attempt &lt; max_attempts:
+</span><span id="__span-30-19"><a id="__codelineno-30-19" name="__codelineno-30-19"></a>            time.sleep(sleep_time)
+</span><span id="__span-30-20"><a id="__codelineno-30-20" name="__codelineno-30-20"></a>            sleep_time *= backoff
+</span></code></pre></div></td></tr></table></div>
+<p>如果COMMIT成功，程序将退出循环。attempt &lt; max_attempts将重试次数限制为max_attempts，并且代码在下一次重试之前等待的时间也会随着sleep_time*＝backoff而增加。选择适合您的应用程序的值</p>
+<h4 id="40001-serializationfailure">40001 - SerializationFailure<a class="headerlink" href="#40001-serializationfailure" title="Permanent link">&para;</a></h4>
+<p>当多个事务更新同一组键（冲突）或事务相互等待（死锁）时，会发生SerializationFailure 错误。错误消息可能是以下类型之一： </p>
+<p>在冲突期间，会重试某些事务。但是，在达到重试限制后，会出现以下错误： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-31-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1"></a>ERROR:  40001: All transparent retries exhausted.
+</span></code></pre></div></td></tr></table></div>
+<p>所有事务都具有动态优先级。当检测到死锁时，优先级较低的事务会自动终止。对于这种情况，客户端可能会收到类似于以下内容的消息：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-32-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1"></a>ERROR:  40001: Operation expired: Heartbeat: Transaction XXXX expired or aborted by a conflict
+</span></code></pre></div></td></tr></table></div>
+<p>处理此错误的正确方法是使用具有后退的重试循环，如客户端重试中所述。当UPDATE或COMMIT由于SerializationFailure而失败时，代码会在等待sleep_time秒后重试，最多可达max_attempts。
+处理这些失败的另一种方法是回滚到失败语句之前的检查点，然后如Savepoints中所述继续操作。</p>
+<h3 id="savepoints"><strong>Savepoints</strong><a class="headerlink" href="#savepoints" title="Permanent link">&para;</a></h3>
+<p>Savepoints 是命名的检查点，可用于回滚少数语句，然后继续处理事务，而不是在出现错误时中止整个事务。</p>
+<p>考虑以下插入一行的示例[k=1，v=30]：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-33-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-33-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-33-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-33-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-33-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-33-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-33-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-33-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-33-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-33-10">10</a></span>
+<span class="normal"><a href="#__codelineno-33-11">11</a></span>
+<span class="normal"><a href="#__codelineno-33-12">12</a></span>
+<span class="normal"><a href="#__codelineno-33-13">13</a></span>
+<span class="normal"><a href="#__codelineno-33-14">14</a></span>
+<span class="normal"><a href="#__codelineno-33-15">15</a></span>
+<span class="normal"><a href="#__codelineno-33-16">16</a></span>
+<span class="normal"><a href="#__codelineno-33-17">17</a></span>
+<span class="normal"><a href="#__codelineno-33-18">18</a></span>
+<span class="normal"><a href="#__codelineno-33-19">19</a></span>
+<span class="normal"><a href="#__codelineno-33-20">20</a></span>
+<span class="normal"><a href="#__codelineno-33-21">21</a></span>
+<span class="normal"><a href="#__codelineno-33-22">22</a></span>
+<span class="normal"><a href="#__codelineno-33-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1"></a>connstr = &#39;postgresql://bigmath@localhost:2521/bigmath&#39;
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2"></a>cxn = psycopg2.connect(connstr)
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3"></a>cursor = cxn.cursor()
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4"></a>try:
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5"></a>    cursor.execute(&quot;BEGIN&quot;)
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6"></a>
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7"></a>    # ... Execute other statements
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8"></a>
+</span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9"></a>    cursor.execute(&quot;SAVEPOINT before_insert&quot;)
+</span><span id="__span-33-10"><a id="__codelineno-33-10" name="__codelineno-33-10"></a>    try:
+</span><span id="__span-33-11"><a id="__codelineno-33-11" name="__codelineno-33-11"></a>        # insert a row
+</span><span id="__span-33-12"><a id="__codelineno-33-12" name="__codelineno-33-12"></a>        cursor.execute(&quot;INSERT INTO txndemo VALUES (1,30)&quot;)
+</span><span id="__span-33-13"><a id="__codelineno-33-13" name="__codelineno-33-13"></a>    except psycopg2.errors.UniqueViolation as e:
+</span><span id="__span-33-14"><a id="__codelineno-33-14" name="__codelineno-33-14"></a>        print(e)
+</span><span id="__span-33-15"><a id="__codelineno-33-15" name="__codelineno-33-15"></a>        # k=1 already exists in our table
+</span><span id="__span-33-16"><a id="__codelineno-33-16" name="__codelineno-33-16"></a>        cursor.execute(&quot;ROLLBACK TO SAVEPOINT before_insert&quot;)
+</span><span id="__span-33-17"><a id="__codelineno-33-17" name="__codelineno-33-17"></a>        cursor.execute(&quot;UPDATE txndemo SET v=30 WHERE k=1;&quot;)
+</span><span id="__span-33-18"><a id="__codelineno-33-18" name="__codelineno-33-18"></a>
+</span><span id="__span-33-19"><a id="__codelineno-33-19" name="__codelineno-33-19"></a>    # ... Execute other statements
+</span><span id="__span-33-20"><a id="__codelineno-33-20" name="__codelineno-33-20"></a>    cursor.execute(&quot;COMMIT&quot;)
+</span><span id="__span-33-21"><a id="__codelineno-33-21" name="__codelineno-33-21"></a>except Exception as e:
+</span><span id="__span-33-22"><a id="__codelineno-33-22" name="__codelineno-33-22"></a>  print(e)
+</span><span id="__span-33-23"><a id="__codelineno-33-23" name="__codelineno-33-23"></a>  cursor.execute(&quot;ROLLBACK&quot;)
+</span></code></pre></div></td></tr></table></div>
+<p>如果表中已存在行[k=1]，则INSERT操作将导致Unique Violation异常。从技术上讲，事务将处于错误状态，进一步的语句将导致25P02:in失败的SQL事务错误。您必须捕获异常并回滚。但是，您可以回滚到先前声明的保存点before_insert，并使用k=1更新行的值，而不是回滚整个事务。然后您可以继续处理事务中的其他语句 。</p>
+<h3 id="_14"><strong>不可重试的错误</strong><a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<p>尽管在大多数错误情况下可以重试大多数事务，但在某些情况下，重试事务不会解决问题。例如，当语句发布不正确时，可能会出现错误。这些语句必须在代码中修复才能继续 。</p>
+<h4 id="25001-specify-transaction-isolation-level">25001 - Specify transaction isolation level<a class="headerlink" href="#25001-specify-transaction-isolation-level" title="Permanent link">&para;</a></h4>
+<p>应在执行事务的第一条语句之前指定事务级隔离。如果没有，则会发生以下错误：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-34-1">1</a></span>
+<span class="normal"><a href="#__codelineno-34-2">2</a></span>
+<span class="normal"><a href="#__codelineno-34-3">3</a></span>
+<span class="normal"><a href="#__codelineno-34-4">4</a></span>
+<span class="normal"><a href="#__codelineno-34-5">5</a></span>
+<span class="normal"><a href="#__codelineno-34-6">6</a></span>
+<span class="normal"><a href="#__codelineno-34-7">7</a></span>
+<span class="normal"><a href="#__codelineno-34-8">8</a></span>
+<span class="normal"><a href="#__codelineno-34-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1"></a>BEGIN;
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2"></a>BEGIN
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3"></a>Time: 0.797 ms
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4"></a>UPDATE txndemo SET v=20 WHERE k=1;
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5"></a>UPDATE 1
+</span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6"></a>Time: 10.416 ms
+</span><span id="__span-34-7"><a id="__codelineno-34-7" name="__codelineno-34-7"></a>SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+</span><span id="__span-34-8"><a id="__codelineno-34-8" name="__codelineno-34-8"></a>ERROR:  25001: SET TRANSACTION ISOLATION LEVEL must be called before any query
+</span><span id="__span-34-9"><a id="__codelineno-34-9" name="__codelineno-34-9"></a>Time: 3.808 ms
+</span></code></pre></div></td></tr></table></div>
+<h4 id="25006-modify-a-row-in-a-read-only-transaction">25006 - Modify a row in a read-only transaction<a class="headerlink" href="#25006-modify-a-row-in-a-read-only-transaction" title="Permanent link">&para;</a></h4>
+<p>将事务指定为只读（READ ONLY）后修改行时会出现此错误，如下所示： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-35-1">1</a></span>
+<span class="normal"><a href="#__codelineno-35-2">2</a></span>
+<span class="normal"><a href="#__codelineno-35-3">3</a></span>
+<span class="normal"><a href="#__codelineno-35-4">4</a></span>
+<span class="normal"><a href="#__codelineno-35-5">5</a></span>
+<span class="normal"><a href="#__codelineno-35-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1"></a>BEGIN READ ONLY;
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2"></a>BEGIN
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3"></a>Time: 1.095 ms
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4"></a>UPDATE txndemo SET v=20 WHERE k=1;
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5"></a>ERROR:  25006: cannot execute UPDATE in a read-only transaction
+</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6"></a>Time: 4.417 ms
+</span></code></pre></div></td></tr></table></div>
+<h4 id="25p02-infailedsqltransaction">25P02 - InFailedSqlTransaction<a class="headerlink" href="#25p02-infailedsqltransaction" title="Permanent link">&para;</a></h4>
+<p>当在事务中已经存在错误之后发出语句时，就会发生此错误。错误消息将类似于以下内容：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-36-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1"></a>ERROR:  25P02: current transaction is aborted, commands ignored until end of transaction block
+</span></code></pre></div></td></tr></table></div>
+<p>考虑以下场景：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-37-1">1</a></span>
+<span class="normal"><a href="#__codelineno-37-2">2</a></span>
+<span class="normal"><a href="#__codelineno-37-3">3</a></span>
+<span class="normal"><a href="#__codelineno-37-4">4</a></span>
+<span class="normal"><a href="#__codelineno-37-5">5</a></span>
+<span class="normal"><a href="#__codelineno-37-6">6</a></span>
+<span class="normal"><a href="#__codelineno-37-7">7</a></span>
+<span class="normal"><a href="#__codelineno-37-8">8</a></span>
+<span class="normal"><a href="#__codelineno-37-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1"></a>BEGIN;
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2"></a>BEGIN
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3"></a>Time: 0.393 ms
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4"></a>INVALID TXN STATEMENT;
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5"></a>ERROR:  42601: syntax error at or near &quot;INVALID&quot;
+</span><span id="__span-37-6"><a id="__codelineno-37-6" name="__codelineno-37-6"></a>Time: 2.523 ms
+</span><span id="__span-37-7"><a id="__codelineno-37-7" name="__codelineno-37-7"></a>SELECT * from txndemo where k=1;
+</span><span id="__span-37-8"><a id="__codelineno-37-8" name="__codelineno-37-8"></a>ERROR:  25P02: current transaction is aborted, commands ignored until end of transaction block
+</span><span id="__span-37-9"><a id="__codelineno-37-9" name="__codelineno-37-9"></a>Time: 17.074 ms
+</span></code></pre></div></td></tr></table></div>
+<p>此时唯一有效的语句是ROLLBACK或COMMIT</p>
+<h2 id="bsql_2"><strong>BSQL中的性能调优</strong><a class="headerlink" href="#bsql_2" title="Permanent link">&para;</a></h2>
+<p>作为一个通用的分布式数据库，BMDB可以部署在各种配置中，用于各种用例。以下最佳实践和提示可以极大地提高BMDB集群的性能。 </p>
+<h3 id="_15"><strong>快速单行事务</strong><a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<p>BMDB具有特定的优化功能，可以在事务在单行上操作的某些场景中提高事务的性能。这些事务被称为单行或快速路径事务。这些比分布在分片上的一组行的分布式事务快得多，这些行本身分布在分布在数据中心、区域或全局的多个节点上。
+例如，考虑事务中的一个常见场景，其中更新一行并获取新值。这通常分以下多个步骤进行： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-38-1">1</a></span>
+<span class="normal"><a href="#__codelineno-38-2">2</a></span>
+<span class="normal"><a href="#__codelineno-38-3">3</a></span>
+<span class="normal"><a href="#__codelineno-38-4">4</a></span>
+<span class="normal"><a href="#__codelineno-38-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1"></a>BEGIN;
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2"></a>SELECT v FROM txndemo WHERE k=1 FOR UPDATE;
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3"></a>UPDATE txndemo SET v = v + 3 WHERE k=1;
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4"></a>SELECT v FROM txndemo WHERE k=1;
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5"></a>COMMIT;
+</span></code></pre></div></td></tr></table></div>
+<p>如上脚本中，当行在第一个SELECT语句中被锁定时，BMDB不知道哪些行将在后续命令中被修改。因此，它认为事务是分布式的。
+然而，如果你把它写成一个单独的语句，BMDB可以自信地把它当作一个单行事务。要使用单个语句更新行并返回其新值，请按如下方式使用RETURNING子句：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1"></a>UPDATE txndemo SET v = v + 3 WHERE k=1 RETURNING v;
+</span></code></pre></div></td></tr></table></div>
+<p>BMDB将其视为单行事务，执行速度要快得多。这也节省了一次往返行程，并立即获取更新后的值。</p>
+<h3 id="_16"><strong>最大限度地减少冲突错误</strong><a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<p>INSERT语句有一个可选的ON CONFLICT子句，它有助于避免某些错误并避免多个语句。
+例如，如果并发事务正在插入同一行，这可能会导致UniqueViolation。您不需要让服务器抛出错误并在代码中进行处理，只需要求服务器忽略它，如下所示： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-40-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1"></a>INSERT INTO txndemo VALUES (1,10) ON CONFLICT DO NOTHING;
+</span></code></pre></div></td></tr></table></div>
+<p>使用DO NOTHING，服务器不会抛出错误，从而减少应用程序和服务器之间的往返行程。</p>
+<p>您还可以通过使用DO UPDATE SET 而不是执行INSERT、fail和UPDATE来模拟upsert ，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-41-1">1</a></span>
+<span class="normal"><a href="#__codelineno-41-2">2</a></span>
+<span class="normal"><a href="#__codelineno-41-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1"></a>INSERT INTO txndemo VALUES (1,10)
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2"></a>        ON CONFLICT (k)
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3"></a>        DO UPDATE SET v=10;
+</span></code></pre></div></td></tr></table></div>
+<p>现在，当插入失败时，服务器会自动更新行。同样，这会减少应用程序和服务器之间的往返行程。</p>
+<h3 id="_17"><strong>处理空闲应用程序</strong><a class="headerlink" href="#_17" title="Permanent link">&para;</a></h3>
+<p>当应用程序在事务中的两个语句之间花费很长时间或只是挂起时，它可能在这段时间内持有临时记录的锁。如果相应地设置idle_in_transaction_session_timeout，它将达到超时。达到超时后，连接将断开，客户端将不得不重新连接。典型的错误消息是： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-42-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1"></a>FATAL:  25P03: terminating connection due to idle-in-transaction timeout
+</span></code></pre></div></td></tr></table></div>
+<p>默认情况下，idle_in_transaction_session_timeout设置为0。您可以使用以下命令在sqlsh中将超时设置为特定值：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-43-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1"></a>SET idle_in_transaction_session_timeout = &#39;10s&#39;;
+</span></code></pre></div></td></tr></table></div>
+<p>要查看当前值，请使用以下命令：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-44-1">1</a></span>
+<span class="normal"><a href="#__codelineno-44-2">2</a></span>
+<span class="normal"><a href="#__codelineno-44-3">3</a></span>
+<span class="normal"><a href="#__codelineno-44-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1"></a>SHOW idle_in_transaction_session_timeout;
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2"></a> idle_in_transaction_session_timeout
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3"></a>-------------------------------------
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4"></a> 10s
+</span></code></pre></div></td></tr></table></div>
+<p>设置此超时可以避免出现死锁情况，即应用程序获取锁，然后意外挂起。</p>
+<h3 id="_18"><strong>大型扫描和批处理作业</strong><a class="headerlink" href="#_18" title="Permanent link">&para;</a></h3>
+<p>当事务处于SERIALIZABLE 隔离级别和READ ONLY模式时，如果设置了事务属性DEFERRABLE ，则该事务的执行开销要低得多，并且永远不会因为序列化失败而取消。这可以用于批处理或长时间运行的作业，这些作业需要数据库的一致快照，而不会干扰或受到其他事务的干扰。例如： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-45-1">1</a></span>
+<span class="normal"><a href="#__codelineno-45-2">2</a></span>
+<span class="normal"><a href="#__codelineno-45-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1"></a>BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY DEFERRABLE;
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2"></a>SELECT * FROM very_large_table;
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3"></a>COMMIT;
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_19"><strong>乐观并发控制</strong><a class="headerlink" href="#_19" title="Permanent link">&para;</a></h3>
+<p>如前所述，所有事务都会动态地分配优先级。这是一个在[0.0，1.0]范围内的值。可以使用bm_get_current_transaction_prority设置获取当前优先级，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-46-1">1</a></span>
+<span class="normal"><a href="#__codelineno-46-2">2</a></span>
+<span class="normal"><a href="#__codelineno-46-3">3</a></span>
+<span class="normal"><a href="#__codelineno-46-4">4</a></span>
+<span class="normal"><a href="#__codelineno-46-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1"></a>SELECT bm_get_current_transaction_priority();
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2"></a>    bm_get_current_transaction_priority
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3"></a>-------------------------------------------
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4"></a> 0.000000000 (Normal priority transaction)
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5"></a>(1 row)
+</span></code></pre></div></td></tr></table></div>
+<p>优先级值由两个设置绑定，即bm_transaction_priority_lower_bound和bm_transaction_priority_upper_bound。如果应用程序希望特定事务具有更高的优先级，则可以发出以下语句： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-47-1">1</a></span>
+<span class="normal"><a href="#__codelineno-47-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1"></a>SET bm_transaction_priority_lower_bound=0.9;
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2"></a>SET bm_transaction_priority_upper_bound=1.0;
+</span></code></pre></div></td></tr></table></div>
+<p>这确保了分配给您的事务的优先级在[0.9-1.0]范围内，从而使其成为高优先级事务。</p>
+<h3 id="_20"><strong>存储过程：最大限度地减少往返</strong><a class="headerlink" href="#_20" title="Permanent link">&para;</a></h3>
+<p>具有多条语句的客户端执行的事务块，需要在客户端和服务器之间进行多次往返。考虑以下事务：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-48-1">1</a></span>
+<span class="normal"><a href="#__codelineno-48-2">2</a></span>
+<span class="normal"><a href="#__codelineno-48-3">3</a></span>
+<span class="normal"><a href="#__codelineno-48-4">4</a></span>
+<span class="normal"><a href="#__codelineno-48-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1"></a>BEGIN TRANSACTION;
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2"></a>    UPDATE txndemo SET v = 11 WHERE k = 1;
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3"></a>    UPDATE txndemo SET v = 22 WHERE k = 2;
+</span><span id="__span-48-4"><a id="__codelineno-48-4" name="__codelineno-48-4"></a>    UPDATE txndemo SET v = 33 WHERE k = 3;
+</span><span id="__span-48-5"><a id="__codelineno-48-5" name="__codelineno-48-5"></a>COMMIT;
+</span></code></pre></div></td></tr></table></div>
+<p>这个方法需要在应用程序和服务器之间进行五次往返，这意味着应用程序与服务器之间的延迟是前者的五倍。即使延迟很低，这也是非常有害的。如果这些事务被封装在存储过程中，则可以避免这些往返。存储过程在服务器中执行，可以包含循环和错误处理。只需一次调用即可从客户端调用存储过程，如下所示： </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-49-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1"></a>CALL stored_procedure_name(argument_list);
+</span></code></pre></div></td></tr></table></div>
+<p>根据事务块的复杂性，这可以极大地提高性能。</p>
+<h2 id="_21"><strong>全局应用程序的性能调优</strong><a class="headerlink" href="#_21" title="Permanent link">&para;</a></h2>
+<p>以下最佳实践和提示可以极大地提高多区域部署中事务的性能。</p>
+<h3 id="leader"><strong>将Leader放在一个区域</strong><a class="headerlink" href="#leader" title="Permanent link">&para;</a></h3>
+<p>在多地区的设置中，事务必须接触到分布在多个地区的分片Leader。在这种情况下，事务可能会导致高的区域间延迟。</p>
+<p>通过使用bm-admin中的set_preferred_zones命令将所有分片Leader放置在一个区域中，可以避免跨区域访问。</p>
+<h3 id="follower"><strong>follower读</strong><a class="headerlink" href="#follower" title="Permanent link">&para;</a></h3>
+<p>BMDB中的所有读取都由leader处理，以确保应用程序获取最新的数据，即使数据被复制到follower。虽然复制很快，但它不是即时的，并且follower在读取时可能没有最新的数据。但在某些情况下，没有必要从leader那里了解情况。例如：</p>
+<ul>
+<li>数据不会经常更改（例如，电影数据库）。</li>
+<li>应用程序不需要最新数据（例如，阅读昨天的报告）。 </li>
+</ul>
+<p>在这种情况下，您可以启用follower 读取，以从follower 读取内容，而不是转到可能位于不同地区的leader。
+要启用follower读取，请将事务设置为READ ONLY，并打开BSQL参数bm_read_from_followers。例如：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-50-1">1</a></span>
+<span class="normal"><a href="#__codelineno-50-2">2</a></span>
+<span class="normal"><a href="#__codelineno-50-3">3</a></span>
+<span class="normal"><a href="#__codelineno-50-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1"></a>SET bm_read_from_followers = true;
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2"></a>BEGIN TRANSACTION READ ONLY;
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3"></a>...
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4"></a>COMMIT;
+</span></code></pre></div></td></tr></table></div>
+<p>这将从最近的follower 或leader那里读取数据。由于复制副本可能不是所有更新都是最新的，因此按设计，这将只返回过时的数据（默认值：30秒）。即使读给了leader，情况也是如此。可以使用其他设置更改旧值，如：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-51-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1"></a>SET bm_follower_read_staleness_ms = 10000; -- 10s
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_22"><strong>使用重复索引</strong><a class="headerlink" href="#_22" title="Permanent link">&para;</a></h3>
+<p>添加索引是加快查询速度的常用技术。通过添加查询中创建覆盖索引所需的所有列，可以执行仅索引扫描，而不需要扫描表，只需要扫描索引。如果覆盖索引的模式与表相同，则称为重复索引。</p>
+<p>如果从多个区域运行应用程序，可以将重复索引与多区域集群中的表空间结合使用，以大大提高读取延迟，如下所示： </p>
+<ul>
+<li>创建不同的表空间，并为每个区域设置首选leader。</li>
+<li>创建重复索引，并将它们附加到每个表空间。</li>
+</ul>
+<p>这导致多个重复索引与本地leader立即一致，每个区域一个。现在，在一个区域中运行的应用程序不必跨区域转到另一个区域的表leader。尽管这会影响写入延迟，因为每次更新都必须到达多个索引，但读取延迟要低得多，因为读取会到达表的本地重复索引。</p>
+<h2 id="_23"><strong>错误码</strong><a class="headerlink" href="#_23" title="Permanent link">&para;</a></h2>
+<p>由于BMDB保证了强大的ACID属性，事务过程中的失败是不可避免的。您需要设计应用程序，以便对失败的语句采取适当的操作，以确保它们具有高可用性。BMDB为事务处理过程中发生的错误返回各种错误代码。</p>
+<p>以下错误代码通常发生在事务处理过程中:</p>
+<h3 id="25001-active-sql-transaction"><strong>25001: Active SQL transaction</strong><a class="headerlink" href="#25001-active-sql-transaction" title="Permanent link">&para;</a></h3>
+<p>应该在事务块外部运行的某些语句会发生此错误，因为它们具有不可回滚的副作用或执行内部提交。例如，在事务内部发出BEGIN语句。</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-52-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1"></a>WARNING:  25001: there is already a transaction in progress
+</span></code></pre></div></td></tr></table></div>
+<p>注：25001个错误只是警告。但该代码需要修复，以避免将来出现警告。 </p>
+<h3 id="25006-read-only-sql-transaction"><strong>25006: Read only SQL transaction</strong><a class="headerlink" href="#25006-read-only-sql-transaction" title="Permanent link">&para;</a></h3>
+<p>当在违反只读约束的只读事务中执行某些语句时，会发生此错误。例如，修改只读事务中的记录。</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-53-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1"></a>ERROR:  25006: cannot execute UPDATE in a read-only transaction
+</span></code></pre></div></td></tr></table></div>
+<p>注：25006错误不可重试。应从只读事务代码中删除写入操作。 </p>
+<h3 id="25p01-no-active-sql-transaction"><strong>25P01: No active SQL transaction</strong><a class="headerlink" href="#25p01-no-active-sql-transaction" title="Permanent link">&para;</a></h3>
+<p>当应该在事务中执行的某些语句在事务之外执行时，就会发生此错误。例如，在事务外部发出ROLLBACK。</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-54-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1"></a>WARNING:  25P01: there is no transaction in progress
+</span></code></pre></div></td></tr></table></div>
+<p>注：25P01错误只是警告。但该代码需要修复，以避免将来出现警告。</p>
+<h3 id="25p02-in-failed-sql-transaction"><strong>25P02: In failed SQL transaction</strong><a class="headerlink" href="#25p02-in-failed-sql-transaction" title="Permanent link">&para;</a></h3>
+<p>当语句在事务内部失败，并且执行COMMIT或ROLLBACK以外的另一条语句时，就会发生此错误。</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-55-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1"></a>ERROR:  25P02: current transaction is aborted, commands ignored until end of transaction block
+</span></code></pre></div></td></tr></table></div>
+<p>注：25P02错误不可重试。通过尝试正确处理try..catch块，并且COMMIT或ROLLBACK应该被适当地执行。</p>
+<h3 id="25p03-idle-in-transaction-session-timeout"><strong>25P03: Idle in transaction session timeout</strong><a class="headerlink" href="#25p03-idle-in-transaction-session-timeout" title="Permanent link">&para;</a></h3>
+<p>当应用程序在事务中间的空闲时间超过idle_in_transaction_session_timeout时，就会发生这种情况。</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-56-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1"></a>FATAL:  25P03: terminating connection due to idle-in-transaction timeout
+</span></code></pre></div></td></tr></table></div>
+<p>注：客户端可以重新连接到服务器，然后重试事务。 </p>
+<h3 id="40001-serialization-failure"><strong>40001: Serialization failure</strong><a class="headerlink" href="#40001-serialization-failure" title="Permanent link">&para;</a></h3>
+<p>当事务由于其他冲突事务而无法应用或无法继续进行时，就会发生此错误。例如，当多个事务正在修改同一个Key时。 </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-57-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1"></a>ERROR:  40001: Operation expired: Transaction XXXX expired or aborted by a conflict
+</span></code></pre></div></td></tr></table></div>
+<p>注：客户端可以重试序列化失败错误。</p>
+<h3 id="2d000-invalid-transaction-termination"><strong>2D000: Invalid transaction termination</strong><a class="headerlink" href="#2d000-invalid-transaction-termination" title="Permanent link">&para;</a></h3>
+<p>当事务被COMMIT或ROLLBACK终止在无效位置时，就会发生此错误。例如，当COMMIT在从事务内部调用的存储过程中发出时。 </p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-58-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1"></a>ERROR:  2D000: invalid transaction termination
+</span></code></pre></div></td></tr></table></div>
+<p>注：2D000错误是不可重试的。需要修复事务代码才能避免此错误。 </p>
+<h3 id="3b001-invalid-savepoint-specification"><strong>3B001: Invalid savepoint specification</strong><a class="headerlink" href="#3b001-invalid-savepoint-specification" title="Permanent link">&para;</a></h3>
+<p>当您尝试ROLLBACK到或RELEASE 未定义的存储点时，会发生此错误。</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-59-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1"></a>ERROR:  3B001: savepoint &quot;FIRST_SAVE&quot; does not exist
+</span></code></pre></div></td></tr></table></div>
+<p>注：3B001错误不可重试。需要修复事务代码以指定正确的保存点名称来修复此错误。 </p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="SQLvsNoSQL.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: SQL vs NoSQL">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                SQL vs NoSQL
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="%E6%96%87%E6%9C%AC%E6%90%9C%E7%B4%A2.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 文本搜索">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                文本搜索
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2023 - 2024 贝格迈思（深圳）技术有限公司 粤ICP备17054434号-1
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/as599397086/BMDOC" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.code.select", "content.tabs.link", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.path", "navigation.prune", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>

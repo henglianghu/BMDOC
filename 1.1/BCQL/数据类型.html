@@ -1,0 +1,1660 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="贝格迈思数据库使用手册">
+      
+      
+      
+      
+        <link rel="prev" href="../BSQL/%E7%B3%BB%E7%BB%9F%E8%A1%A8%E8%A7%86%E5%9B%BE.html">
+      
+      
+        <link rel="next" href="%E5%87%BD%E6%95%B0%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6.html">
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+    
+    
+      
+        <title>数据类型 - 手册</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.35e1ed30.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="mo" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#integer-and-counter" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      <!--
+  Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Determine classes -->
+
+
+  
+
+
+<!-- Header -->
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav
+    class="md-header__inner md-grid"
+    aria-label="页眉"
+  >
+
+    <!-- Link to home -->
+    <a
+      href="../index.html"
+      title="手册"
+      class="md-header__button md-logo"
+      aria-label="手册"
+      data-md-component="logo"
+    >
+      
+  <img src="../assets/new-logo.png" alt="logo">
+
+    </a>
+
+    <!-- Button to open drawer -->
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+
+    <!-- Header title -->
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            手册
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              数据类型
+            
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color palette toggle -->
+    
+      
+    
+
+    <!-- User preference: color palette -->
+    
+
+    <!-- Site language selector -->
+    
+
+    <!-- Button to open search modal -->
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+
+      <!-- Search interface -->
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    <!-- Repository information -->
+    
+      <div class="md-header__source">
+        <a href="https://github.com/as599397086/BMDOC" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+
+  <!-- Navigation tabs (sticky) -->
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="手册" class="md-nav__button md-logo" aria-label="手册" data-md-component="logo">
+      
+  <img src="../assets/new-logo.png" alt="logo">
+
+    </a>
+    手册
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/as599397086/BMDOC" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AiSQL简介
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    快速上手
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/JAVA.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    应用开发
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E9%83%A8%E7%BD%B2%E9%9B%86%E7%BE%A4/%E8%BD%AF%E7%A1%AC%E4%BB%B6%E7%8E%AF%E5%A2%83%E9%9C%80%E6%B1%82.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    部署集群
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数据迁移
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E7%AE%A1%E7%90%86%E6%95%B0%E6%8D%AE%E5%BA%93/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E4%B8%8E%E7%9B%91%E6%8E%A7.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    管理数据库
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E5%90%91%E9%87%8F%E7%89%B9%E6%80%A7.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    向量特性
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../AI%E7%89%B9%E6%80%A7/%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI特性
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    参考
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            参考
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    架构
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../CLIs/sqlsh/%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CLIs
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E9%85%8D%E7%BD%AE/bm-mserver.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    配置
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../BSQL/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/%E6%95%B0%E7%BB%84.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    BSQL
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9_5" id="__nav_9_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    BCQL
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9_5">
+            <span class="md-nav__icon md-icon"></span>
+            BCQL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    数据类型
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    数据类型
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#integer-and-counter" class="md-nav__link">
+    Integer and counter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blob" class="md-nav__link">
+    BLOB
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boolean" class="md-nav__link">
+    BOOLEAN
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-integer-float-double-and-decimal" class="md-nav__link">
+    Non-integer (FLOAT, DOUBLE, and DECIMAL)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#date-and-time-date-time-and-timestamp" class="md-nav__link">
+    Date and time (DATE, TIME, and TIMESTAMP)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frozen" class="md-nav__link">
+    FROZEN
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inet" class="md-nav__link">
+    INET
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#collection-map-list-and-set" class="md-nav__link">
+    Collection (MAP, LIST, and SET)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#text-text-and-varchar" class="md-nav__link">
+    TEXT (TEXT, and VARCHAR)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uuid-and-timeuuid" class="md-nav__link">
+    UUID and TIMEUUID
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jsonb" class="md-nav__link">
+    JSONB
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E5%87%BD%E6%95%B0%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    函数和运算符
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="BCQL%E8%AF%AD%E8%A8%80.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BCQL语言
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#integer-and-counter" class="md-nav__link">
+    Integer and counter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blob" class="md-nav__link">
+    BLOB
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boolean" class="md-nav__link">
+    BOOLEAN
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-integer-float-double-and-decimal" class="md-nav__link">
+    Non-integer (FLOAT, DOUBLE, and DECIMAL)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#date-and-time-date-time-and-timestamp" class="md-nav__link">
+    Date and time (DATE, TIME, and TIMESTAMP)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frozen" class="md-nav__link">
+    FROZEN
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inet" class="md-nav__link">
+    INET
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#collection-map-list-and-set" class="md-nav__link">
+    Collection (MAP, LIST, and SET)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#text-text-and-varchar" class="md-nav__link">
+    TEXT (TEXT, and VARCHAR)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uuid-and-timeuuid" class="md-nav__link">
+    UUID and TIMEUUID
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jsonb" class="md-nav__link">
+    JSONB
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/as599397086/BMDOC/edit/master/docs/BCQL/数据类型.md" title="编辑此页" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/as599397086/BMDOC/raw/master/docs/BCQL/数据类型.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+  <h1>数据类型</h1>
+
+<p>下表列出了BCQL支持的数据类型。</p>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bigint</td>
+<td>64位带符号长</td>
+</tr>
+<tr>
+<td>blob</td>
+<td>任意字节，以十六进制表示</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>true 或者false</td>
+</tr>
+<tr>
+<td>counter</td>
+<td>分布式计数器值（64位长）</td>
+</tr>
+<tr>
+<td>date</td>
+<td>Value是没有相应时间值的日期；Cassandra将日期编码为32位整数，表示自epoch（1970年1月1日）以来的天数。日期可以在查询和插入中表示为字符串，例如2015-05-03（yyyy-mm-dd）</td>
+</tr>
+<tr>
+<td>decimal</td>
+<td>可变精度小数</td>
+</tr>
+<tr>
+<td>double</td>
+<td>64位IEEE-754浮点</td>
+</tr>
+<tr>
+<td>float</td>
+<td>32位IEEE-754浮点</td>
+</tr>
+<tr>
+<td>frozen</td>
+<td>frozen的值将多个组件序列化为一个值。非frozen类型允许更新各个字段。将frozen类型的值视为blob。必须覆盖整个值。</td>
+</tr>
+<tr>
+<td>JSONB</td>
+<td>JSON数据</td>
+</tr>
+<tr>
+<td>inet</td>
+<td>IPv4或IPv6格式的IP地址字符串，由python cql驱动程序和cql本机协议使用</td>
+</tr>
+<tr>
+<td>int</td>
+<td>32位有符号整数</td>
+</tr>
+<tr>
+<td>list</td>
+<td>一个或多个有序元素的集合： [literal, literal, literal]。 注意： 列表有局限性和特定的性能注意事项。使用frozen列表来减少影响。通常，使用集合而不是列表。</td>
+</tr>
+<tr>
+<td>map</td>
+<td>JSON样式的文字数组：｛literal:literal，literal:literal…｝</td>
+</tr>
+<tr>
+<td>set</td>
+<td>一个或多个元素的集合：｛literal，literal、literal｝</td>
+</tr>
+<tr>
+<td>smallint</td>
+<td>2字节整数</td>
+</tr>
+<tr>
+<td>text</td>
+<td>UTF-8编码字符串</td>
+</tr>
+<tr>
+<td>time</td>
+<td>值编码为64位带符号整数，表示自午夜以来的纳秒数。值可以表示为字符串，例如13:30:54.234。</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>日期和时间，精度为毫秒，自epoch以来编码为8字节。可以用字符串表示，如2015-05-03 13:30:54.234。</td>
+</tr>
+<tr>
+<td>timeuuid</td>
+<td>除了具备UUID的特性外，还带时间信息</td>
+</tr>
+<tr>
+<td>tinyint</td>
+<td>1字节整数</td>
+</tr>
+<tr>
+<td>uuid</td>
+<td>标准UUID格式的UUID</td>
+</tr>
+<tr>
+<td>varchar</td>
+<td>UTF-8编码字符串</td>
+</tr>
+<tr>
+<td>varint</td>
+<td>任意精度整数</td>
+</tr>
+</tbody>
+</table>
+<h2 id="integer-and-counter"><strong>Integer and counter</strong><a class="headerlink" href="#integer-and-counter" title="Permanent link">&para;</a></h2>
+<p>Integer的类型，它们和counter类型的主要区别在于：counter只能增加，或者减少，而Integer可以任意设置。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>最小值</th>
+<th>最大值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TINYINT</td>
+<td>-128</td>
+<td>127</td>
+</tr>
+<tr>
+<td>SMALLINT</td>
+<td>-32,768</td>
+<td>32,767</td>
+</tr>
+<tr>
+<td>INT 或 INTEGER</td>
+<td>-2,147,483,648</td>
+<td>2,147,483,647</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>–9,223,372,036,854,775,808</td>
+<td>9,223,372,036,854,775,807</td>
+</tr>
+<tr>
+<td>VARINT</td>
+<td>无限</td>
+<td>无限</td>
+</tr>
+<tr>
+<td>COUNTER</td>
+<td>–9,223,372,036,854,775,808</td>
+<td>9,223,372,036,854,775,807</td>
+</tr>
+</tbody>
+</table>
+<p>注意事项：</p>
+<ul>
+<li>TINYINT, SMALLINT, INT, INTEGER, BIGINT 或者 VARINT可以作为主键Primary Key的组成部分。</li>
+<li>COUNTER不可以作为主键Primary Key的组成部分。</li>
+<li>类型之间可以互相转换，并且可以互相比较。</li>
+<li>上面的整型不可以和浮点型直接比较。</li>
+<li>浮点型不可以直接转换为整型。</li>
+</ul>
+<h2 id="blob"><strong>BLOB</strong><a class="headerlink" href="#blob" title="Permanent link">&para;</a></h2>
+<p>BLOB的作用和其他数据库此类型的定义类似，一个是基于二进制的数据编码，第二个就是可以任意的可变的长度。</p>
+<p>注意事项：</p>
+<ul>
+<li>BLOB可以作为主键Primary Key的组成部分。</li>
+<li>隐含下，BLOB不可以直接转换为其他类型，也不可以和其他类型比较。</li>
+<li>如果需要转换类型，请用两个内置函数：BlobAs<Type> 和 <Type>AsBlob。</li>
+<li>BLOB的长度理论上无上限。</li>
+</ul>
+<h2 id="boolean"><strong>BOOLEAN</strong><a class="headerlink" href="#boolean" title="Permanent link">&para;</a></h2>
+<p>BOOLEAN类型只表达：是或否（也可称为真或假，或称为true和false），这两个概念。</p>
+<p>注意事项：</p>
+<ul>
+<li>BOOLEAN绝对不可以作为主键Primary Key的组成部分。</li>
+<li>BOOLEAN列，可以增加、赋值以及比较。</li>
+<li>当使用WHERE和IF语句时，BOOLEAN列不可以直接作为表达式使用，而必须和true或者false进行对比。比如：WHERE boolean_column = TRUE是正确表达式，但是WHERE boolean_column的用法是错误的。</li>
+<li>隐含下，BOOLEAN类不可以转换为其他类型，也不可以和其他类型比较。</li>
+</ul>
+<h2 id="non-integer-float-double-and-decimal"><strong>Non-integer (FLOAT, DOUBLE, and DECIMAL)</strong><a class="headerlink" href="#non-integer-float-double-and-decimal" title="Permanent link">&para;</a></h2>
+<p>相比上面的多种Integer(含counter)类，还有一些类型，表达值的概念，但不是整型。请参考下表：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+<th>精度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FLOAT</td>
+<td>32位浮点数，注意：做不到绝对精确</td>
+<td>7位bit</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>64位浮点数，注意：做不到绝对精确</td>
+<td>15位bit</td>
+</tr>
+<tr>
+<td>DECIMAL</td>
+<td>任何绝对精确的数值</td>
+<td>无上限</td>
+</tr>
+</tbody>
+</table>
+<p>注意事项：</p>
+<ul>
+<li>上面几个类型都可以作为主键Primary Key的组成部分。</li>
+<li>DOUBLE 和 DOUBLE PRECISION是一个意思，即互为别名。</li>
+<li>上面几个类型之间可以互相转换，或者互相比较。
+  n 这里有一个例外，就是下面几个浮点数转换为DECIMAL时，会产生错误异常，包括：NaN、Infinity、-Infinity。</li>
+<li>上面类型不可以直接比较，也不可以转换为整型，但是整型可以转换为上面的类型。</li>
+<li>如果按升序排序的话，依次顺序如下：-Infinity，所有负值（内部按升序），所有正值（内部按升序），Infinity，NaN。</li>
+</ul>
+<h2 id="date-and-time-date-time-and-timestamp"><strong>Date and time (DATE, TIME, and TIMESTAMP)</strong><a class="headerlink" href="#date-and-time-date-time-and-timestamp" title="Permanent link">&para;</a></h2>
+<p>包括三个类型，分别是：DATE、TIME、TIMESTAMP，其中，DATE表达日期，TIME表达一天里的某个时间，TIMESTAMP则可以看作是DATE和TIME的结合。</p>
+<p>注意事项：</p>
+<ul>
+<li>上面几个类型都可以作为主键Primary Key的组成部分。</li>
+<li>隐含下，DATE类型不可以转换，也不可以比较其他两个类型。</li>
+<li>整型以及TEXT类型，如果表达正确，可以转换为上面几个时间类型。</li>
+<li>TIMESTAMP类型的年份起始最早只能是1900，最晚只能是9999。</li>
+<li>对于小时hour，分钟minute，秒second以及毫秒millisecond，缺省值均是0。</li>
+<li>缺省的时区Time Zone是UTC。</li>
+</ul>
+<h2 id="frozen"><strong>FROZEN</strong><a class="headerlink" href="#frozen" title="Permanent link">&para;</a></h2>
+<p>FROZEN类型是集合collection类型进行串行化所形成的二进制字符串。</p>
+<p>其表达为：FROZEN<type>。</p>
+<p>注意事项：</p>
+<ul>
+<li>可以作为主键Primary Key的组成部分。</li>
+<li>上面表达的type，必须是集合collection类型，包括：LIST、MAP、SET或用户自定义集合类型。</li>
+<li>FROZEN自己本身，也可以作为集合collection类型的包含参数。</li>
+<li>对于FROZEN<type>里，如果type是合法的，那么如果某个值的类型是type，那么它可以转换为类型FROZEN<type>。</li>
+</ul>
+<h2 id="inet"><strong>INET</strong><a class="headerlink" href="#inet" title="Permanent link">&para;</a></h2>
+<p>INET类型用于表达IP地址。</p>
+<p>注意事项：</p>
+<ul>
+<li>可以作为主键Primary Key的组成部分。</li>
+<li>隐含下，INET类型不可以转换，也不可以比较其他类型。</li>
+<li>对于TEXT类型，如果它表达正确，它可以转换为INET类型。</li>
+<li>INET类型的TEXT字面（literal）表达式，可以是IPv4，也可以是IPv6。</li>
+</ul>
+<h2 id="collection-map-list-and-set"><strong>Collection (MAP, LIST, and SET)</strong><a class="headerlink" href="#collection-map-list-and-set" title="Permanent link">&para;</a></h2>
+<p>LIST是有次序的集合。LIST里的元素，必须同类型，而且是初级类型。LIST可以在头部和尾部，通过+进行增加，或者通过-进行减少，访问某个元素，可以通过[]里的索引index值进行。</p>
+<p>MAP是key和value的成对的元素组合，它是排序的。排序基于key值，通过key值，MAP可以通过[]进行修改，+进行增加，-进行删除。当查询时，MAP返回的是有序的。</p>
+<p>SET是排序的组合，只有key（或元素本身）。SET通过+进行增加，通过-进行删除，查询返回的也是有序的。</p>
+<p>注意事项：</p>
+<ul>
+<li>这几个类型，都不可以作为主键Primary Key的组成部分。</li>
+<li>type不能带type 参数（即不能是MAP、LIST、SET类型），但Frozen除外（Frozen可以有type参数）</li>
+<li>对于key type，必须是能成为主键的（即不能是BOOL，也不能是MAP、LIST、SET）。</li>
+<li>map字面(literal)可以表达为key:value。</li>
+<li>Collection作为整体是不能进行比较的， 比如：出现在WHERE和IF中。</li>
+<li>空Collection，将作为null值对待。</li>
+</ul>
+<h2 id="text-text-and-varchar"><strong>TEXT (TEXT, and VARCHAR)</strong><a class="headerlink" href="#text-text-and-varchar" title="Permanent link">&para;</a></h2>
+<p>TEXT类型，表达的是字符串，而且是Unicode编码。
+TEXT的别名就是VARCHAR，即它们是同一个类型。</p>
+<p>注意事项：</p>
+<ul>
+<li>TEXT或VARCHAR类型，可以作为主键Primary Key的组成部分。</li>
+<li>隐含下，TEXT既不能转换为其他类型，也不能比较其他类型。</li>
+<li>TEXT的长度理论上无上限。</li>
+</ul>
+<h2 id="uuid-and-timeuuid"><strong>UUID and TIMEUUID</strong><a class="headerlink" href="#uuid-and-timeuuid" title="Permanent link">&para;</a></h2>
+<p>UUID保证全宇宙里唯一，TIMEUUID除了具备UUID的特性外，还带时间信息。</p>
+<p>注意事项：</p>
+<ul>
+<li>上面几个类型都可以作为主键Primary Key的组成部分。</li>
+<li>隐含下，UUID和TIMEUUID不能转换为其他类型，也不能比较其他类型。</li>
+<li>TIMEUUID是早期的UUID实现，它包含：创建的时间，加上产生这个值的唯一的机器号。</li>
+<li>TIMEUUID的比较，首先比较时间部分；如果时间部分相同，再比较机器号。</li>
+</ul>
+<h2 id="jsonb"><strong>JSONB</strong><a class="headerlink" href="#jsonb" title="Permanent link">&para;</a></h2>
+<p>JSONB存储的是JSON数据，和POSTGRESQL的JSON类型十分类似。</p>
+<p>注意事项：</p>
+<ul>
+<li>不可以作为主键Primary Key的组成部分。</li>
+<li>隐含下，JSONB不可以转换为其他类型，对于比较，如果JSONB是一个有效的JSON表达，其只可以和TEXT/VARCHAR类型进行。</li>
+<li>某个值，类型是TEXT，表达是正确的JSON格式，其可以转换为JSONB。</li>
+<li>同样如上，JSONB支持正确表达为JSON格式的TEXT字面(literal)。</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../BSQL/%E7%B3%BB%E7%BB%9F%E8%A1%A8%E8%A7%86%E5%9B%BE.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 系统表/视图">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                系统表/视图
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="%E5%87%BD%E6%95%B0%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 函数和运算符">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                函数和运算符
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2023 - 2024 贝格迈思（深圳）技术有限公司 粤ICP备17054434号-1
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/as599397086/BMDOC" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.code.select", "content.tabs.link", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.path", "navigation.prune", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+        <script src="../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>
