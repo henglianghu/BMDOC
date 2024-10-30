@@ -1,0 +1,1706 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="贝格迈思数据库使用手册">
+      
+      
+      
+      
+        <link rel="prev" href="%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87.html">
+      
+      
+        <link rel="next" href="%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD.html">
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+    
+    
+      
+        <title>基本概念 - 手册</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.35e1ed30.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="mo" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#universe" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      <!--
+  Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Determine classes -->
+
+
+  
+
+
+<!-- Header -->
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav
+    class="md-header__inner md-grid"
+    aria-label="页眉"
+  >
+
+    <!-- Link to home -->
+    <a
+      href="../index.html"
+      title="手册"
+      class="md-header__button md-logo"
+      aria-label="手册"
+      data-md-component="logo"
+    >
+      
+  <img src="../assets/new-logo.png" alt="logo">
+
+    </a>
+
+    <!-- Button to open drawer -->
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+
+    <!-- Header title -->
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            手册
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              基本概念
+            
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color palette toggle -->
+    
+      
+    
+
+    <!-- User preference: color palette -->
+    
+
+    <!-- Site language selector -->
+    
+
+    <!-- Button to open search modal -->
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+
+      <!-- Search interface -->
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    <!-- Repository information -->
+    
+      <div class="md-header__source">
+        <a href="https://github.com/as599397086/BMDOC" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+
+  <!-- Navigation tabs (sticky) -->
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="手册" class="md-nav__button md-logo" aria-label="手册" data-md-component="logo">
+      
+  <img src="../assets/new-logo.png" alt="logo">
+
+    </a>
+    手册
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/as599397086/BMDOC" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AiSQL简介
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    快速上手
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/JAVA.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    应用开发
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E9%83%A8%E7%BD%B2%E9%9B%86%E7%BE%A4/%E8%BD%AF%E7%A1%AC%E4%BB%B6%E7%8E%AF%E5%A2%83%E9%9C%80%E6%B1%82.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    部署集群
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数据迁移
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E7%AE%A1%E7%90%86%E6%95%B0%E6%8D%AE%E5%BA%93/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E4%B8%8E%E7%9B%91%E6%8E%A7.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    管理数据库
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E5%90%91%E9%87%8F%E7%89%B9%E6%80%A7.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    向量特性
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../AI%E7%89%B9%E6%80%A7/%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI特性
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    参考
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            参考
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9_1" id="__nav_9_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    架构
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9_1">
+            <span class="md-nav__icon md-icon"></span>
+            架构
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    设计目标
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    基本概念
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    基本概念
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#universe" class="md-nav__link">
+    Universe
+  </a>
+  
+    <nav class="md-nav" aria-label="Universe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    数据组织
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    组件服务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#universe-vs-cluster" class="md-nav__link">
+    Universe vs. cluster
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dbserver" class="md-nav__link">
+    DBServer服务
+  </a>
+  
+    <nav class="md-nav" aria-label="DBServer服务">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    服务器全局块缓存
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    空间放大
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#throttled-compactions" class="md-nav__link">
+    节流压缩Throttled compactions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    小型和大型压缩队列
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mserver" class="md-nav__link">
+    MServer服务
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    核心功能
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    分层架构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E6%9F%A5%E8%AF%A2%E5%B1%82.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    查询层
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="CoreDB%E4%BA%8B%E5%8A%A1%E5%B1%82/%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CoreDB事务层
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="CoreDB%E5%88%86%E7%89%87%E5%B1%82/%E5%93%88%E5%B8%8C%E5%92%8C%E8%8C%83%E5%9B%B4%E5%88%86%E7%89%87.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CoreDB分片层
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="CoreDB%E5%A4%8D%E5%88%B6%E5%B1%82/%E5%90%8C%E6%AD%A5.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CoreDB复制层
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="CoreDB%E5%AD%98%E5%82%A8%E5%B1%82/%E6%8C%81%E4%B9%85%E5%8C%96.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CoreDB存储层
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../CLIs/sqlsh/%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CLIs
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E9%85%8D%E7%BD%AE/bm-mserver.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    配置
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../BSQL/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/%E6%95%B0%E7%BB%84.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    BSQL
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../BCQL/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    BCQL
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#universe" class="md-nav__link">
+    Universe
+  </a>
+  
+    <nav class="md-nav" aria-label="Universe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    数据组织
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    组件服务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#universe-vs-cluster" class="md-nav__link">
+    Universe vs. cluster
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dbserver" class="md-nav__link">
+    DBServer服务
+  </a>
+  
+    <nav class="md-nav" aria-label="DBServer服务">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    服务器全局块缓存
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    空间放大
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#throttled-compactions" class="md-nav__link">
+    节流压缩Throttled compactions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    小型和大型压缩队列
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mserver" class="md-nav__link">
+    MServer服务
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/as599397086/BMDOC/edit/master/docs/架构/基本概念.md" title="编辑此页" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/as599397086/BMDOC/raw/master/docs/架构/基本概念.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+  <h1>基本概念</h1>
+
+<h2 id="universe"><strong>Universe</strong><a class="headerlink" href="#universe" title="Permanent link">&para;</a></h2>
+<p>AiSQL universe是一组节点（虚拟机、物理机或容器），它们共同充当弹性且可扩展的分布式数据库。</p>
+<p>根据业务要求和延迟考虑，Universe 可以部署为多种配置，如下所示：</p>
+<ul>
+<li>单一可用区。</li>
+<li>一个区域内有多个可用区。</li>
+<li>多个区域，具有同步和异步复制选择。</li>
+</ul>
+<p>请注意，有时术语“universe”和“cluster”可以互换使用。 然而，正如universe与cluster中所述，两者并不总是等效的。</p>
+<h3 id="_1"><strong>数据组织</strong><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>AiSQL Universe 可以由一个或多个命名空间组成。 这些命名空间中的每一个都可以包含一个或多个用户表。</p>
+<p>AiSQL 自动在 Universe 中的节点上对这些表进行分片、复制和负载平衡，同时尊重您的意图，例如跨可用区 (AZ) 或区域放置要求、所需的复制因子等。 AiSQL 自动处理故障，例如节点、磁盘、可用区或区域故障，以及在剩余可用节点上重新分配和重新复制数据到所需级别，同时仍然遵守任何副本放置要求。</p>
+<p><strong>BSQL</strong>
+BSQL 中的命名空间被称为数据库，逻辑上与其他 RDBMS（例如 PostgreSQL）中的命名空间相同。</p>
+<p><strong>BCQL</strong>
+BCQL 中的命名空间称为键空间，逻辑上与 Apache Cassandra 的 CQL 中的键空间相同。</p>
+<h3 id="_2"><strong>组件服务</strong><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>Universe 由两组服务器组成：AiSQL Tile 服务器（DBServer）和 AiSQL 主服务器（MServer）。 DBServer 和 MServer 服务器组使用 Raft 作为构建块形成两个各自的分布式服务。 这些服务的高可用性（HA）是通过 Raft 实现中的故障检测、领导者选举和数据复制机制来实现的。</p>
+<p>请注意，AiSQL 的设计目的是不存在任何单点故障。</p>
+<p><strong>DBServer</strong>
+DBServer 服务负责托管和提供用户数据（例如表），以及处理所有查询。</p>
+<p>MServer
+MServer服务负责保存系统元数据，协调系统范围的操作，例如创建、更改和删除表，以及启动负载平衡等维护操作。</p>
+<p>下图描述了一个基本的四节点 AiSQL universe：</p>
+<p><img alt="" src="../assets/chapter9/1.png" /></p>
+<h3 id="universe-vs-cluster"><strong>Universe vs. cluster</strong><a class="headerlink" href="#universe-vs-cluster" title="Permanent link">&para;</a></h3>
+<p>AiSQL Universe 由一个主cluster和零个或多个只读副本cluster组成。</p>
+<p>主cluster可以执行写入和读取操作。 主cluster中节点之间的复制是同步执行的。</p>
+<p>只读副本cluster只能执行读取； 发送到只读副本cluster的写入会自动重新路由到 Universe 的主cluster。 这些cluster可以在远离主cluster的区域中读取时间线一致的数据。 这确保了地理分布式应用程序的低延迟读取。 数据通过主cluster的异步复制引入只读副本cluster。 换句话说，只读副本cluster中的节点充当 Raft 观察者，不参与涉及主cluster中存在的 Raft 领导者和 Raft 追随者的写入路径。</p>
+<p>有关只读副本cluster的更多信息，请参阅只读副本。</p>
+<h2 id="dbserver"><strong>DBServer服务</strong><a class="headerlink" href="#dbserver" title="Permanent link">&para;</a></h2>
+<p>AiSQL Tile Server (DBServer) 服务负责 AiSQL 集群中最终用户请求的输入输出 (I/O)。 表的数据被分割（分片）为Tile。 每个Tile都由一个或多个Tile对等体组成，具体取决于复制因子。每个 DBServer 托管一个或多个Tile对等点。</p>
+<p>下图描述了一个基本的四节点 AiSQL universe，其中一个表有 16 个Tile，复制因子为 3：</p>
+<p><img alt="" src="../assets/chapter9/2.png" /></p>
+<p>托管在不同DBServer上的每个Tile对应的Tile对等体形成一个Raft组并在彼此之间复制数据。 上图所示的系统包含16个独立的Raft组。 有关详细信息，请参阅复制层。</p>
+<p>在每个 DBServer 中，都采用cross-Tile智能来最大限度地提高资源效率。 DBServer 有多种方式协调其托管的Tile之间的操作。</p>
+<h3 id="_3"><strong>服务器全局块缓存</strong><a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>块缓存在给定 DBServer 中的不同Tile之间共享，当一个Tile比其他Tile读取更频繁时，可以实现高效的内存利用率。 例如，如果一个表与其他表相比具有大量读取的使用模式，则块缓存将自动偏向该表的块，因为块缓存在所有 Tile 对等方中都是全局的。</p>
+<h3 id="_4"><strong>空间放大</strong><a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>AiSQL 的压缩是按大小分层的。 与级别压缩相比，大小分层压缩具有磁盘写入 (I/O) 放大较低的优点。 可能有人担心大小分层压缩具有更高的空间放大（它需要 50% 的空间净空）。 但在 AiSQL 中情况并非如此，因为每个表都被分成多个Tile，并且跨Tile的并发压缩被限制到特定的最大值。 AiSQL 中的典型空间放大往往在 10-20% 范围内。</p>
+<h3 id="throttled-compactions"><strong>节流压缩Throttled compactions</strong><a class="headerlink" href="#throttled-compactions" title="Permanent link">&para;</a></h3>
+<p>压缩在给定的 DBServer 中跨Tile进行限制，以防止压缩风暴。 例如，这可以防止压缩风暴期间出现较高的前景延迟。</p>
+<p>默认策略确保进行压缩是值得的。 该算法试图确保被压缩的文件在大小上不会相差太大。 例如，用 1GB 文件压缩 100GB 文件来生成 101GB 文件是没有意义的，因为这需要大量不必要的 I/O，但收益却很小。</p>
+<h3 id="_5"><strong>小型和大型压缩队列</strong><a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>压缩按优先级分为大型压缩和小型压缩，并具有一定的优先级，即使在极端的 I/O 模式下也能保持系统正常运行。</p>
+<p>除了压缩的节流控制之外，AiSQL 还进行了各种内部优化，以最大限度地减少压缩对前台延迟的影响。 例如，优先队列将小压缩优先于大压缩，以确保任何Tile的 SSTable 文件数量保持尽可能低。</p>
+<p><strong>手动压实</strong>
+AiSQL允许使用bm-admin实用程序中的compact_table命令在表上外部触发压缩。 当新数据不再进入表的系统并且您可能由于已经发生的覆盖或删除或由于 TTL 过期而需要回收磁盘空间时，这非常有用。</p>
+<p><strong>基于统计的完全压缩以提高读取性能</strong>
+AiSQL 跟踪一段时间内在 CoreDB 级别读取的键值对数量（由 auto_compact_stat_window_seconds DBServer 标志指定）。 如果 AiSQL 检测到Tile中的大量 CoreDB 读取跳过了逻辑删除和过时的键，那么将触发完全压缩以删除不必要的键。</p>
+<p>一旦滑动窗口中满足以下所有条件，Tile上就会自动触发完全压缩：</p>
+<ul>
+<li>已过时（例如，由于 TTL 导致删除或删除）与活动键读取的比率达到阈值 auto_compact_percent_obsolete。</li>
+<li>已读取足够的key（auto_compact_min_obsolete_keys_found）。</li>
+</ul>
+<p>虽然此功能与具有 TTL 的表兼容，但如果 TTL 文件过期功能处于活动状态，AiSQL 不会对具有 TTL 的表安排压缩。</p>
+<p><strong>预定的全面压实</strong>
+AiSQL允许使用scheduled_full_compaction_Frequency_hours和scheduled_full_compaction_jitter_factor_percentage DBServer标志自动安排对Tile中所有数据的完全压缩。 这对于定期进行大量覆盖或删除的工作负载的性能和磁盘空间回收非常有用。 这也可以与具有 TTL 的表一起使用，但与 TTL 文件过期功能不兼容。</p>
+<p><strong>服务器全局内存存储限制</strong>
+服务器全局内存存储限制跟踪不同Tile的内存存储并强制执行全局大小。 当Tile之间的写入速率存在偏差时，这非常有用。 例如，如果在单个 DBServer 中存在属于多个表的 Tile，并且其中一个表比其他表获得更多的写入次数，允许写入量大的表增长得更大，即使存在per-Tile内存限制。 这允许良好的写入效率。</p>
+<p><strong>自动调整块缓存和内存存储的大小</strong>
+块缓存和内存存储代表一些较大的内存消耗组件。 由于这些在所有Tile对等体中都是全局的，因此可以轻松地跨各种工作负载管理这些组件的内存和大小。 根据系统上可用的 RAM，DBServer 自动将总可用内存的一定百分比分配给块缓存，并将另一百分比分配给内存存储。</p>
+<p><strong>在数据磁盘之间均匀分配Tile负载</strong>
+在多 SSD 机器上，各个表Tile的数据 (SSTable) 和 WAL（Raft 预写日志）按每个表均匀分布在连接的磁盘上。 这种负载分布（也称为条带化）可确保每个磁盘为每个表处理均匀的负载量。</p>
+<h2 id="mserver"><strong>MServer服务</strong><a class="headerlink" href="#mserver" title="Permanent link">&para;</a></h2>
+<p>MServer 服务保留系统元数据和记录，例如表和表相关Tile的位置、用户和角色及其相关权限等。</p>
+<p>MServer 服务还负责协调后台操作，例如负载平衡或启动复制不足的数据的重新复制，以及执行各种管理操作，例如创建、更改和删除表。</p>
+<p>MServer 具有高可用性，因为它与其对等方形成 Raft 组，并且它不在针对用户表的 I/O 关键路径中。</p>
+<p><img alt="" src="../assets/chapter9/3.png" /></p>
+<p><strong>MServer的功能</strong>
+MServer 系统内具有许多重要功能。</p>
+<p><strong>1.运行全universe范围的管理协调</strong>
+此类操作的示例包括用户发出的 CREATE TABLE、ALTER TABLE 和 DROP TABLE 请求以及创建表的备份。 MServer 执行这些操作时保证该操作会传播到所有Tile，而不管托管这些Tile的 DBServer 的状态如何。 这是至关重要的，因为当这些全域范围的操作之一正在进行时，DBServer 发生故障不会因为无法将操作应用到某些Tile而影响操作的结果。</p>
+<p><strong>2.系统元数据的存储</strong>
+每个MServer存储系统元数据，包括有关命名空间、表、角色、权限以及Tile到DBServers的分配的信息。 这些系统记录也使用 Raft 跨 MServer 进行复制，以实现冗余。 系统元数据也由 MServer 存储为 CoreDB 表。</p>
+<p><strong>3.DBServers Tile分配的权威来源</strong>
+MServer 存储所有Tile以及当前托管它们的相应 DBServer。 Tile到托管 DBServer 的映射由客户端（例如 AiSQL 查询层）查询。 使用 BCQL 和 BSQL API 的 AiSQL 智能客户端的应用程序可以高效地检索数据。 智能客户端向 MServer 查询Tile到 DBServer 的映射并将其缓存。 通过这样做，智能客户端可以直接与正确的 DBServer 通信以服务各种查询，而不会产生额外的网络跃点。</p>
+<p><strong>4.后台操作</strong>
+某些操作在 Universe 的整个生命周期中在后台执行，不会影响前台读写性能。</p>
+<p>（1）数据放置和负载平衡
+MServer 领导者在 DBServer 上进行Tile的初始放置（在创建表时），以强制执行任何用户定义的数据放置约束并确保均匀负载。 此外，在 Universe 的生命周期内，随着节点的添加、故障或停用，它会继续平衡负载并自动强制执行数据放置约束。</p>
+<p>（2）领导者平衡
+除了确保每个 DBServer 服务的 Tile 数量在整个universe中保持平衡之外，MServer 还确保每个节点在符合条件的节点上拥有对称数量的 Tile 对等领导者。</p>
+<p>（3）扩展 DBServer 故障时重新复制数据
+MServer 接收来自所有 DBServer 的心跳，并跟踪它们的活跃度。 它检测是否有任何 DBServer 发生故障，并跟踪 DBServer 保持故障状态的时间间隔。 如果故障的持续时间超过阈值，则它会查找替换DBServer，将故障DBServer的Tile数据重新复制到该替换DBServer。 重新复制由 MServer 领导者以节流方式（throttled fashion）启动，以免影响 Universe 的前台操作。</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 设计目标">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                设计目标
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 核心功能">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                核心功能
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2023 - 2024 贝格迈思（深圳）技术有限公司 粤ICP备17054434号-1
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/as599397086/BMDOC" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.code.select", "content.tabs.link", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.path", "navigation.prune", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+        <script src="../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>
