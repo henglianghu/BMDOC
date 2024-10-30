@@ -1,0 +1,1878 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="贝格迈思数据库使用手册">
+      
+      
+      
+      
+        <link rel="prev" href="%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%83%A8%E7%BD%B2.html">
+      
+      
+        <link rel="next" href="%E6%B5%8B%E8%AF%95%E9%9B%86%E7%BE%A4%E6%80%A7%E8%83%BD.html">
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+    
+    
+      
+        <title>多数据中心部署 - 手册</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.35e1ed30.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="mo" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#three-data-center-3dc" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      <!--
+  Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Determine classes -->
+
+
+  
+
+
+<!-- Header -->
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav
+    class="md-header__inner md-grid"
+    aria-label="页眉"
+  >
+
+    <!-- Link to home -->
+    <a
+      href="../index.html"
+      title="手册"
+      class="md-header__button md-logo"
+      aria-label="手册"
+      data-md-component="logo"
+    >
+      
+  <img src="../assets/new-logo.png" alt="logo">
+
+    </a>
+
+    <!-- Button to open drawer -->
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+
+    <!-- Header title -->
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            手册
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              多数据中心部署
+            
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color palette toggle -->
+    
+      
+    
+
+    <!-- User preference: color palette -->
+    
+
+    <!-- Site language selector -->
+    
+
+    <!-- Button to open search modal -->
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+
+      <!-- Search interface -->
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    <!-- Repository information -->
+    
+      <div class="md-header__source">
+        <a href="https://github.com/as599397086/BMDOC" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+
+  <!-- Navigation tabs (sticky) -->
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="手册" class="md-nav__button md-logo" aria-label="手册" data-md-component="logo">
+      
+  <img src="../assets/new-logo.png" alt="logo">
+
+    </a>
+    手册
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/as599397086/BMDOC" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AiSQL简介
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    快速上手
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/JAVA.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    应用开发
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    部署集群
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            部署集群
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E8%BD%AF%E7%A1%AC%E4%BB%B6%E7%8E%AF%E5%A2%83%E9%9C%80%E6%B1%82.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    软硬件环境需求
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E7%8E%AF%E5%A2%83%E4%B8%8E%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E6%A3%80%E6%9F%A5.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    环境与系统配置检查
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E6%9C%80%E5%B0%8F%E9%83%A8%E7%BD%B2%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    最小部署拓扑结构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E9%80%9A%E8%BF%87%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2%E9%83%A8%E7%BD%B2.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    通过图形化界面部署
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%83%A8%E7%BD%B2.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    通过命令行部署
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    多数据中心部署
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="%E5%A4%9A%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E9%83%A8%E7%BD%B2.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    多数据中心部署
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#three-data-center-3dc" class="md-nav__link">
+    three+ data center (3dc)
+  </a>
+  
+    <nav class="md-nav" aria-label="three+ data center (3dc)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    示例场景
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    部署集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    验证部署
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xdcr" class="md-nav__link">
+    xDCR部署
+  </a>
+  
+    <nav class="md-nav" aria-label="xDCR部署">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ab" class="md-nav__link">
+    建立集群A与集群B
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    单向复制
+  </a>
+  
+    <nav class="md-nav" aria-label="单向复制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uuid" class="md-nav__link">
+    集群UUID
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    获取新表ID
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    建立复制
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    双向复制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    启用或禁用复制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    验证复制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    复制已有数据的表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    迁移架构
+  </a>
+  
+    <nav class="md-nav" aria-label="迁移架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    停止用户写入
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    使用备份和恢复
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#read-replicas" class="md-nav__link">
+    read replicas
+  </a>
+  
+    <nav class="md-nav" aria-label="read replicas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    部署只读副本集群
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E6%B5%8B%E8%AF%95%E9%9B%86%E7%BE%A4%E6%80%A7%E8%83%BD.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    测试集群性能
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数据迁移
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../%E7%AE%A1%E7%90%86%E6%95%B0%E6%8D%AE%E5%BA%93/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E4%B8%8E%E7%9B%91%E6%8E%A7.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    管理数据库
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E5%90%91%E9%87%8F%E7%89%B9%E6%80%A7.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    向量特性
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../AI%E7%89%B9%E6%80%A7/%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI特性
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../%E6%9E%B6%E6%9E%84/%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    参考
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#three-data-center-3dc" class="md-nav__link">
+    three+ data center (3dc)
+  </a>
+  
+    <nav class="md-nav" aria-label="three+ data center (3dc)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    示例场景
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    部署集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    验证部署
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xdcr" class="md-nav__link">
+    xDCR部署
+  </a>
+  
+    <nav class="md-nav" aria-label="xDCR部署">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ab" class="md-nav__link">
+    建立集群A与集群B
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    单向复制
+  </a>
+  
+    <nav class="md-nav" aria-label="单向复制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uuid" class="md-nav__link">
+    集群UUID
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    获取新表ID
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    建立复制
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    双向复制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    启用或禁用复制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    验证复制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    复制已有数据的表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    迁移架构
+  </a>
+  
+    <nav class="md-nav" aria-label="迁移架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    停止用户写入
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    使用备份和恢复
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#read-replicas" class="md-nav__link">
+    read replicas
+  </a>
+  
+    <nav class="md-nav" aria-label="read replicas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    部署只读副本集群
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/as599397086/BMDOC/edit/master/docs/部署集群/多数据中心部署.md" title="编辑此页" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/as599397086/BMDOC/raw/master/docs/部署集群/多数据中心部署.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+  <h1>多数据中心部署</h1>
+
+<h2 id="three-data-center-3dc"><strong>three+ data center (3dc)</strong><a class="headerlink" href="#three-data-center-3dc" title="Permanent link">&para;</a></h2>
+<p>跨区域部署BMDB集群。
+BMDB 的三个数据中心部署本质上是手动部署部分中记录的三个可用区 (AZ) 部署的自然扩展。 三个数据中心中各放置了相同数量的节点。 在单个数据中心内，建议进行多可用区部署，以确保针对区域故障的恢复能力。 此方法适用于任何奇数个可用区或数据中心。 鉴于 BMDB 的分布式基于共识的复制需要多数仲裁来保证写入请求的持续可用性，因此不建议跨偶数个可用区或数据中心部署单个集群。</p>
+<h3 id="_1"><strong>示例场景</strong><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>1.创建复制因子为 3 的三节点集群。
+（1）云是 aws，三个区域/可用区是 us-west/us-west-2a、us-east-1/us-east-1a、ap-northeast-1/ap-northeast-1a。 每个区域/可用区中放置一个节点，以便每个Tile的一个副本也放置在每个区域/可用区中。
+（2）3个节点的私网IP地址分别为172.151.17.130、172.151.17.220、172.151.17.140。</p>
+<ol>
+<li>/home/centos/disk1、/home/centos/disk2 上挂载了多个数据驱动器。</li>
+</ol>
+<p><strong>先决条件</strong>
+按照检查表确保您已准备好用于安装 BMDB 的节点。</p>
+<h3 id="_2"><strong>部署集群</strong><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>在每个实例上执行以下步骤。</p>
+<p><strong>1.安装软件</strong>
+按照安装说明在每个节点上安装 BMDB。</p>
+<p><strong>2.启动MServers</strong>
+在每个节点上运行 mserver 服务器，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span>
+<span class="normal"><a href="#__codelineno-0-8">8</a></span>
+<span class="normal"><a href="#__codelineno-0-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>$ ./bin/mserver \
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>  --mserver_addresses 172.151.17.130:11000,172.151.17.220:11000,172.151.17.140:11000 \
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>  --rpc_bind_addresses 172.151.17.130 \
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>  --fs_data_dirs &quot;/home/centos/disk1,/home/centos/disk2&quot; \
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>  --placement_cloud aws \
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>  --placement_region us-west \
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a>  --placement_zone us-west-2a \
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a>  --leader_failure_max_missed_heartbeat_periods 10 \
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a>  &gt;&amp; /home/centos/disk1/mserver.out &amp;
+</span></code></pre></div></td></tr></table></div>
+<p>请注意如何为 --fs_data_dirs 标志提供多个目录。 将 --rpc_bind_addresses 值替换为主机的私有 IP 地址，并适当设置 --placement_cloud、--placement_region 和 --placement_zone 值。</p>
+<p>请注意 --leader_failure_max_missed_heartbeat_periods 标志如何设置为 10。该标志指定在领导者被视为失败之前，领导者可以无法进行心跳检测的最大心跳周期。 由于数据是跨数据中心进行地理复制的，因此 RPC 延迟预计会更高。 使用此标志可以增加较高 RPC 延迟部署中的故障检测间隔。</p>
+<p>总故障超时现在为 5 秒，计算方法为 --raft_heartbeat_interval_ms（默认值为 500 毫秒）乘以 --leader_failure_max_missed_heartbeat_periods（当前值为 10）。</p>
+<p>有关配置标志的完整列表，请参阅 MServer 参考。</p>
+<p><strong>3.启动 DBServer</strong>
+在每个节点上运行 dbserver 服务器，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>$ ./bin/dbserver \
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>  --dbserver_mserver_addrs 172.151.17.130:11000,172.151.17.220:11000,172.151.17.140:11000 \
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>  --rpc_bind_addresses 172.151.17.130 \
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>  --enable_bsql \
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a>  --pgsql_proxy_bind_address 172.151.17.130:2521 \
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a>  --cql_proxy_bind_address 172.151.17.130:9542 \
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a>  --fs_data_dirs &quot;/home/centos/disk1,/home/centos/disk2&quot; \
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a>  --placement_cloud aws \
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9"></a>  --placement_region us-west \
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10"></a>  --placement_zone us-west-2a \
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11"></a>  --leader_failure_max_missed_heartbeat_periods 10 \
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12"></a>  &gt;&amp; /home/centos/disk1/dbserver.out &amp;
+</span></code></pre></div></td></tr></table></div>
+<p>请注意，必须使用 --dbserver_mserver_addrs 标志提供所有mserver addresses。 将 --rpc_bind_addresses 值替换为主机的私有 IP 地址，并适当设置placement_cloud、placement_region 和placement_zone 值。</p>
+<p>与 MServer 一样，将 --leader_failure_max_missed_heartbeat_periods 标志设置为 10 以考虑较高的 RPC 延迟。</p>
+<p>有关配置标志的完整列表，请参阅 DBServer 参考。</p>
+<p><strong>4.设置副本放置策略</strong>
+首次创建集群时的默认副本放置策略是将所有节点视为平等，无论 --placement_* 配置标志如何。 但是，对于当前部署，您希望在每个区域/可用区中显式放置每个Tile的一个副本。 以下命令将 us-west-2/us-west-2a、us-east-1/us-east-1a、ap-northeast-1/ap-northeast-1a 之间的复制因子设置为 3，从而实现这样的放置。</p>
+<p>在任何运行 mserver 的主机上，运行以下命令：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a>$ ./bin/bm-admin \
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a>    --mserver_addresses 172.151.17.130:11000,172.151.17.220:11000,172.151.17.140:11000 \
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a>    modify_placement_info  \
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4"></a>    aws.us-west.us-west-2a,aws.us-east-1.us-east-1a,aws.ap-northeast-1.ap-northeast-1a 3
+</span></code></pre></div></td></tr></table></div>
+<p>通过运行以下命令进行验证：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a>$ curl -s http://&lt;any-mserver-ip&gt;:10000/cluster-config
+</span></code></pre></div></td></tr></table></div>
+<p>确认输出类似于以下内容，并将每个可用区的 --min_num_replicas 设置为 1：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span>
+<span class="normal"><a href="#__codelineno-4-23">23</a></span>
+<span class="normal"><a href="#__codelineno-4-24">24</a></span>
+<span class="normal"><a href="#__codelineno-4-25">25</a></span>
+<span class="normal"><a href="#__codelineno-4-26">26</a></span>
+<span class="normal"><a href="#__codelineno-4-27">27</a></span>
+<span class="normal"><a href="#__codelineno-4-28">28</a></span>
+<span class="normal"><a href="#__codelineno-4-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a>replication_info {
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2"></a>  live_replicas {
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3"></a>    num_replicas: 3
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4"></a>    placement_blocks {
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5"></a>      cloud_info {
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6"></a>        placement_cloud: &quot;aws&quot;
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7"></a>        placement_region: &quot;us-west&quot;
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8"></a>        placement_zone: &quot;us-west-2a&quot;
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9"></a>      }
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10"></a>      min_num_replicas: 1
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11"></a>    }
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12"></a>    placement_blocks {
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13"></a>      cloud_info {
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14"></a>        placement_cloud: &quot;aws&quot;
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15"></a>        placement_region: &quot;us-east-1&quot;
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16"></a>        placement_zone: &quot;us-east-1a&quot;
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17"></a>      }
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18"></a>      min_num_replicas: 1
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19"></a>    }
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20"></a>    placement_blocks {
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21"></a>      cloud_info {
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22"></a>        placement_cloud: &quot;aws&quot;
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23"></a>        placement_region: &quot;ap-northeast-1&quot;
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24"></a>        placement_zone: &quot;ap-northeast-1a&quot;
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25"></a>      }
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26"></a>      min_num_replicas: 1
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27"></a>    }
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28"></a>  }
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29"></a>}
+</span></code></pre></div></td></tr></table></div>
+<p><strong>5.设置首选位置</strong>
+需要考虑的另一个选项是使用 bm-admin set_preferred_zones 命令为所有Tile领导者设置首选位置。</p>
+<p>对于多行或多表事务操作，将领导者放在单个专区或区域中可以帮助减少执行事务时涉及的跨区域网络跃点数量，从而提高性能。</p>
+<p>以下命令将首选区域设置为 aws.us-west.us-west-2a：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a>$ ./bin/bm-admin \
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2"></a>    --mserver_addresses 172.151.17.130:11000,172.151.17.220:11000,172.151.17.140:11000 \
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3"></a>    set_preferred_zones  \
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4"></a>    aws.us-west.us-west-2a
+</span></code></pre></div></td></tr></table></div>
+<p>再次查看集群配置，您应该看到添加了 affinitized_leaders：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span>
+<span class="normal"><a href="#__codelineno-6-19">19</a></span>
+<span class="normal"><a href="#__codelineno-6-20">20</a></span>
+<span class="normal"><a href="#__codelineno-6-21">21</a></span>
+<span class="normal"><a href="#__codelineno-6-22">22</a></span>
+<span class="normal"><a href="#__codelineno-6-23">23</a></span>
+<span class="normal"><a href="#__codelineno-6-24">24</a></span>
+<span class="normal"><a href="#__codelineno-6-25">25</a></span>
+<span class="normal"><a href="#__codelineno-6-26">26</a></span>
+<span class="normal"><a href="#__codelineno-6-27">27</a></span>
+<span class="normal"><a href="#__codelineno-6-28">28</a></span>
+<span class="normal"><a href="#__codelineno-6-29">29</a></span>
+<span class="normal"><a href="#__codelineno-6-30">30</a></span>
+<span class="normal"><a href="#__codelineno-6-31">31</a></span>
+<span class="normal"><a href="#__codelineno-6-32">32</a></span>
+<span class="normal"><a href="#__codelineno-6-33">33</a></span>
+<span class="normal"><a href="#__codelineno-6-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a>replication_info {
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a>  live_replicas {
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3"></a>    num_replicas: 3
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4"></a>    placement_blocks {
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5"></a>      cloud_info {
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6"></a>        placement_cloud: &quot;aws&quot;
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7"></a>        placement_region: &quot;us-west&quot;
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8"></a>        placement_zone: &quot;us-west-2a&quot;
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9"></a>      }
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10"></a>      min_num_replicas: 1
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11"></a>    }
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12"></a>    placement_blocks {
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13"></a>      cloud_info {
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14"></a>        placement_cloud: &quot;aws&quot;
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15"></a>        placement_region: &quot;us-east-1&quot;
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16"></a>        placement_zone: &quot;us-east-1a&quot;
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17"></a>      }
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18"></a>      min_num_replicas: 1
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19"></a>    }
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20"></a>    placement_blocks {
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21"></a>      cloud_info {
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22"></a>        placement_cloud: &quot;aws&quot;
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23"></a>        placement_region: &quot;ap-northeast-1&quot;
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24"></a>        placement_zone: &quot;ap-northeast-1a&quot;
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25"></a>      }
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26"></a>      min_num_replicas: 1
+</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27"></a>    }
+</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28"></a>    affinitized_leaders {
+</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29"></a>      placement_cloud: &quot;aws&quot;
+</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30"></a>      placement_region: &quot;us-west&quot;
+</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31"></a>      placement_zone: &quot;us-west-2a&quot;
+</span><span id="__span-6-32"><a id="__codelineno-6-32" name="__codelineno-6-32"></a>    }
+</span><span id="__span-6-33"><a id="__codelineno-6-33" name="__codelineno-6-33"></a>  }
+</span><span id="__span-6-34"><a id="__codelineno-6-34" name="__codelineno-6-34"></a>}
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_3"><strong>验证部署</strong><a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>使用 sqlsh（对于 BSQL API）或 cqlsh（对于 BCQL API）shell 测试与集群的连接。</p>
+<h2 id="xdcr"><strong>xDCR部署</strong><a class="headerlink" href="#xdcr" title="Permanent link">&para;</a></h2>
+<p>使用xDCR复制，可以在两个集群之间，使用单向（主-从）或双向（多主）异步复制。
+下面将具体介绍如何使用xDCR复制。</p>
+<p>首先按照单集群多节点进行安装部署集群A 与集群B，假设其拓扑结构如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>集群</strong></th>
+<th><strong>主机 IP</strong></th>
+<th><strong>节点类型</strong></th>
+<th><strong>节点类型</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>10.0.0.1</td>
+<td>mserver</td>
+<td>dbserver</td>
+</tr>
+<tr>
+<td>10.0.0.2</td>
+<td>mserver</td>
+<td>dbserver</td>
+<td></td>
+</tr>
+<tr>
+<td>10.0.0.3</td>
+<td>mserver</td>
+<td>dbserver</td>
+<td></td>
+</tr>
+<tr>
+<td>B</td>
+<td>10.0.0.4</td>
+<td>mserver</td>
+<td>dbserver</td>
+</tr>
+<tr>
+<td>10.0.0.5</td>
+<td>mserver</td>
+<td>dbserver</td>
+<td></td>
+</tr>
+<tr>
+<td>10.0.0.6</td>
+<td>mserver</td>
+<td>dbserver</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ab"><strong>建立集群A与集群B</strong><a class="headerlink" href="#ab" title="Permanent link">&para;</a></h3>
+<p>请按照如下方式创建源集群A和目标集群B：</p>
+<ul>
+<li>参考<a href="#_单集群多节点安装与启动">单集群多节点安装与启动</a>，部署并创建BMDB源集群A。</li>
+<li>为源集群A创建表。</li>
+<li>参考<a href="#_单集群多节点安装与启动">单集群多节点安装与启动</a>，部署并创建BMDB目标集群B。</li>
+<li>为目标集群B创建表，这些表应该与源集群B创建的表相同。</li>
+<li>设置单向或双向复制。</li>
+</ul>
+<p>需要注意的一点是：如果源集群A中的表中已有数据，请按照<a href="#_复制已有数据的表">复制已有数据的表</a>中描述的过程步骤进行操作。</p>
+<h3 id="_4"><strong>单向复制</strong><a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>将一个集群（源集群）上需要复制的表，复制到另一个集群（目标集群）的过程，我们称之为单向复制。</p>
+<h4 id="uuid">集群UUID<a class="headerlink" href="#uuid" title="Permanent link">&para;</a></h4>
+<p>可通过访问：<a href="http://10.0.0.1:7001/">http://10.0.0.1:10000/</a> 获取集群A的UUID
+例如：4b0ec5da-3582-45b3-aa47-98d9425a5f5c </p>
+<h4 id="id">获取新表ID<a class="headerlink" href="#id" title="Permanent link">&para;</a></h4>
+<p>需要复制的新表，需要在集群A和集群B中均进行相同的表定义创建。如果是想复制已经有数据的表，请参考<a href="#_复制已有数据的表">复制已有数据的表</a>。接下来，需要使用如下命令来获取需要复制的新表ID。
+基本语法为：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a>./bm-admin -mserver_addresses &lt;source mserver ips comma separated&gt; list_tables include_table_id | grep table_name
+</span></code></pre></div></td></tr></table></div>
+<p>例如，获取表t_user的ID，执行如下命令来获取表ID：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a>bigmath@bigmath-virtual-machine:~$./bm-admin -mserver_addresses 10.0.0.1:11000,10.0.0.2:11000,10.0.0.3:11000 list_tables include_table_id | grep t_user
+</span></code></pre></div></td></tr></table></div>
+<p>获取到的表ID为：000033e8000030008000000000004000</p>
+<h4 id="_5">建立复制<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<p>进入BMDB工作目录，运行如下命令bm-admin setup_universe_replication来建立复制。
+确保在命令中指定了集群A和集群B的所有mserver地址。
+基本语法为：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a>./bm-admin \
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2"></a> -mserver_addresses &lt;target_universe_mserver_addresses&gt; \
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3"></a>setup_universe_replication &lt;source_universe_uuid&gt;_&lt;replication_stream_name&gt;  \
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4"></a>    &lt;source_universe_mserver_addresses&gt; \
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5"></a>    &lt;table_id&gt;,[&lt;table_id&gt;..]
+</span></code></pre></div></td></tr></table></div>
+<p>例如，需要复制上面表：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a>bigmath@bigmath-virtual-machine:~$./bm-admin 
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2"></a>-mserver_addresses 10.0.0.4:11000,10.0.0.5:11000,10.0.0.6:11000 
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3"></a>setup_universe_replication  4b0ec5da-3582-45b3-aa47-98d9425a5f5c 10.0.0.1:11000,10.0.0.2:11000,10.0.0.3:11000 
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4"></a>000033e8000030008000000000004000
+</span></code></pre></div></td></tr></table></div>
+<p>在执行成功后，会打印如下成功信息：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a>Replication setup successfully
+</span></code></pre></div></td></tr></table></div>
+<p>需要注意的一点是：如果源集群中需要复制的表定义发生改变，请参考【<a href="#_迁移架构">迁移架构</a>】解决复制问题。</p>
+<h3 id="_6"><strong>双向复制</strong><a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>双向复制，就是在上节单向复制设置的基础上，将其设置过程中的源集群做为目标集群，而目标集群做为源集群，再重复进行单向复制中描述的设置过程。</p>
+<h3 id="_7"><strong>启用或禁用复制</strong><a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>可以设置复制为启用或禁用，来暂停复制过程。
+基本语法为：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1"></a>./bm-admin \
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2"></a>-mserver_addresses &lt;target_mserver_addresses&gt; \ 
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3"></a>set_universe_replication_enabled  &lt;source_universe_uuid&gt;_&lt;replication_name&gt; (0|1)
+</span></code></pre></div></td></tr></table></div>
+<p>参数说明：
+target_mserver_addresss:目标mserver主机和端口的逗号分隔列表。默认值为localhost:11000。
+source_universe_uid：源集群的uuid。
+replication_name：要启用或禁用的复制的名称。
+0|1:0代表禁用，1代表启用。默认值为1。</p>
+<p>例如，禁用复制：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1"></a>bigmath@bigmath-virtual-machine:~$./bm-admin 
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2"></a>-mserver_addresses 10.0.0.4:11000,10.0.0.5:11000,10.0.0.6:11000 
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3"></a>set_universe_replication_enabled 4b0ec5da-3582-45b3-aa47-98d9425a5f5c 0
+</span></code></pre></div></td></tr></table></div>
+<p>例如，启用复制：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1"></a>bigmath@bigmath-virtual-machine:~$./bm-admin 
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2"></a>-mserver_addresses 10.0.0.4:11000,10.0.0.5:11000,10.0.0.6:11000 
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3"></a>set_universe_replication_enabled  4b0ec5da-3582-45b3-aa47-98d9425a5f5c 1
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_8"><strong>验证复制</strong><a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>(1) 单向复制
+对于单向复制，使用BSQL shell（sqlsh）连接到目标集群，并确认可以看到预期的记录，例如使用count(*)函数验证复制的表在源集群和目标集群上的记录数相同；或者，在源集群中，对复制的表成功插入一条记录，在目标集群中可以成功查看到该记录，则视为单向复制成功。</p>
+<p>(2) 双向复制
+对于双向复制，请重复单向复制中描述的过程，但反转源和目标信息。</p>
+<p>(3) 复制滞后
+(4) 复制状态 
+可以使用bm-admin返回当前的复制状态。get_replication_status命令返回所有使用者端复制流的复制状态。错误字段为空则表示复制流正常。 
+基本语法为：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1"></a>./bm-admin \
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2"></a>    -mserver_addresses &lt;mserver-addresses&gt; get_replication_status [ &lt;producer_universe_uuid&gt; ]
+</span></code></pre></div></td></tr></table></div>
+<p>例如，检查上述复制状态：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span>
+<span class="normal"><a href="#__codelineno-16-3">3</a></span>
+<span class="normal"><a href="#__codelineno-16-4">4</a></span>
+<span class="normal"><a href="#__codelineno-16-5">5</a></span>
+<span class="normal"><a href="#__codelineno-16-6">6</a></span>
+<span class="normal"><a href="#__codelineno-16-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1"></a> ./bm-admin \
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2"></a>    -mserver_addresses 10.0.0.4:10000,10.0.0.5:10000,10.0.0.6:10000 \
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3"></a>    get_replication_status
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4"></a>statuses {
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5"></a>  table_id: &quot;000033e8000030008000000000004000&quot;
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6"></a>  stream_id: &quot;2640ec7bd32d405ba57fd67a29b5939c&quot;
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7"></a>}
+</span></code></pre></div></td></tr></table></div>
+<p>如果无errors显示，表示复制流正常；否则，会打印相应的错误信息，类似如下：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span>
+<span class="normal"><a href="#__codelineno-17-4">4</a></span>
+<span class="normal"><a href="#__codelineno-17-5">5</a></span>
+<span class="normal"><a href="#__codelineno-17-6">6</a></span>
+<span class="normal"><a href="#__codelineno-17-7">7</a></span>
+<span class="normal"><a href="#__codelineno-17-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1"></a>statuses {
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2"></a>  table_id: &quot;03ee1455f2134d5b914dd499ccad4377&quot;
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3"></a>  stream_id: &quot;53441ad2dd9f4e44a76dccab74d0a2ac&quot;
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4"></a>  errors {
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5"></a>    error: REPLICATION_MISSING_OP_ID
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6"></a>    error_detail: &quot;Unable to find expected op id on the producer&quot;
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7"></a>  }
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8"></a>}
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_9"><strong>复制已有数据的表</strong><a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>单向复制也可以复制如下情况的表：</p>
+<ul>
+<li>在已经有数据的表上启用复制。</li>
+<li>目标表数据落后源表数据太多。</li>
+</ul>
+<p>首先确保wal仍然可用，您需要在cdc_wal_retension_time_secs gflag窗口中执行以下步骤。如果进程所花费的时间将超过此标志定义的值，则应增加该值。</p>
+<p>按以下步骤进行：</p>
+<ul>
+<li>检查点设置
+  通过执行以下命令，在源集群中为要复制的所有表创建一个检查点：</li>
+</ul>
+<p>基本语法为：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span>
+<span class="normal"><a href="#__codelineno-18-2">2</a></span>
+<span class="normal"><a href="#__codelineno-18-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1"></a>./bm-admin \
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2"></a>-mserver_addresses &lt;source_universe_mserver_addresses&gt; \
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3"></a>bootstrap_cdc_producer &lt;comma_separated_source_universe_table_ids&gt;
+</span></code></pre></div></td></tr></table></div>
+<p>例如：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span>
+<span class="normal"><a href="#__codelineno-19-2">2</a></span>
+<span class="normal"><a href="#__codelineno-19-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1"></a>bigmath@bigmath-virtual-machine:~$./bm-admin 
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2"></a>-mserver_addresses 10.0.0.1:11000,10.0.0.2:11000,10.0.0.3:11000 
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3"></a>bootstrap_cdc_producer 000033e8000030008000000000004000
+</span></code></pre></div></td></tr></table></div>
+<p>在执行成功后，会打印类似如下信息：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1"></a>table id: 000033e8000030008000000000004000, CDC bootstrap id: 45f1cf33cc0d4f2790a53509567794df
+</span></code></pre></div></td></tr></table></div>
+<ul>
+<li>备份与恢复</li>
+</ul>
+<p>在源集群中备份需要复制的表，并且在目标集群中恢复。</p>
+<ul>
+<li>设置复制流</li>
+</ul>
+<p>执行以下命令，使用前面步骤中生成的bootstrap id设置复制流。注意：需要确保bootstrap id与其对应的表ID的顺序相同。</p>
+<p>基本语法为：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span>
+<span class="normal"><a href="#__codelineno-21-2">2</a></span>
+<span class="normal"><a href="#__codelineno-21-3">3</a></span>
+<span class="normal"><a href="#__codelineno-21-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1"></a>./bm-admin 
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2"></a>-mserver_addresses &lt;target_universe_mserver_addresses&gt; setup_universe_replication \
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3"></a>    &lt;source_universe_uuid&gt;_&lt;replication_stream_name&gt; &lt;source_universe_mserver_addresses&gt; \
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4"></a>    &lt;comma_separated_source_universe_table_ids&gt; &lt;comma_separated_bootstrap_ids&gt;
+</span></code></pre></div></td></tr></table></div>
+<p>例如：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span>
+<span class="normal"><a href="#__codelineno-22-3">3</a></span>
+<span class="normal"><a href="#__codelineno-22-4">4</a></span>
+<span class="normal"><a href="#__codelineno-22-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1"></a>./bm-admin 
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2"></a>-mserver_addresses 10.0.0.4:11000,10.0.0.5:11000,10.0.0.6:11000 setup_universe_replication 
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3"></a>4b0ec5da-3582-45b3-aa47-98d9425a5f5c
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4"></a>10.0.0.1:11000,10.0.0.2:11000,10.0.0.3:11000 
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5"></a>000033e8000030008000000000004000  45f1cf33cc0d4f2790a53509567794df
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_10"><strong>迁移架构</strong><a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>在已经为某些表配置了复制之后，支持执行DDL操作，但需要考虑下面两种情况：</p>
+<h4 id="_11">停止用户写入<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
+<p>在某些情况下，需要暂时停止用户写入。通常会按照以下方式进行处理： </p>
+<ul>
+<li>停止任何新的用户写入。</li>
+<li>等待所有更改复制到目标集群。这可以通过复制滞后降至0来观察到。</li>
+<li>在两个集群上应用DDL更改，并更改任何新创建的表的复制。例如，在执行CREATE TABLE或CREATE INDEX语句之后。</li>
+<li>恢复用户写入。</li>
+</ul>
+<h4 id="_12">使用备份和恢复<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
+<p>如果无法停止用户写入，需要执行以下操作： </p>
+<ul>
+<li>在进行任何DDL更改之前停止复制。 </li>
+<li>将所有DDL更改应用于源集群。 </li>
+<li>备份源集群和所有要复制更改的相关表。按照<a href="#_复制已有数据的表">复制已有数据的表</a>中提供的说明进行操作。 </li>
+<li>在目标集群上还原此备份。 </li>
+<li>再次为所有相关表设置复制。请确保传入所有bootstrap_id值。 </li>
+</ul>
+<h2 id="read-replicas"><strong>read replicas</strong><a class="headerlink" href="#read-replicas" title="Permanent link">&para;</a></h2>
+<p>部署只读副本以将数据异步复制到不同区域。</p>
+<p>在 BMDB 部署中，主集群节点之间的数据复制同步运行并保证强一致性。 或者，您可以创建一个只读副本集群，该集群从主集群异步复制数据并保证时间线一致性（具有有限的过时性）。 同步复制的主集群可以接受对系统的写入。 使用只读副本集群允许应用程序在远程区域提供低延迟读取服务。</p>
+<p>在只读副本集群中，只读副本是不参与写入的观察者节点，而是通过异步复制从主集群获取时间线一致的数据副本。</p>
+<p>本文档介绍如何使用 BMDB 部署只读副本集群。 </p>
+<h3 id="_13"><strong>部署只读副本集群</strong><a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<p>您可以部署与主集群异步复制数据的只读副本集群，如下所示：
+1.启动“主mserver”服务并让它们形成法定人数。
+2.使用 bm-admin modify_placement_info 命令定义主集群放置，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1"></a>./bin/bm-admin -mserver_addresses ip1:11000,ip2:11000,ip3:11000 modify_placement_info &lt;placement_info&gt; &lt;replication_factor&gt; [placement_uuid]
+</span></code></pre></div></td></tr></table></div>
+<ul>
+<li>placement_info：以逗号分隔的可用区列表，格式为 <cloud1.region1.zone1>,<cloud2.region2.zone2>, ...</li>
+<li>replication_factor：主集群的复制因子（RF）。</li>
+<li>placement_uuid：主集群的放置标识符，使用有意义的字符串。</li>
+</ul>
+<p>3.使用 bm-admin add_read_replica_placement_info 命令定义只读副本放置，如下所示：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1"></a>./bin/bm-admin -mserver_addresses ip1:11000,ip2:11000,ip3:11000 add_read_replica_placement_info &lt;placement_info&gt; &lt;replication_factor&gt; [placement_uuid]
+</span></code></pre></div></td></tr></table></div>
+<ul>
+<li>placement_info：以逗号分隔的可用区列表，使用格式 <cloud1.region1.zone1>:<num_replicas_in_zone1>,<cloud2.region2.zone2>:<num_replicas_in_zone2>,... 这些只读副本可用区必须唯一不同于 步骤 2 中定义的主可用区。如果您想要使用相同的云、区域和可用区作为主集群，一种选择是在该区域后添加 _rr（用于只读副本）。 例如，c1.r1.z1_rr:2。</li>
+<li>replication_factor：只读副本总数。</li>
+<li>placement_uuid：只读副本集群的标识符，使用有意义的字符串。</li>
+</ul>
+<p>4.启动主 dbserver 服务，包括以下配置标志：</p>
+<ul>
+<li>--placement_cloud placement_cloud</li>
+<li>--placement_region placement_region</li>
+<li>--placement_zone placement_zone</li>
+<li>--placement_uuid live_id
+  放置位置应与步骤 2 中的信息匹配。您不需要将这些配置标志添加到 mserver 配置中。</li>
+</ul>
+<p>5.启动只读副本 dbserver 服务，包括以下配置标志：</p>
+<ul>
+<li>--placement_cloud placement_cloud</li>
+<li>--placement_region placement_region</li>
+<li>--placement_zone placement_zone</li>
+<li>--placement_uuid read_replica_id</li>
+</ul>
+<p>展示位置应与步骤 3 中的信息匹配。
+主集群应开始与只读副本集群进行异步复制。</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%83%A8%E7%BD%B2.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 通过命令行部署">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                通过命令行部署
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="%E6%B5%8B%E8%AF%95%E9%9B%86%E7%BE%A4%E6%80%A7%E8%83%BD.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 测试集群性能">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                测试集群性能
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2023 - 2024 贝格迈思（深圳）技术有限公司 粤ICP备17054434号-1
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/as599397086/BMDOC" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.code.select", "content.tabs.link", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.path", "navigation.prune", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+        <script src="../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>
