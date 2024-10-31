@@ -1,4 +1,7 @@
 文档中心
 
 mike 打包
-https://gitcode.com/gh_mirrors/mi/mike/overview?utm_source=artical_gitcode&index=top&type=card&webUrl&isLogin=1
+将文档推送到远程分支
+mike deploy 1.0 latest -p
+
+mike delete --all 清理旧版本的文档
