@@ -2,7 +2,7 @@ site_name: AiSQL数据库
 repo_url: https://github.com/as599397086/BMDOC
 site_description: 贝格迈思数据库使用手册
 copyright: Copyright © 2023 - 2024 贝格迈思（深圳）技术有限公司 粤ICP备17054434号-1
-dev_addr: 0.0.0.0:8000
+# dev_addr: 0.0.0.0:8000
 theme:
     custom_dir: material/overrides # 自定义文件夹
     name: material
