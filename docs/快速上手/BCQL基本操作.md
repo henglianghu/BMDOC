@@ -1,198 +1,191 @@
-## 建库、建表、建表索引
+## 登录
+
+AiSQL安装部署完成之后，可通过bcql客户端登录并对其进行操作。
+
+首先,需要进入bcql客户端程序所在的位置，AiSQL默认安装路径是bigmath/AiSQL-x.x.x.x,使用如下命令可以进入bcql所在的目录，此目录下面会有一个cqlsh的程序，运行如下语句：
+
+```
+cd bigmath/AiSQL-x.x.x.x/bin
+```
+
+注意，上述命令中的x表示版本号，需要根据当前安装的AiSQL版本的具体版本号进行替换；
+
+其次，通过bcql客户登录AiSQL进行操作，默认用户是cassandra, 默认密码是 cassandra，运行如下语句:
+
+```
+./cqlsh 192.168.50.111 9542 -u cassandra
+Password: 
+Connected to local cluster at 192.168.50.111:9542.
+[cqlsh 5.0.1 | Cassandra 3.9-SNAPSHOT | CQL spec 3.4.2 | Native protocol v4]
+Use HELP for help.
+cassandra@cqlsh>
+```
+
+注意：上面的参数值192.168.50.111是AiSQL安装部署所在的ip地址，9542是登录的网络端口号，-u 后面的参数是用户名(cassandra),此用户的默认密码是cassandra，输出上述登录语句之后按回车，会出现Password: 提示输入密码，之后输入密码 cassandra即可完成登录。
+
+
+
+##  建键空间、建表、建表索引 
+
+
 
 ### 新建键空间
 
-在新建键空间前，您需要查询已有的键空间以预防使用已占用名称来新建键空间。
+在创建数据库之前，使用desc keyspaces 命令查看当前已经存在的数据库，以预防此键空间名已经被占用，运行如下语句：
 
 ```
-cqlsh> desc keyspaces;
-system_schema  system_auth  system
+DESC KEYSPACES;
 ```
 
-在确认无误后，您可以使用如下命令进行创建：
+创建一个新的键空间 test_key_spaces，注意不要与已存在的键空间同名，运行如下语句:
 
 ```
-cqlsh> create keyspace cas_db; 
+CREATE KEYSPACE test_key_spaces; 
 ```
 
-创建后再次查询已有键空间：
+创建后再次查询已有键空间,是否已存在了，运行如下语句:：
 
 ```
-cqlsh> desc keyspaces;
-system_schema  system_auth  system  cas_db
+DESC KEYSPACES;
 ```
 
-您还可以进一步查看创建的键空间相关信息：
+您还可以进一步查看创建的键空间相关信息，运行如下语句:
 
 ```
-cqlsh> desc cas_db;
-CREATE KEYSPACE cas_db WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '3'}  AND durable_writes = true;
+DESC test_key_spaces;
 ```
 
-确认无误后可使用新建键空间：
+确认无误后可使用新建键空间，运行如下语句：
 
 ```
-cqlsh> use cas_db;
-cqlsh:cas_db> 
+USE test_key_spaces;
 ```
 
-
+上面命令就进入use test_key_spaces键空间了。
 
 ### 新建表
 
-创建表需要在指定的键空间进行操作。
+上述命令创建了use test_key_spaces键空间，并进入了此键空间，下面接着对此键空间进行表(员工信息表employees)创建操作。
 
-创建表之前需要查看 cas_db 中已有的表：
-
-```
-cqlsh:cas_db> DESCRIBE TABLES;
-```
-
-确认无误后，在键空间 cas_db 中创建一个名为 stock_market 的表：
+首先，在创建employees表之前需要查看 test_key_spaces中已有的表，以预防此表名已经被占用，运行如下语句:
 
 ```
-cqlsh> create table cas_db.stock_market(
-    stock_symbol text,    /* 股票代码 */ 
-    ts text,    /* timestamp */
-    cur_price float,    /* 股票价格 */
-    primary key(stock_symbol, ts));    /* 主键 */
+DESCRIBE TABLES;
 ```
 
-查看表的信息：
+其次，创建一个员工信息表employees，此表包括的信息有：工号、姓名、邮箱、入职日期、职位、薪资、归属部门，运行如下语句：
 
 ```
-cqlsh> desc cas_db.stock_market;
-CREATE TABLE cas_db.stock_market (
-    stock_symbol text,
-    ts text,
-    cur_price float,
-    PRIMARY KEY (stock_symbol, ts)
-) WITH CLUSTERING ORDER BY (ts ASC)
-    AND default_time_to_live = 0
-    AND transactions = {'enabled': 'false'};
+CREATE TABLE employees (
+    employee_id BIGINT,
+    name varchar,
+    email varchar,
+    hire_date DATE,
+    job_title varchar,
+    salary DOUBLE,
+    department_id INT,
+    primary key(employee_id))WITH transactions = {'enabled': 'true'};
 ```
 
+注意：上面的transactions必须设置为true，否则无法为此表创建索引，如果不想再为此表创建索引，那么上述语句中可以删除WITH关键词后面的语句。
 
+最后，查看表的信息，运行如下语句：
 
-### 建表索引
+```
+DESC employees;
+```
 
-您可以使用 `CREATE INDEX` 语句在 `BCQL` 中创建索引，语法如下：
+注意：数据类型varchar与TEXT是同一种数据类型，互为别名。
+
+### 建、删表索引
+
+在employees表的name字段上建立普通索引(非唯一索引)，运行如下语句：
+
+```
+CREATE INDEX employees_name ON employees (name);
+```
+
+如果想在employees表的name字段上建立唯一索引，运行如下语句：
+
+```
+CREATE UNIQUE INDEX employees_name ON employees (name);
+```
+
+上述语句中，employees_name是索引的名称，可以自定义该名称。employees是表名，括号内的name是employees表的字段名，如果需要在多个字段上建立索引，括号内可以包含多个字段名，并使用逗号隔开。
+
+如果不想使用说明的索引，那么可以删除此索引，运行如下语句：
 
 ```CQL
-CREATE INDEX index_name ON table_name(column_list)
+DROP INDEX employees_name;
 ```
 
-以上述创建的表作为示例，用户可创建表索引：
-
-```cql
-CREATE INDEX index_stock_symbol ON stock_market(stock_symbol)
-```
-
-这样您就为 `stock_symbol` 列创建了索引。
 
 
-
-## 插入表数据、查询表数据
+## 表数据操作
 
 ### 插入数据
 
-用户可使用 `INSERT` 向表内插入数据。
+上述过程创建了employees表，接下来可以向此表插入数据，运行如下语句:
 
-使用上述创建的表 `cas_db.stock_market` 为例，插入两条记录：
-
-```cql
-cqlsh> INSERT INTO cas_db.stock_market (stock_symbol,ts,cur_price) VALUES ('AAPL','2017-10-26 09:00:00',157.41);
-cqlsh> INSERT INTO cas_db.stock_market (stock_symbol,ts,cur_price) VALUES ('AAPL','2017-10-26 10:00:00',157);
 ```
-
-如果您需要更新数据，可以使用 `UPDATE` 更新某行记录：
-
-```cql
-cqlsh:cas_db> UPDATE stock_market set cur_price = 158.1 where stock_symbol = 'AAPL' and ts = '2017-10-26 10:00:00';
-```
-
-然后查询更新后的内容：
-
-```cql
-cqlsh:cas_db> select cur_price from stock_market where stock_symbol = 'AAPL' and ts = '2017-10-26 10:00:00';
- cur_price-----------
- 158.10001
+INSERT INTO employees(employee_id,name,email,hire_date,job_title,salary,department_id) VALUES (1, 'Zhang San', 'abc001@136.com','2020-09-12','development engineer',20000.00,3);
 ```
 
 
 
 ### 查询表数据
 
-您可以使用 `select` 语句查看表中的数据。
-
-使用上述创建的表 `cas_db.stock_market` 为例，进行表数据的查询：
+查询employees表的所有数据，运行如下语句:
 
 ```cql
-cqlsh> select * from cas_db.stock_market ;
-
- stock_symbol | ts | cur_price 
- --------------+----+----------- 
-(0 rows)
+select * from employees;
 ```
 
-由于新建的表没有存放数据，所以显示的内容为0行。
-
-在使用上述插入指令插入数据后再进行查询，将会看到如下显示：
+查询employees表中员工工号是2的员工信息，运行如下语句:
 
 ```cql
-# 插入数据
-cqlsh> INSERT INTO cas_db.stock_market (stock_symbol,ts,cur_price) VALUES ('AAPL','2017-10-26 09:00:00',157.41);
-cqlsh> INSERT INTO cas_db.stock_market (stock_symbol,ts,cur_price) VALUES ('AAPL','2017-10-26 10:00:00',157);
+select * from employees where employee_id=2;
+```
 
-# 查询表数据
-cqlsh> select * from cas_db.stock_market ;
-stock_symbol | ts | cur_price 
---------------+---------------------+----------- 
-AAPL | 2017-10-26 09:00:00 | 157.41 
-AAPL | 2017-10-26 10:00:00 | 157 
+查询employees表中员工姓名是Li Si的员工信息，运行如下语句:
+
+```cql
+select * from employees where name='Li Si';
+```
+
+查询employees表的所有数据,并按部门号(department_id)分组显示，运行如下语句:
+
+```cql
+select * from employees group by department_id;
 ```
 
 
 
-## 删除表索引、删除表数据
+### 修改表数据
 
-### 删除表索引
-
-如果您需要删除表中的索引，您可以使用 `DROP INDEX` 语句来删除一个或者多个现有索引。
+在employees表中，修改工号是1的员工姓名为Zhang Xiao Shan，运行如下语句:
 
 ```cql
-DROP INDEX index_name1, index_name2, ...;
+UPDATE employees SET name='Zhang Xiao Shan' WHERE employee_id=1;
 ```
 
-使用上文创建的索引为例：
+在employees表中，给工号是2的员工薪水增加5000，运行如下语句:
 
 ```cql
-DROP INDEX index_stock_symbol;
+UPDATE employees SET salary = salary + 5000 WHERE employee_id=2;
 ```
 
 
 
 ### 删除表数据
 
-您可以使用 `DELETE` 删除某行记录.
-
-同样使用上文创建的表作为示例
+在employees表中，删除工号是2的员工数据，运行如下语句:
 
 ```cql
-cqlsh:cas_db> DELETE from stock_market where stock_symbol = 'AAPL' and ts = '2017-10-26 10:00:00';
+DELETE from employees WHERE employee_id=2;
 ```
 
-删除数据后再进行查询：
 
-```cql
-cqlsh:cas_db> select * from stock_market ;
-stock_symbol | ts | cur_price 
---------------+---------------------+----------- 
-AAPL | 2017-10-26 09:00:00 | 157.41 
-(1 rows)
-```
-
-可以看到指定的数据已经从表内被移除了。
 
 
 
@@ -200,103 +193,89 @@ AAPL | 2017-10-26 09:00:00 | 157.41
 
 ### 删除表
 
-您可以使用 `drop table` 来删除不需要的表。
-
-在删除前请查看存在的表以避免误删等误操作：
+在删除前最好是先查看存在的表以避免误删等误操作，运行如下语句:
 
 ```cql
-cqlsh:cas_db> DESCRIBE TABLES;
+DESC TABLES;
 ```
 
-确认无误后使用 `drop table` 进行表的删除：
+确认无误后使用 `drop table` 进行表的删除，比如删除employees表，运行如下语句:
 
 ```cql
-cqlsh:cas_db> drop table stock_market;
+DROP TABLE employees;
 ```
 
 
 
 ### 删除键空间
 
-删除键空间：需要注意的是当键空间包含表时，需要先删除全部表才能删除键空间。
+在删除键空间前最好是先查看一下当前已存在的键空间，以避免误删等误操作，运行如下语句:
 
 ```cql
-cqlsh> drop keyspace cas_db;
+DESC KEYSPACES;
 ```
 
-查看是否删除成功：
+确认无误后使用drop keyspace 删除键空间, 需要注意的是当键空间包含表时，需要先删除全部表才能删除键空间。比如删除键空间test_key_spaces，运行如下语句:
 
 ```cql
-cqlsh> desc keyspaces;
-system_schema  system_auth  system
+DROP KEYSPACE test_key_spaces;
 ```
 
 
 
 ## 创建、授权和删除用户
 
-默认情况下，AiSQL 已经创建了一个管理员用户：cassandra（推荐用户），您可以按如下方式查看现有用户：
+
+
+### 授权创建用户权限
+
+采用默认配置启动的AiSQL，是不支持创建新用户的，这是为了确保数据库在初始状态下的安全性，采取了较为保守的安全策略，不允许随意创建 BCQL 用户可以防止未经授权的访问和潜在的安全漏洞。在没有明确的安全设置和授权流程的情况下，随意创建用户可能会导致数据泄露、恶意攻击等风险。
+
+所以，如果需要创建新的用户，那么需要在启动AiSQL的时候为cassandra用户授权，授权命令如下：
 
 ```cql
-cqlsh> select * from system_auth.roles;
+./bigmathd start --use_cassandra_authentication=true
 ```
 
-输出如下：
+
+
+
+
+### 查看当前用户信息
+
+AiSQL启动之后，采用cassandra登录bcsql客户端，在创建新的用户之前，查询一下当前有哪些用户名，以防与新创建的用户名同名，运行如下语句:
 
 ```cql
- Role    | can_login | is_superuser | member_of | salted_hash
-------------+-------------+--------------+---------------+------------------------------------------------------------------------------
-cassandra |     True |      True |         [] | $2a$12$64A8Vo0R3K9XeUp26CSzpuWtvUBwOiGFjPAbXGt7wsxZIScGrcsDu\x00\x00\x00\x00
+cassandra@cqlsh> select * from system_auth.roles;
 ```
 
 
 
-### 创建
+### 创建新用户
 
-您可以使用 `CREATE ROLE` 创建新的角色：
+您可以使用 `CREATE ROLE` 创建新的角色，比如创建用户aiuser，并且设置登录密码为123456，运行如下语句:
 
 ```cql
-cqlsh> CREATE ROLE new_user;
+cassandra@cqlsh> CREATE ROLE aiuser WITH PASSWORD = '123456' AND LOGIN = true;
 ```
 
-请注意不要创建于原有用户冲突的新用户。
 
 
+### 授权用户
 
-### 授权
-
-使用 `GRANT PERMISSION` 语句向角色授予权限（或所有可用权限）。 
-
-创建数据库对象（键空间、表或角色）时，将自动且明确地向创建该对象的角色授予与该对象相关的所有权限。 
-
-通过将 `dbServer` 标志 `--use_cassandra_authentication` 设置为 `true`，可以启用此语句。
-
-以创建的 `cas_db` 和新角色 `new_user` 为示例：
+向aiuser授权访问键空间test_key_spaces的所有权限，运行如下语句:
 
 ```cql
-cqlsh> GRANT all_permission ON KEYSPACE cas_db TO new_user
+cassandra@cqlsh>GRANT ALL PERMISSIONS ON KEYSPACE test_key_spaces TO aiuser;
 ```
 
 
 
-### 删除
-使用 `DROP ROLE` 语句可以删除现有角色。 
+### 删除用户
 
-通过将 `dbServer` 标志 `--use_cassandra_authentication` 设置为 `true`，可以启用此语句。
+删除aiuser用户，运行如下语句:
 
-语法：
-
-```
-drop_role ::=  DROP ROLE [ IF EXISTS ] role_name
-```
-
-以新创建的 `new_user` 作为示例：
 
 ```cql
-cqlsh> DROP ROLE new_user
+cassandra@cqlsh> DROP ROLE aiuser
 ```
-
-注意：
-* 如果要删除的角色 `role_name` 不存在，除非存在 `IF EXISTS` 选项，则会引发错误。 
-* 只有具有超级用户状态的角色才能删除另一个超级用户角色。 
-* 只有对 `ALL ROLES` 或指定的 `role_name` 具有DROP权限或具有SUPERUSER状态的客户端才能删除另一个角色。
