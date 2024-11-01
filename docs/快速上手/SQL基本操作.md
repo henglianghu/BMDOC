@@ -1,3 +1,25 @@
+## 登录
+
+AiSQL安装部署完成之后，可通过bcql客户端登录并对其进行操作。
+
+首先,需要进入bcql客户端程序所在的位置，AiSQL默认安装路径是bigmath/AiSQL-x.x.x.x,使用如下命令可以进入bcql所在的目录，此目录下面会有一个cqlsh的程序，运行如下语句：
+
+```
+cd bigmath/AiSQL-x.x.x.x/bin
+```
+
+注意，上述命令中的x表示版本号，需要根据当前安装的AiSQL版本的具体版本号进行替换；
+
+其次，通过sqlsh客户登录AiSQL进行操作，默认用户是bigmath, 默认密码是 bigmath，运行如下语句:
+
+```
+./sqlsh -h 192.168.50.111 -U bigmath
+```
+
+-h参数后面的值是AiSQL安装部署所在的ip地址，默认端口是2521(参数-p)  ，-U 后面的参数是用户名(bigmath),此用户的默认密码是bigmath。
+
+
+
 ## 建库、建表、建表索引
 
 
@@ -54,13 +76,21 @@ CREATE TABLE employees (
 CREATE INDEX employees_name ON employees (name);
 ```
 
-如果想在employees表的name字段上建立唯一索引，运行如下语句：
+在employees表的name字段上建立唯一索引，运行如下语句：
 
 ```
 CREATE UNIQUE INDEX employees_name ON employees (name);
 ```
 
 上述语句中，employees_name是索引的名称，可以自定义该名称。employees是表名，括号内的name是employees表的字段名，如果需要在多个字段上建立索引，括号内可以包含多个字段名，并使用逗号隔开。
+
+### 删除表索引
+
+上面的操作为表创建了employees_name的索引，既然可以为表添加索引，故也可以删除索引，运行如下语句
+
+```
+DROP INDEX employees_name;
+```
 
 
 
@@ -153,18 +183,6 @@ DELETE FROM employees where name='Zhang San';
 
 ```
 DELETE FROM employees;
-```
-
-
-
-## 删除表索引
-
-
-
-上面的操作为表创建了employees_name的索引，既然可以为表添加索引，故也可以删除索引，运行如下语句
-
-```
-DROP INDEX employees_name;
 ```
 
 
