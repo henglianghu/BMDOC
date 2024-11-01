@@ -57,7 +57,7 @@ extra_css:
     - stylesheets/extra.css
 extra_javascript:
     - javascripts/extra.js
-use_directory_urls: true
+use_directory_urls: false
 markdown_extensions:
     - abbr
     - pymdownx.caret
