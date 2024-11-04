@@ -1,8 +1,8 @@
 ## 登录
 
-AiSQL安装部署完成之后，可通过bcql客户端登录并对其进行操作。
+AiSQL安装部署完成之后，可通过AiSQL安装自带的sqlsh客户端登录并对其进行操作。
 
-首先,需要进入bcql客户端程序所在的位置，AiSQL默认安装路径是bigmath/AiSQL-x.x.x.x,使用如下命令可以进入bcql所在的目录，此目录下面会有一个cqlsh的程序，运行如下语句：
+首先,需要进入sqlsh客户端程序所在的位置，AiSQL默认安装路径是bigmath/AiSQL-x.x.x.x,使用如下命令可以进入sqlsh所在的目录，此目录下面会有一个sqlsh的程序，运行如下语句：
 
 ```
 cd bigmath/AiSQL-x.x.x.x/bin
